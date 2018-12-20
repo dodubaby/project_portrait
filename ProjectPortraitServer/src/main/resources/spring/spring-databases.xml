@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+        <property name="url">
+            <value><![CDATA[${aee.db.url}]]></value>
+        </property>
+        <property name="username" value="${aee.db.username}" />
+        <property name="password" value="${aee.db.password}" />
+        <property name="initialSize" value="${aee.db.initialSize}" />
+        <property name="minIdle" value="${aee.db.minIdle}" />
+        <property name="maxActive" value="${aee.db.maxActive}" />
+        <property name="validationQuery" value="select 1" />
+        <property name="removeAbandoned" value="true"/>
+        <property name="removeAbandonedTimeout" value="60"/>
+        <property name="logAbandoned" value="true"/>
+        <property name="connectionProperties" value="useUnicode=true;characterEncoding=utf8;connectTimeout=5000;socketTimeout=60000;autoReconnect=true;failOverReadOnly=false"/>
+    </bean>
+
+    <!-- 事务-->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+    <!--mybatis-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="configLocation" value="classpath:spring/mybatis-config.xml"/>
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg index="0" ref="sqlSessionFactory" />
+    </bean>
+    <!-- 映射dao目录下的接口转换为spring容器中的bean -->
+    <bean id="mapperScanner" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.**.dao" />
+        <property name="sqlSessionTemplateBeanName" value="sqlSession" />
+    </bean>
+</beans>
