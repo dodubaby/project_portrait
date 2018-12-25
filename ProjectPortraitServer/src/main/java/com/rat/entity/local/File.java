@@ -1,17 +1,95 @@
-package com.rat.entity.local.user;
+package com.rat.entity.local;
 
 import java.io.Serializable;
 
 /**
- * 用户实体类
+ * 实体类
  *
  * @author L.jinzhu
  * @date 2017-03-31 18:07
  */
-public class User implements Serializable {
-    public static final int ACCOUNT_TYPE_WECHAT = 1;// 微信
-    public static final int ACCOUNT_TYPE_QQ = 2;// QQ
-    public static final int ACCOUNT_TYPE_PHONE = 3;// 手机号
+public class File implements Serializable {
+    private long id;
+    private String type;
+    private String fullName;
+    private String path;
+    private String name;
+    private String suffix;
+    private String classFullName;
+    private String lineCount;
+    private String size;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getSuffix() {
+        return suffix;
+    }
+
+    public void setSuffix(String suffix) {
+        this.suffix = suffix;
+    }
+
+    public String getClassFullName() {
+        return classFullName;
+    }
+
+    public void setClassFullName(String classFullName) {
+        this.classFullName = classFullName;
+    }
+
+    public String getLineCount() {
+        return lineCount;
+    }
+
+    public void setLineCount(String lineCount) {
+        this.lineCount = lineCount;
+    }
+
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
+    }
 
     // 用户基本信息
     private long userId; // 用户id,唯一标示
@@ -39,9 +117,9 @@ public class User implements Serializable {
     private String token4RongCloud;// 融云token
 
     // 显示额外信息
-    private int videoCount; // 视频数
-    private int followCount; // 关注数
-    private int followedCount; // 被关注数
+    private int resourceCount; // 视频数
+    private int referenceCount; // 关注数
+    private int referenceedCount; // 被关注数
 
     public long getUserId() {
         return userId;
@@ -49,6 +127,22 @@ public class User implements Serializable {
 
     public void setUserId(long userId) {
         this.userId = userId;
+    }
+
+    public String getAccount() {
+        return account;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
+    }
+
+    public int getAccountType() {
+        return accountType;
+    }
+
+    public void setAccountType(int accountType) {
+        this.accountType = accountType;
     }
 
     public String getHeadUrl() {
@@ -65,14 +159,6 @@ public class User implements Serializable {
 
     public void setNickName(String nickName) {
         this.nickName = nickName;
-    }
-
-    public int getAccountType() {
-        return accountType;
-    }
-
-    public void setAccountType(int accountType) {
-        this.accountType = accountType;
     }
 
     public int getAge() {
@@ -203,65 +289,31 @@ public class User implements Serializable {
         this.token4RongCloud = token4RongCloud;
     }
 
-    public int getVideoCount() {
-        return videoCount;
+    public int getResourceCount() {
+        return resourceCount;
     }
 
-    public void setVideoCount(int videoCount) {
-        this.videoCount = videoCount;
+    public void setResourceCount(int resourceCount) {
+        this.resourceCount = resourceCount;
     }
 
-    public int getFollowCount() {
-        return followCount;
+    public int getReferenceCount() {
+        return referenceCount;
     }
 
-    public void setFollowCount(int followCount) {
-        this.followCount = followCount;
+    public void setReferenceCount(int referenceCount) {
+        this.referenceCount = referenceCount;
     }
 
-    public int getFollowedCount() {
-        return followedCount;
+    public int getReferenceedCount() {
+        return referenceedCount;
     }
 
-    public void setFollowedCount(int followedCount) {
-        this.followedCount = followedCount;
+    public void setReferenceedCount(int referenceedCount) {
+        this.referenceedCount = referenceedCount;
     }
 
-    public String getAccount() {
-        return account;
-    }
-
-    public void setAccount(String account) {
-        this.account = account;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "userId=" + userId +
-                ", headUrl='" + headUrl + '\'' +
-                ", nickName='" + nickName + '\'' +
-                ", account='" + account + '\'' +
-                ", accountType=" + accountType +
-                ", age=" + age +
-                ", sex='" + sex + '\'' +
-                ", bigImg='" + bigImg + '\'' +
-                ", cityCode='" + cityCode + '\'' +
-                ", cityName='" + cityName + '\'' +
-                ", workCode='" + workCode + '\'' +
-                ", workName='" + workName + '\'' +
-                ", educationCode='" + educationCode + '\'' +
-                ", educationName='" + educationName + '\'' +
-                ", houseCode='" + houseCode + '\'' +
-                ", houseName='" + houseName + '\'' +
-                ", marriageCode='" + marriageCode + '\'' +
-                ", marriageName='" + marriageName + '\'' +
-                ", introduce='" + introduce + '\'' +
-                ", remark='" + remark + '\'' +
-                ", token4RongCloud='" + token4RongCloud + '\'' +
-                ", videoCount=" + videoCount +
-                ", followCount=" + followCount +
-                ", followedCount=" + followedCount +
-                '}';
-    }
+    public static final int ACCOUNT_TYPE_WECHAT = 1;// 微信
+    public static final int ACCOUNT_TYPE_QQ = 2;// QQ
+    public static final int ACCOUNT_TYPE_PHONE = 3;// 手机号
 }

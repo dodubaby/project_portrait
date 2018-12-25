@@ -1,6 +1,6 @@
 package com.rat.entity.network.response;
 
-import com.rat.entity.local.user.UserDetail;
+import com.rat.entity.local.UserDetail;
 import com.rat.entity.network.response.base.ResponseInfo;
 
 /**

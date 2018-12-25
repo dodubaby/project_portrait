@@ -7,8 +7,8 @@ import com.rat.entity.network.request.base.ActionInfo;
  * date : 2015/8/12
  * introduce : 请求实体
  */
-public class VideoNamesActionInfo extends ActionInfo {
-    public VideoNamesActionInfo(int actionId) {
+public class ResourceNamesActionInfo extends ActionInfo {
+    public ResourceNamesActionInfo(int actionId) {
         super(actionId);
     }
 }

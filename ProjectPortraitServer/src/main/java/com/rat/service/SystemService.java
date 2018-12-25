@@ -2,9 +2,9 @@ package com.rat.service;
 
 import com.rat.common.Constant;
 import com.rat.entity.network.request.NewVersionActionInfo;
-import com.rat.entity.network.request.VideoNamesActionInfo;
+import com.rat.entity.network.request.ResourceNamesActionInfo;
 import com.rat.entity.network.response.NewVersionRspInfo;
-import com.rat.entity.network.response.VideoNamesRspInfo;
+import com.rat.entity.network.response.ResourceNamesRspInfo;
 import com.rat.utils.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,13 +50,13 @@ public class SystemService {
      * @param actionInfo
      * @return
      */
-    public VideoNamesRspInfo getVideoNames(VideoNamesActionInfo actionInfo) {
-        VideoNamesRspInfo rspInfo = new VideoNamesRspInfo();
-        if (StringUtil.isNullOrBlank(Constant.videoNames)) {
+    public ResourceNamesRspInfo getResourceNames(ResourceNamesActionInfo actionInfo) {
+        ResourceNamesRspInfo rspInfo = new ResourceNamesRspInfo();
+        if (StringUtil.isNullOrBlank(Constant.resourceNames)) {
             rspInfo.initError4System(actionInfo.getActionId());
         } else {
             rspInfo.initSuccess(actionInfo.getActionId());
-            rspInfo.setVideoNames(Constant.videoNames);
+            rspInfo.setResourceNames(Constant.resourceNames);
         }
         return rspInfo;
     }

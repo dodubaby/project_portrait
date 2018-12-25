@@ -1,6 +1,6 @@
 package com.rat.entity.network.response;
 
-import com.rat.entity.local.user.UserDetail;
+import com.rat.entity.local.File;
 import com.rat.entity.network.response.base.ResponseInfo;
 
 import java.util.List;
@@ -10,10 +10,10 @@ import java.util.List;
  * date : 2015/8/12
  * introduce : 响应实体
  */
-public class UserFindAllRspInfo extends ResponseInfo {
+public class FileFindAllRspInfo extends ResponseInfo {
     private int currentPage;
     private int isEndPage; // 是否是最后一页 1：是 0：否
-    private List<UserDetail> userDetailList;
+    private List<File> fileList;
 
     public int getCurrentPage() {
         return currentPage;
@@ -31,11 +31,11 @@ public class UserFindAllRspInfo extends ResponseInfo {
         this.isEndPage = isEndPage ? 1 : 0;
     }
 
-    public List<UserDetail> getUserDetailList() {
-        return userDetailList;
+    public List<File> getFileList() {
+        return fileList;
     }
 
-    public void setUserDetailList(List<UserDetail> userDetailList) {
-        this.userDetailList = userDetailList;
+    public void setFileList(List<File> fileList) {
+        this.fileList = fileList;
     }
 }

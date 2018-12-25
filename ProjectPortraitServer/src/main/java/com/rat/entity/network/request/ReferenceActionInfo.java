@@ -1,7 +1,7 @@
 package com.rat.entity.network.request;
 
 
-import com.rat.entity.local.user.Follow;
+import com.rat.entity.local.Reference;
 import com.rat.entity.network.request.base.ActionInfo;
 
 /**
@@ -9,17 +9,17 @@ import com.rat.entity.network.request.base.ActionInfo;
  * date : 2015/8/12
  * introduce : 请求实体
  */
-public class FollowActionInfo extends ActionInfo {
+public class ReferenceActionInfo extends ActionInfo {
     public static final int FOLLOW_TYPE_OK = 1;// 关注
     public static final int FOLLOW_TYPE_CANCLE = 2;// 取消关注
 
     private int type;
-    private Follow follow;
+    private Reference reference;
 
-    public FollowActionInfo(int actionId, int type, Follow follow) {
+    public ReferenceActionInfo(int actionId, int type, Reference reference) {
         super(actionId);
         this.type = type;
-        this.follow = follow;
+        this.reference = reference;
     }
 
     public int getType() {
@@ -30,11 +30,11 @@ public class FollowActionInfo extends ActionInfo {
         this.type = type;
     }
 
-    public Follow getFollow() {
-        return follow;
+    public Reference getReference() {
+        return reference;
     }
 
-    public void setFollow(Follow follow) {
-        this.follow = follow;
+    public void setReference(Reference reference) {
+        this.reference = reference;
     }
 }

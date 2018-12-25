@@ -7,5 +7,5 @@ import com.rat.entity.network.response.base.ResponseInfo;
  * date : 2015/8/12
  * introduce : 响应实体
  */
-public class FollowRspInfo extends ResponseInfo {
+public class ReferenceRspInfo extends ResponseInfo {
 }

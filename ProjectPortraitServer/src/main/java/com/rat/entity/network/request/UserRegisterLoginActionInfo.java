@@ -9,7 +9,7 @@ import com.rat.entity.network.request.base.ActionInfo;
  * introduce : 请求实体
  */
 public class UserRegisterLoginActionInfo extends ActionInfo {
-    private int accountType;// User.accountType
+    private int accountType;// File.accountType
 
     // 第三方平台快捷登录
     private String dataFromOtherPlatform;

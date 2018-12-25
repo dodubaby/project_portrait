@@ -1,7 +1,7 @@
 package com.rat.entity.network.request;
 
 
-import com.rat.entity.local.user.User;
+import com.rat.entity.local.File;
 import com.rat.entity.network.request.base.ActionInfo;
 
 /**
@@ -10,18 +10,18 @@ import com.rat.entity.network.request.base.ActionInfo;
  * introduce : 请求实体
  */
 public class UserUpdateActionInfo extends ActionInfo {
-    private User user;
+    private File file;
 
-    public UserUpdateActionInfo(int actionId, User user) {
+    public UserUpdateActionInfo(int actionId, File file) {
         super(actionId);
-        this.user = user;
+        this.file = file;
     }
 
-    public User getUser() {
-        return user;
+    public File getFile() {
+        return file;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setFile(File file) {
+        this.file = file;
     }
 }

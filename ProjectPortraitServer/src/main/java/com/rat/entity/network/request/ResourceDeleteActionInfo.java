@@ -10,14 +10,14 @@ import java.util.List;
  * date : 2015/8/12
  * introduce : 请求实体
  */
-public class VideoDeleteActionInfo extends ActionInfo {
+public class ResourceDeleteActionInfo extends ActionInfo {
     private Long userId;
-    private List<Long> videoIdList;
+    private List<Long> resourceIdList;
 
-    public VideoDeleteActionInfo(int actionId, Long userId, List<Long> videoIdList) {
+    public ResourceDeleteActionInfo(int actionId, Long userId, List<Long> resourceIdList) {
         super(actionId);
         this.userId = userId;
-        this.videoIdList = videoIdList;
+        this.resourceIdList = resourceIdList;
     }
 
     public Long getUserId() {
@@ -28,11 +28,11 @@ public class VideoDeleteActionInfo extends ActionInfo {
         this.userId = userId;
     }
 
-    public List<Long> getVideoIdList() {
-        return videoIdList;
+    public List<Long> getResourceIdList() {
+        return resourceIdList;
     }
 
-    public void setVideoIdList(List<Long> videoIdList) {
-        this.videoIdList = videoIdList;
+    public void setResourceIdList(List<Long> resourceIdList) {
+        this.resourceIdList = resourceIdList;
     }
 }

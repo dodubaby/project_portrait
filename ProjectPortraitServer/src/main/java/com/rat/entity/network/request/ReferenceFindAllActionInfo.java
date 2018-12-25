@@ -6,12 +6,12 @@ import com.rat.entity.network.request.base.ActionInfo;
 /**
  * author : L.jinzhu
  * date : 2015/8/12
- * introduce : 我关注的 请求实体
+ * introduce : 请求实体
  */
-public class FollowFindAllActionInfo extends ActionInfo {
+public class ReferenceFindAllActionInfo extends ActionInfo {
     private long userId; // 用户id,唯一标示
 
-    public FollowFindAllActionInfo(int actionId, long userId) {
+    public ReferenceFindAllActionInfo(int actionId, long userId) {
         super(actionId);
         this.userId = userId;
     }

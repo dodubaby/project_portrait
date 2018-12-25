@@ -22,5 +22,5 @@ public class Constant {
     public static String des = "";
 
     // 视频名称列表
-    public static String videoNames = "";
+    public static String resourceNames = "";
 }

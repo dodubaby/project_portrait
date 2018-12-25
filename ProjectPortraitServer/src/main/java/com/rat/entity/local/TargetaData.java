@@ -1,4 +1,4 @@
-package com.rat.entity.local.system;
+package com.rat.entity.local;
 
 import java.io.Serializable;
 
@@ -8,9 +8,9 @@ import java.io.Serializable;
  * @author L.jinzhu
  * @date 2017-03-31 18:07
  */
-public class SecurityCode implements Serializable {
+public class TargetaData implements Serializable {
     public static final String CODE_TYPE_REGISTER_LOGIN = "1";// 1、登录注册
-    public static final String CODE_TYPE_BIND_PHONE= "2";// 2、绑定手机号
+    public static final String CODE_TYPE_BIND_PHONE = "2";// 2、绑定手机号
 
     private String phoneNumber; // 手机号
     private String code; // 验证码

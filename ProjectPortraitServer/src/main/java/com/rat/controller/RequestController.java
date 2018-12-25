@@ -28,16 +28,16 @@ import java.util.Properties;
  * @author L.jinzhu 2017/3/30
  */
 @Controller
-@RequestMapping("/seelove")
+@RequestMapping("/projectportrait")
 public class RequestController {
 
     private static Logger logger = LoggerFactory.getLogger(RequestController.class);
     @Resource
-    private UserService userService;
+    private FileService fileService;
     @Resource
-    private VideoService videoService;
+    private ResourceService resourceService;
     @Resource
-    private FollowService followService;
+    private ReferenceService referenceService;
     @Resource
     private NewsService newsService;
     @Resource
@@ -66,56 +66,59 @@ public class RequestController {
         JSONObject jsonObject = JSONObject.parseObject(json);
         String actionInfoStr = jsonObject.getString("actionInfo");
         switch (requestInfo.getActionInfo().getActionId()) {
+            // 文件获取全部
+            case RequestCode.FILE_FIND_ALL:
+                FileFindAllActionInfo fileFindAllActionInfo = GsonUtil.fromJson(actionInfoStr, FileFindAllActionInfo.class);
+                response = fileService.findAll(fileFindAllActionInfo);
+                break;
+
+
             // 注册登录
             case RequestCode.USER_REGISTER_LOGIN:
                 UserRegisterLoginActionInfo userRegisterLoginActionInfo = GsonUtil.fromJson(actionInfoStr, UserRegisterLoginActionInfo.class);
-                response = userService.login(userRegisterLoginActionInfo);
+                response = fileService.login(userRegisterLoginActionInfo);
                 break;
             // 用户更新
             case RequestCode.USER_UPDATE:
                 UserUpdateActionInfo userUpdateActionInfo = GsonUtil.fromJson(actionInfoStr, UserUpdateActionInfo.class);
-                response = userService.update(userUpdateActionInfo);
+                response = fileService.update(userUpdateActionInfo);
                 break;
             // 获取所有用户
             case RequestCode.USER_FIND_ALL:
                 UserFindAllActionInfo userFindAllActionInfo = GsonUtil.fromJson(actionInfoStr, UserFindAllActionInfo.class);
-                response = userService.findAll(userFindAllActionInfo);
+//                response = fileService.findAll(fileFindAllActionInfo);
                 break;
             // 获取用户详情
             case RequestCode.USER_FIND_DETAIL:
                 UserFindDetailActionInfo userFindDetailActionInfo = GsonUtil.fromJson(actionInfoStr, UserFindDetailActionInfo.class);
-                response = userService.findDetail(userFindDetailActionInfo);
+                response = fileService.findDetail(userFindDetailActionInfo);
                 break;
             // 创建视频
             case RequestCode.VIDEO_CREATE:
-                VideoCreateActionInfo videoCreateActionInfo = GsonUtil.fromJson(actionInfoStr, VideoCreateActionInfo.class);
-                response = videoService.create(videoCreateActionInfo);
+                ResourceCreateActionInfo resourceCreateActionInfo = GsonUtil.fromJson(actionInfoStr, ResourceCreateActionInfo.class);
+                response = resourceService.create(resourceCreateActionInfo);
                 break;
             // 删除视频
             case RequestCode.VIDEO_DELETE:
-                VideoDeleteActionInfo videoDeleteActionInfo = GsonUtil.fromJson(actionInfoStr, VideoDeleteActionInfo.class);
-                response = videoService.delete(videoDeleteActionInfo);
+                ResourceDeleteActionInfo resourceDeleteActionInfo = GsonUtil.fromJson(actionInfoStr, ResourceDeleteActionInfo.class);
+                response = resourceService.delete(resourceDeleteActionInfo);
                 break;
             // 关注、取消关注
             case RequestCode.FOLLOW:
-                FollowActionInfo followActionInfo = GsonUtil.fromJson(actionInfoStr, FollowActionInfo.class);
-                response = followService.follow(followActionInfo);
+                ReferenceActionInfo referenceActionInfo = GsonUtil.fromJson(actionInfoStr, ReferenceActionInfo.class);
+                response = referenceService.reference(referenceActionInfo);
                 break;
             // 获取user主动关注的人
             case RequestCode.FOLLOW_FIND_BY_USER:
-                FollowFindAllActionInfo followFindAllByUserActionInfo = GsonUtil.fromJson(actionInfoStr, FollowFindAllActionInfo.class);
-                response = followService.findAllByUserId(followFindAllByUserActionInfo);
+                ReferenceFindAllActionInfo referenceFindAllByUserActionInfo = GsonUtil.fromJson(actionInfoStr, ReferenceFindAllActionInfo.class);
+                response = referenceService.findAllByUserId(referenceFindAllByUserActionInfo);
                 break;
             // 获取关注user的人
             case RequestCode.FOLLOW_FIND_BY_FOLLOWED_USER:
-                FollowFindAllActionInfo followFindAllByFollowedUserActionInfo = GsonUtil.fromJson(actionInfoStr, FollowFindAllActionInfo.class);
-                response = followService.findAllByFollowedUserId(followFindAllByFollowedUserActionInfo);
+                ReferenceFindAllActionInfo referenceFindAllByReferenceedUserActionInfo = GsonUtil.fromJson(actionInfoStr, ReferenceFindAllActionInfo.class);
+                response = referenceService.findAllByReferenceedUserId(referenceFindAllByReferenceedUserActionInfo);
                 break;
-            // 获取动态
-            case RequestCode.NEWS_FIND_ALL:
-                NewsFindAllActionInfo newsFindAllActionInfo = GsonUtil.fromJson(actionInfoStr, NewsFindAllActionInfo.class);
-                response = newsService.findAll(newsFindAllActionInfo);
-                break;
+
             // 最新版本
             case RequestCode.SYSTEM_NEW_VERSION:
                 NewVersionActionInfo newVersionActionInfo = GsonUtil.fromJson(actionInfoStr, NewVersionActionInfo.class);
@@ -123,8 +126,8 @@ public class RequestController {
                 break;
             // 视频名称列表
             case RequestCode.SYSTEM_VIDEO_NAMES:
-                VideoNamesActionInfo videoNamesActionInfo = GsonUtil.fromJson(actionInfoStr, VideoNamesActionInfo.class);
-                response = systemService.getVideoNames(videoNamesActionInfo);
+                ResourceNamesActionInfo resourceNamesActionInfo = GsonUtil.fromJson(actionInfoStr, ResourceNamesActionInfo.class);
+                response = systemService.getResourceNames(resourceNamesActionInfo);
                 break;
             default:
                 response = new ResponseInfo();
@@ -149,9 +152,9 @@ public class RequestController {
             prop.load(in);
             Constant.DATA_COUNT_OF_PAGE = Integer.parseInt(prop.getProperty("dataCountOfPage"));
             Constant.userDefaultBigImage = prop.getProperty("userDefaultBigImage");
-            Constant.videoNames = prop.getProperty("videoNames");
+            Constant.resourceNames = prop.getProperty("resourceNames");
             in.close();
-            logger.info("rat init system profiles success: dataCountOfPage: " + Constant.DATA_COUNT_OF_PAGE + " | userDefaultBigImage: " + Constant.userDefaultBigImage + " | videoNames: " + Constant.videoNames);
+            logger.info("rat init system profiles success: dataCountOfPage: " + Constant.DATA_COUNT_OF_PAGE + " | userDefaultBigImage: " + Constant.userDefaultBigImage + " | resourceNames: " + Constant.resourceNames);
         } catch (Throwable e) {
             logger.error("rat init system profiles error", e);
         }

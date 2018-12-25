@@ -232,12 +232,12 @@
     <build>
         <finalName>SeeLove</finalName>
         <resources>
-            <resource>
+            <resourceData>
                 <directory>${profiles.dir}/${package.environment}</directory>
-            </resource>
-            <resource>
+            </resourceData>
+            <resourceData>
                 <directory>src/main/resources</directory>
-            </resource>
+            </resourceData>
         </resources>
         <plugins>
             <plugin>

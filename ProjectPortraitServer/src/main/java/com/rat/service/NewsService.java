@@ -1,11 +1,11 @@
 package com.rat.service;
 
-import com.rat.dao.FollowDao;
-import com.rat.dao.UserDao;
-import com.rat.dao.VideoDao;
-import com.rat.entity.local.user.User;
-import com.rat.entity.local.user.UserDetail;
-import com.rat.entity.local.video.Video;
+import com.rat.dao.ReferenceDao;
+import com.rat.dao.FileDao;
+import com.rat.dao.ResourceDao;
+import com.rat.entity.local.File;
+import com.rat.entity.local.ResourceData;
+import com.rat.entity.local.UserDetail;
 import com.rat.entity.network.entity.DataPage;
 import com.rat.entity.network.request.*;
 import com.rat.entity.network.response.*;
@@ -30,43 +30,43 @@ public class NewsService {
 
     private static Logger logger = LoggerFactory.getLogger(NewsService.class);
     @Resource
-    private UserDao userDao;
+    private FileDao fileDao;
     @Resource
-    private FollowDao followDao;
+    private ReferenceDao referenceDao;
     @Resource
-    private VideoDao videoDao;
+    private ResourceDao resourceDao;
 
     public NewsService() {
     }
 
-    public NewsFindAllRspInfo findAll(NewsFindAllActionInfo actionInfo) {
+    public NewsFindAllRspInfo findAll(FileFindAllActionInfo actionInfo) {
         DataPage dataPage = DataPageUtil.getPage(actionInfo.getPageNumber(), actionInfo.getDataGetType());
         List<UserDetail> userDetailList = new ArrayList<>();
         // 获取我关注的人
-        List<User> userList = followDao.findByUserId(actionInfo.getUserId());
+        List<File> fileList = referenceDao.findByUserId(null);
         // 我关注的人为空，则获取默认视频
-        if (null == userList || 0 == userList.size()) {
+        if (null == fileList || 0 == fileList.size()) {
             return findDefault(actionInfo);
         }
         // 增加自己
-        User my = userDao.findById(actionInfo.getUserId());
-        userList.add(my);
+        File my = fileDao.findById(null);
+        fileList.add(my);
         // 放在map中，后续使用
-        Map<Long, User> userMap = new HashMap<>();
-        for (User user : userList) {
-            userMap.put(user.getUserId(), user);
+        Map<Long, File> userMap = new HashMap<>();
+        for (File file : fileList) {
+            userMap.put(file.getId(), file);
         }
         // 获取所有人的所有视频
-        List<Video> videoList = videoDao.findAllByUserList(dataPage.getDataIndexStart(), dataPage.getDataIndexEnd(), userList);
+        List<ResourceData> resourceList = resourceDao.findAllByUserList(dataPage.getDataIndexStart(), dataPage.getDataIndexEnd(), fileList);
         // 所有人的所有视频为空，则获取默认视频
-        if (null == videoList || 0 == videoList.size()) {
+        if (null == resourceList || 0 == resourceList.size()) {
             return findDefault(actionInfo);
         }
         // 拼接视频和人物
-        for (Video video : videoList) {
+        for (ResourceData resource : resourceList) {
             UserDetail userDetail = new UserDetail();
-            userDetail.setUser(userMap.get(video.getUserId()));
-            userDetail.setDefultVideo(video);
+            userDetail.setFile(userMap.get(resource.getUserId()));
+            userDetail.setDefultResourceData(resource);
             userDetailList.add(userDetail);
         }
 
@@ -84,15 +84,15 @@ public class NewsService {
      * @param actionInfo
      * @return
      */
-    private NewsFindAllRspInfo findDefault(NewsFindAllActionInfo actionInfo) {
-        User my = userDao.findById(actionInfo.getUserId());
-        String sex = (null == my) ? "1" : my.getSex();
+    private NewsFindAllRspInfo findDefault(FileFindAllActionInfo actionInfo) {
+        File my = fileDao.findById(null);
+        String sex = (null == my) ? "1" : my.getFullName();
         List<UserDetail> userDetailList = new ArrayList<>();
-        List<Video> videoList = videoDao.findCount5BySex(sex);
-        for (Video video : videoList) {
+        List<ResourceData> resourceList = resourceDao.findCount5BySex(sex);
+        for (ResourceData resource : resourceList) {
             UserDetail userDetail = new UserDetail();
-            userDetail.setUser(userDao.findById(video.getUserId()));
-            userDetail.setDefultVideo(video);
+            userDetail.setFile(fileDao.findById(resource.getUserId()));
+            userDetail.setDefultResourceData(resource);
             userDetailList.add(userDetail);
         }
         NewsFindAllRspInfo rspInfo = new NewsFindAllRspInfo();
