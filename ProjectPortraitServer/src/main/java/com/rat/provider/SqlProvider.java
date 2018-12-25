@@ -1,7 +1,5 @@
 package com.rat.provider;
 
-import com.rat.entity.local.File;
-
 import java.util.List;
 import java.util.Map;
 
@@ -37,48 +35,31 @@ public class SqlProvider {
 //            }
 //        }
         // 分页
-        if (null != para.get("dataIndexStart") && null != para.get("dataIndexEnd")) {
-            int dataIndexStart = (int) para.get("dataIndexStart");
-            int dataIndexEnd = (int) para.get("dataIndexEnd");
-            sql.append(" limit " + dataIndexStart + "," + dataIndexEnd);
-        } else {
-            sql.append(" limit 0,0");
-        }
+        sql.append(getCountLimitCondition(para));
         return sql.toString();
     }
 
-    public String resourceFindAllByUserList(Map<String, Object> para) {
+    public String resourceFindAll(Map<String, Object> para) {
         StringBuffer sql = new StringBuffer();
-        sql.append("select v.* from resourceinfo v, user_resource uv where 1=1");
-
-        // 拼接用户列表
-        if (null != para.get("userList")) {
-            List<File> fileList = (List<File>) para.get("fileList");
-            // 存在关注的好友及对应视频
-            if (null != fileList && 0 != fileList.size()) {
-                String str = "(";
-                for (File file : fileList) {
-                    str += file.getId() + ",";
-                }
-                str = str.substring(0, str.lastIndexOf(","));
-                str += ")";
-                sql.append(" and uv.resourceId = v.resourceId and uv.userId in " + str + " order by v.resourceId desc");
-            }
-            // 不存在关注的好友
-            else {
-                sql.append(" and 1=2");
-            }
-        } else {
-            sql.append(" and 1=2");
-        }
+        sql.append("select * from resource where 1=1");
         // 分页
-        if (null != para.get("dataIndexStart") && null != para.get("dataIndexEnd")) {
-            int dataIndexStart = (int) para.get("dataIndexStart");
-            int dataIndexEnd = (int) para.get("dataIndexEnd");
-            sql.append(" limit " + dataIndexStart + "," + dataIndexEnd);
-        } else {
-            sql.append(" limit 0,0");
-        }
+        sql.append(getCountLimitCondition(para));
+        return sql.toString();
+    }
+
+    public String targetDataFindAll(Map<String, Object> para) {
+        StringBuffer sql = new StringBuffer();
+        sql.append("select * from target_data where 1=1");
+        // 分页
+        sql.append(getCountLimitCondition(para));
+        return sql.toString();
+    }
+
+    public String referenceFindAll(Map<String, Object> para) {
+        StringBuffer sql = new StringBuffer();
+        sql.append("select * from reference where 1=1");
+        // 分页
+        sql.append(getCountLimitCondition(para));
         return sql.toString();
     }
 
@@ -126,5 +107,18 @@ public class SqlProvider {
             sql.append(" and 1=2");
         }
         return sql.toString();
+    }
+
+
+    private String getCountLimitCondition(Map<String, Object> para) {
+        String countLimit;
+        if (null != para.get("dataIndexStart") && null != para.get("dataIndexEnd")) {
+            int dataIndexStart = (int) para.get("dataIndexStart");
+            int dataIndexEnd = (int) para.get("dataIndexEnd");
+            countLimit = " limit " + dataIndexStart + "," + dataIndexEnd;
+        } else {
+            countLimit = " limit 0,0";
+        }
+        return countLimit;
     }
 }

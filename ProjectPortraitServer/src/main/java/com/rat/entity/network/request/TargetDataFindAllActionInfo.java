@@ -8,11 +8,11 @@ import com.rat.entity.network.request.base.ActionInfo;
  * date : 2015/8/12
  * introduce : 请求实体
  */
-public class ReferenceFindAllActionInfo extends ActionInfo {
+public class TargetDataFindAllActionInfo extends ActionInfo {
     private int pageNumber;
     private int dataGetType;
 
-    public ReferenceFindAllActionInfo(int actionId, int pageNumber, int dataGetType) {
+    public TargetDataFindAllActionInfo(int actionId, int pageNumber, int dataGetType) {
         super(actionId);
         this.pageNumber = pageNumber;
         this.dataGetType = dataGetType;

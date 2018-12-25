@@ -9,22 +9,58 @@ import java.io.Serializable;
  * @date 2017-03-31 18:07
  */
 public class Reference implements Serializable {
-    private long userId; // 用户id,唯一标示
-    private long referenceUserId; // 关注的用户id,唯一标示
+    private long id;
+    private long fileId;
+    private long referenceDataId;
+    private String referenceDataType;
+    private String referenceData;
+    private long referenceLine;
 
-    public long getUserId() {
-        return userId;
+    public long getId() {
+        return id;
     }
 
-    public void setUserId(long userId) {
-        this.userId = userId;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public long getReferenceUserId() {
-        return referenceUserId;
+    public long getFileId() {
+        return fileId;
     }
 
-    public void setReferenceUserId(long referenceUserId) {
-        this.referenceUserId = referenceUserId;
+    public void setFileId(long fileId) {
+        this.fileId = fileId;
+    }
+
+    public long getReferenceDataId() {
+        return referenceDataId;
+    }
+
+    public void setReferenceDataId(long referenceDataId) {
+        this.referenceDataId = referenceDataId;
+    }
+
+    public String getReferenceDataType() {
+        return referenceDataType;
+    }
+
+    public void setReferenceDataType(String referenceDataType) {
+        this.referenceDataType = referenceDataType;
+    }
+
+    public String getReferenceData() {
+        return referenceData;
+    }
+
+    public void setReferenceData(String referenceData) {
+        this.referenceData = referenceData;
+    }
+
+    public long getReferenceLine() {
+        return referenceLine;
+    }
+
+    public void setReferenceLine(long referenceLine) {
+        this.referenceLine = referenceLine;
     }
 }

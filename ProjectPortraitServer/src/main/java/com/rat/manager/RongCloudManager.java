@@ -1,4 +1,3 @@
-//package com.seelove.manager;
 //
 //import io.rong.RongCloud;
 //import io.rong.models.CheckOnlineResult;

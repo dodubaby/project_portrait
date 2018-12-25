@@ -1,11 +1,11 @@
 package com.rat.dao;
 
-import com.rat.entity.local.TargetaData;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import com.rat.entity.local.TargetData;
+import com.rat.provider.SqlProvider;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * Dao层
@@ -14,6 +14,9 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface TargetDataDao {
+    @SelectProvider(type = SqlProvider.class, method = "targetDataFindAll")
+    List<TargetData> findAll(@Param("dataIndexStart") int dataIndexStart, @Param("dataIndexEnd") int dataIndexEnd);
+
     @Insert("insert into securitycodeinfo (phoneNumber,code,type,sendTime) values (#{phoneNumber},#{code},#{type},#{sendTime})")
     void create(@Param("phoneNumber") String phoneNumber, @Param("code") String code, @Param("type") String type, @Param("sendTime") String sendTime);
 
@@ -21,5 +24,5 @@ public interface TargetDataDao {
     void delete(@Param("phoneNumber") String phoneNumber, @Param("type") String type);
 
     @Select("select * from securitycodeinfo where phoneNumber=#{phoneNumber} and type=#{type} and code=#{code} limit 0,1")
-    TargetaData find(@Param("phoneNumber") String phoneNumber, @Param("type") String type, @Param("code") String code);
+    TargetData find(@Param("phoneNumber") String phoneNumber, @Param("type") String type, @Param("code") String code);
 }

@@ -1,5 +1,6 @@
 package com.rat.entity.network.response;
 
+import com.rat.entity.local.ResourceData;
 import com.rat.entity.network.response.base.ResponseInfo;
 
 import java.util.List;
@@ -10,13 +11,13 @@ import java.util.List;
  * introduce : 响应实体
  */
 public class ResourceDeleteRspInfo extends ResponseInfo {
-    private List<Long> resourceIdList;
+    private List<ResourceData> resourceList;
 
-    public List<Long> getResourceIdList() {
-        return resourceIdList;
+    public List<ResourceData> getResourceList() {
+        return resourceList;
     }
 
-    public void setResourceIdList(List<Long> resourceIdList) {
-        this.resourceIdList = resourceIdList;
+    public void setResourceList(List<ResourceData> resourceList) {
+        this.resourceList = resourceList;
     }
 }

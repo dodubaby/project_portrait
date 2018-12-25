@@ -2,7 +2,7 @@ package com.rat.service;
 
 import com.rat.common.Constant;
 import com.rat.entity.network.request.NewVersionActionInfo;
-import com.rat.entity.network.request.ResourceNamesActionInfo;
+import com.rat.entity.network.request.ResourceFindAllActionInfo;
 import com.rat.entity.network.response.NewVersionRspInfo;
 import com.rat.entity.network.response.ResourceNamesRspInfo;
 import com.rat.utils.StringUtil;
@@ -50,7 +50,7 @@ public class SystemService {
      * @param actionInfo
      * @return
      */
-    public ResourceNamesRspInfo getResourceNames(ResourceNamesActionInfo actionInfo) {
+    public ResourceNamesRspInfo getResourceNames(ResourceFindAllActionInfo actionInfo) {
         ResourceNamesRspInfo rspInfo = new ResourceNamesRspInfo();
         if (StringUtil.isNullOrBlank(Constant.resourceNames)) {
             rspInfo.initError4System(actionInfo.getActionId());

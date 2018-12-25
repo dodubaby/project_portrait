@@ -1,105 +1,64 @@
 package com.rat.entity.local;
 
 /**
- * 短视频实体类
+ * 实体类
  *
- * @author shisheng.zhao
+ * @author L.jinzhu
  * @date 2017-03-31 17:56
  */
 public class ResourceData {
-    private long resourceId; // 短视频id
-    private long userId; // 用户id
-    private String resourceTitle; // 短视频标题
-    private String resourceTime; // 短视频创建时间
-    private String isDefault; // 是否为默认展示短视频 1是;0否
-    private String resourceImg; // 短视频封皮
-    private String resourceUrl; // 短视频播放地址
-    private String resourcePlayTime;// 视频播放次数
-    private String remark; // 保留域
+    private long id;
+    private String resourceType;
+    private String resourceKey;
+    private String resourceValue;
+    private String fileId;
+    private String fileFullName;
 
-    public void setResourceId(long resourceId) {
-        this.resourceId = resourceId;
+    public long getId() {
+        return id;
     }
 
-    public long getResourceId() {
-        return resourceId;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public void setUserId(long userId) {
-        this.userId = userId;
+    public String getResourceType() {
+        return resourceType;
     }
 
-    public long getUserId() {
-        return userId;
+    public void setResourceType(String resourceType) {
+        this.resourceType = resourceType;
     }
 
-    public String getResourceTitle() {
-        return resourceTitle;
+    public String getResourceKey() {
+        return resourceKey;
     }
 
-    public void setResourceTitle(String resourceTitle) {
-        this.resourceTitle = resourceTitle;
+    public void setResourceKey(String resourceKey) {
+        this.resourceKey = resourceKey;
     }
 
-    public String getResourceTime() {
-        return resourceTime;
+    public String getResourceValue() {
+        return resourceValue;
     }
 
-    public void setResourceTime(String resourceTime) {
-        this.resourceTime = resourceTime;
+    public void setResourceValue(String resourceValue) {
+        this.resourceValue = resourceValue;
     }
 
-    public String getIsDefault() {
-        return isDefault;
+    public String getFileId() {
+        return fileId;
     }
 
-    public void setIsDefault(String isDefault) {
-        this.isDefault = isDefault;
+    public void setFileId(String fileId) {
+        this.fileId = fileId;
     }
 
-    public String getResourceImg() {
-        return resourceImg;
+    public String getFileFullName() {
+        return fileFullName;
     }
 
-    public void setResourceImg(String resourceImg) {
-        this.resourceImg = resourceImg;
-    }
-
-    public String getResourceUrl() {
-        return resourceUrl;
-    }
-
-    public void setResourceUrl(String resourceUrl) {
-        this.resourceUrl = resourceUrl;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public String getResourcePlayTime() {
-        return resourcePlayTime;
-    }
-
-    public void setResourcePlayTime(String resourcePlayTime) {
-        this.resourcePlayTime = resourcePlayTime;
-    }
-
-    @Override
-    public String toString() {
-        return "ResourceData{" +
-                "resourceId=" + resourceId +
-                ", userId=" + userId +
-                ", resourceTitle='" + resourceTitle + '\'' +
-                ", resourceTime='" + resourceTime + '\'' +
-                ", isDefault=" + isDefault +
-                ", resourceImg='" + resourceImg + '\'' +
-                ", resourceUrl='" + resourceUrl + '\'' +
-                ", remark='" + remark + '\'' +
-                '}';
+    public void setFileFullName(String fileFullName) {
+        this.fileFullName = fileFullName;
     }
 }

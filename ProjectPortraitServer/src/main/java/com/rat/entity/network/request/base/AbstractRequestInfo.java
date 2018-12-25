@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 /**
  * @Description:传输对象公共基类:封装一些公共参数例如设备号,IP，预留域等等
- * @author shisheng.zhao
+ * @author L.jinzhu
  * @date 2015-08-31 上午11:55:01
  */
 public abstract class AbstractRequestInfo implements Serializable {

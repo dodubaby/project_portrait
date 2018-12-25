@@ -1,10 +1,9 @@
 package com.rat.dao;
 
 import com.rat.entity.local.File;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import com.rat.entity.local.Reference;
+import com.rat.provider.SqlProvider;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -16,6 +15,9 @@ import java.util.List;
  */
 @Repository
 public interface ReferenceDao {
+    @SelectProvider(type = SqlProvider.class, method = "referenceFindAll")
+    List<Reference> findAll(@Param("dataIndexStart") int dataIndexStart, @Param("dataIndexEnd") int dataIndexEnd);
+
     @Insert("insert into referenceinfo (userId,referenceedUserId) values (#{userId},#{referenceedUserId})")
     void create(@Param("userId") Long userId, @Param("referenceedUserId") Long referenceedUserId);
 

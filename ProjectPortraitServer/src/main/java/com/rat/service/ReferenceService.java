@@ -2,11 +2,10 @@ package com.rat.service;
 
 import com.rat.dao.ReferenceDao;
 import com.rat.entity.local.Reference;
-import com.rat.entity.local.File;
-import com.rat.entity.network.request.ReferenceActionInfo;
+import com.rat.entity.network.entity.DataPage;
 import com.rat.entity.network.request.ReferenceFindAllActionInfo;
 import com.rat.entity.network.response.ReferenceFindAllRspInfo;
-import com.rat.entity.network.response.ReferenceRspInfo;
+import com.rat.utils.DataPageUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -15,7 +14,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 /**
- * 关注服务
+ * 引用服务
  *
  * @author L.jinzhu 2017/3/30
  */
@@ -29,37 +28,14 @@ public class ReferenceService {
     public ReferenceService() {
     }
 
-    /**
-     * 关注、取消关注
-     *
-     * @param actionInfo
-     * @return
-     */
-    public ReferenceRspInfo reference(ReferenceActionInfo actionInfo) {
-        int type = actionInfo.getType();
-        Reference reference = actionInfo.getReference();
-        if (null == reference) {
-            ReferenceRspInfo rspInfo = new ReferenceRspInfo();
-            rspInfo.initError4Param(actionInfo.getActionId());
-            return rspInfo;
-        }
-        switch (type) {
-            // 关注
-            case ReferenceActionInfo.FOLLOW_TYPE_OK:
-                referenceDao.create(reference.getUserId(), reference.getReferenceUserId());
-                break;
-            // 取消关注
-            case ReferenceActionInfo.FOLLOW_TYPE_CANCLE:
-                referenceDao.delete(reference.getUserId(), reference.getReferenceUserId());
-                break;
-            default:
-                ReferenceRspInfo rspInfo = new ReferenceRspInfo();
-                rspInfo.initError4Param(actionInfo.getActionId());
-                return rspInfo;
-        }
-        ReferenceRspInfo rspInfo = new ReferenceRspInfo();
+    public ReferenceFindAllRspInfo findAll(ReferenceFindAllActionInfo actionInfo) {
+        DataPage dataPage = DataPageUtil.getPage(actionInfo.getPageNumber(), actionInfo.getDataGetType());
+        List<Reference> referenceList = referenceDao.findAll(dataPage.getDataIndexStart(), dataPage.getDataIndexEnd());
+        ReferenceFindAllRspInfo rspInfo = new ReferenceFindAllRspInfo();
         rspInfo.initSuccess(actionInfo.getActionId());
-
+        rspInfo.setReferenceList(referenceList);
+        rspInfo.setCurrentPage(dataPage.getCurrentPage());
+        rspInfo.setIsEndPage(DataPageUtil.isEndPage(referenceList.size()));
         return rspInfo;
     }
 
@@ -70,11 +46,9 @@ public class ReferenceService {
      * @return
      */
     public ReferenceFindAllRspInfo findAllByUserId(ReferenceFindAllActionInfo actionInfo) {
-        List<File> fileList = referenceDao.findByUserId(actionInfo.getUserId());
 
         ReferenceFindAllRspInfo rspInfo = new ReferenceFindAllRspInfo();
         rspInfo.initSuccess(actionInfo.getActionId());
-        rspInfo.setFileList(fileList);
 
         return rspInfo;
     }
@@ -86,11 +60,7 @@ public class ReferenceService {
      * @return
      */
     public ReferenceFindAllRspInfo findAllByReferenceedUserId(ReferenceFindAllActionInfo actionInfo) {
-        List<File> fileList = referenceDao.findByReferenceedUserId(actionInfo.getUserId());
-
         ReferenceFindAllRspInfo rspInfo = new ReferenceFindAllRspInfo();
-        rspInfo.initSuccess(actionInfo.getActionId());
-        rspInfo.setFileList(fileList);
 
         return rspInfo;
     }

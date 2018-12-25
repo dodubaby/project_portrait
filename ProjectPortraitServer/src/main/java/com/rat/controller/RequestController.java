@@ -3,7 +3,9 @@ package com.rat.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.rat.common.Constant;
 import com.rat.common.RequestCode;
+import com.rat.entity.enums.DataGetType;
 import com.rat.entity.network.request.*;
+import com.rat.entity.network.request.base.ActionInfo;
 import com.rat.entity.network.request.base.RequestInfo;
 import com.rat.entity.network.response.base.ResponseInfo;
 import com.rat.service.*;
@@ -11,15 +13,13 @@ import com.rat.utils.GsonUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
+import java.util.Map;
 import java.util.Properties;
 
 /**
@@ -28,7 +28,7 @@ import java.util.Properties;
  * @author L.jinzhu 2017/3/30
  */
 @Controller
-@RequestMapping("/projectportrait")
+@RequestMapping("/pp")
 public class RequestController {
 
     private static Logger logger = LoggerFactory.getLogger(RequestController.class);
@@ -39,7 +39,7 @@ public class RequestController {
     @Resource
     private ReferenceService referenceService;
     @Resource
-    private NewsService newsService;
+    private TargetDataService targetDataService;
     @Resource
     private SystemService systemService;
 
@@ -48,10 +48,64 @@ public class RequestController {
         initSystemProfiles();
     }
 
-    @RequestMapping(value = "/request", method = {RequestMethod.POST, RequestMethod.GET})
+    /**
+     * 拦截GET请求
+     */
+    @RequestMapping(value = "/request", method = {RequestMethod.GET})
+    @ResponseBody
+    public String run(@RequestParam(required = false) Map<String, String> map) {
+        logger.info(Constant.LOG_REQUEST + " [GET] param size: " + map.size());
+        ResponseInfo response;
+        int actionId;
+        try {
+            actionId = Integer.parseInt(map.get("actionId"));
+        } catch (Throwable e) {
+            // 请求解析异常
+            response = new ResponseInfo();
+            response.initError4Param(0);
+            logger.info(Constant.LOG_RESPONSE + ": " + response.toString());
+            return GsonUtil.toJson(response);
+        }
+        ActionInfo actionInfo;
+        switch (actionId) {
+            // 文件获取全部
+            case RequestCode.FILE_FIND_ALL:
+                actionInfo = new FileFindAllActionInfo(actionId, 0, DataGetType.DOWN.getCode());
+                response = fileService.findAll((FileFindAllActionInfo) actionInfo);
+                break;
+            // 资源获取全部
+            case RequestCode.RESOURCE_FIND_ALL:
+                actionInfo = new ResourceFindAllActionInfo(actionId, 0, DataGetType.DOWN.getCode());
+                response = resourceService.findAll((ResourceFindAllActionInfo) actionInfo);
+                break;
+            // 资源引用获取全部
+            case RequestCode.REFERENCE_FIND_ALL:
+                actionInfo = new ReferenceFindAllActionInfo(actionId, 0, DataGetType.DOWN.getCode());
+                response = referenceService.findAll((ReferenceFindAllActionInfo) actionInfo);
+                break;
+            // 目标数据获取全部
+            case RequestCode.TARGET_DATA_FIND_ALL:
+                actionInfo = new TargetDataFindAllActionInfo(actionId, 0, DataGetType.DOWN.getCode());
+                response = targetDataService.findAll((TargetDataFindAllActionInfo) actionInfo);
+                break;
+
+            // 请求解析异常
+            default:
+                response = new ResponseInfo();
+                response.initError4Param(actionId);
+                break;
+        }
+        logger.info(Constant.LOG_RESPONSE + ": " + response.toString());
+        return GsonUtil.toJson(response);
+    }
+
+    /**
+     * 拦截POST请求
+     */
+    @RequestMapping(value = "/request", method = {RequestMethod.POST})
     @ResponseBody
     public String run(@RequestBody(required = false) String json) {
-        logger.info(Constant.LOG_REQUEST + json);
+        logger.info(Constant.LOG_REQUEST + " [POST] " + json);
 
         RequestInfo requestInfo = GsonUtil.fromJson(json, RequestInfo.class);
         ResponseInfo response = null;
@@ -70,13 +124,6 @@ public class RequestController {
             case RequestCode.FILE_FIND_ALL:
                 FileFindAllActionInfo fileFindAllActionInfo = GsonUtil.fromJson(actionInfoStr, FileFindAllActionInfo.class);
                 response = fileService.findAll(fileFindAllActionInfo);
-                break;
-
-
-            // 注册登录
-            case RequestCode.USER_REGISTER_LOGIN:
-                UserRegisterLoginActionInfo userRegisterLoginActionInfo = GsonUtil.fromJson(actionInfoStr, UserRegisterLoginActionInfo.class);
-                response = fileService.login(userRegisterLoginActionInfo);
                 break;
             // 用户更新
             case RequestCode.USER_UPDATE:
@@ -106,7 +153,6 @@ public class RequestController {
             // 关注、取消关注
             case RequestCode.FOLLOW:
                 ReferenceActionInfo referenceActionInfo = GsonUtil.fromJson(actionInfoStr, ReferenceActionInfo.class);
-                response = referenceService.reference(referenceActionInfo);
                 break;
             // 获取user主动关注的人
             case RequestCode.FOLLOW_FIND_BY_USER:
@@ -126,8 +172,8 @@ public class RequestController {
                 break;
             // 视频名称列表
             case RequestCode.SYSTEM_VIDEO_NAMES:
-                ResourceNamesActionInfo resourceNamesActionInfo = GsonUtil.fromJson(actionInfoStr, ResourceNamesActionInfo.class);
-                response = systemService.getResourceNames(resourceNamesActionInfo);
+                ResourceFindAllActionInfo resourceFindAllActionInfo = GsonUtil.fromJson(actionInfoStr, ResourceFindAllActionInfo.class);
+                response = systemService.getResourceNames(resourceFindAllActionInfo);
                 break;
             default:
                 response = new ResponseInfo();
@@ -141,6 +187,7 @@ public class RequestController {
     /**
      * 初始化系统配置文件
      */
+
     private void initSystemProfiles() {
         Properties prop;
         String propFile;

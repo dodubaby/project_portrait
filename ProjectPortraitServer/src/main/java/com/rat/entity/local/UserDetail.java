@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * 短视频和用户实体类
  *
- * @author shisheng.zhao
+ * @author L.jinzhu
  * @date 2017-03-31 17:56
  */
 public class UserDetail {

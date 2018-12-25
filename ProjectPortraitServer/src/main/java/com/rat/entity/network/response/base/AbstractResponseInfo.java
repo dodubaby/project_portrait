@@ -3,7 +3,7 @@ package com.rat.entity.network.response.base;
 import java.io.Serializable;
 
 /**
- * @author shisheng.zhao
+ * @author L.jinzhu
  * @Description:响应回执公共基类
  * @date 2015-08-31 上午12:01:22
  */

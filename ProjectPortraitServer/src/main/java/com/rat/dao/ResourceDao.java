@@ -15,6 +15,9 @@ import java.util.List;
  */
 @Repository
 public interface ResourceDao {
+    @SelectProvider(type = SqlProvider.class, method = "resourceFindAll")
+    List<ResourceData> findAll(@Param("dataIndexStart") int dataIndexStart, @Param("dataIndexEnd") int dataIndexEnd);
+
     @Select("select v.* from resourceinfo v, user_resource uv where uv.userId=#{userId} and uv.resourceId = v.resourceId")
     List<ResourceData> findByUser(@Param("userId") Long userId);
 
@@ -30,8 +33,6 @@ public interface ResourceDao {
     @Select("select * from user_resource where userId=#{userId}")
     List<ResourceData> findUserResourceByUser(@Param("userId") Long userId);
 
-    @SelectProvider(type = SqlProvider.class, method = "resourceFindAllByUserList")
-    List<ResourceData> findAllByUserList(@Param("dataIndexStart") int dataIndexStart, @Param("dataIndexEnd") int dataIndexEnd, @Param("fileList") List<File> fileList);
 
     @Insert("insert into resourceinfo (" +
             "resourceTitle,resourceTime,resourceImg,resourceUrl,resourcePlayTime,userId,remark" +

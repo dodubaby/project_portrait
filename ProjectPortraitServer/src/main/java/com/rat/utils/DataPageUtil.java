@@ -14,8 +14,8 @@ public class DataPageUtil {
     }
 
     public static DataPage getPage(int pageNumber, int dataGetType) {
-        int dataIndexStart = 0;
-        int dataIndexEnd = 0;
+        int dataIndexStart;
+        int dataIndexEnd;
         int currentPage = 0;
         if (0 == pageNumber) {
             currentPage = 1;

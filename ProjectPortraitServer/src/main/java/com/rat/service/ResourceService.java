@@ -2,10 +2,13 @@ package com.rat.service;
 
 import com.rat.dao.ResourceDao;
 import com.rat.entity.local.ResourceData;
+import com.rat.entity.network.entity.DataPage;
 import com.rat.entity.network.request.ResourceCreateActionInfo;
 import com.rat.entity.network.request.ResourceDeleteActionInfo;
-import com.rat.entity.network.response.ResourceCreateRspInfo;
+import com.rat.entity.network.request.ResourceFindAllActionInfo;
 import com.rat.entity.network.response.ResourceDeleteRspInfo;
+import com.rat.entity.network.response.ResourceFindAllRspInfo;
+import com.rat.utils.DataPageUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -14,7 +17,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 /**
- * 视频服务
+ * 资源服务
  *
  * @author L.jinzhu 2017/3/30
  */
@@ -28,23 +31,25 @@ public class ResourceService {
     public ResourceService() {
     }
 
-    public ResourceCreateRspInfo create(ResourceCreateActionInfo actionInfo) {
-        ResourceCreateRspInfo rspInfo = new ResourceCreateRspInfo();
+    public ResourceFindAllRspInfo findAll(ResourceFindAllActionInfo actionInfo) {
+        DataPage dataPage = DataPageUtil.getPage(actionInfo.getPageNumber(), actionInfo.getDataGetType());
+        List<ResourceData> resourceList = resourceDao.findAll(dataPage.getDataIndexStart(), dataPage.getDataIndexEnd());
+        ResourceFindAllRspInfo rspInfo = new ResourceFindAllRspInfo();
+        rspInfo.initSuccess(actionInfo.getActionId());
+        rspInfo.setResourceList(resourceList);
+        rspInfo.setCurrentPage(dataPage.getCurrentPage());
+        rspInfo.setIsEndPage(DataPageUtil.isEndPage(resourceList.size()));
+        return rspInfo;
+    }
+
+    public ResourceFindAllRspInfo create(ResourceCreateActionInfo actionInfo) {
+        ResourceFindAllRspInfo rspInfo = new ResourceFindAllRspInfo();
         ResourceData resource = actionInfo.getResourceData();
         if (null == resource) {
             rspInfo.initError4Param(actionInfo.getActionId());
             return rspInfo;
         }
 
-        // 保存resource
-        resourceDao.create(resource);
-        // 更新之前的所有视频为非默认视频
-        resourceDao.updateUserResourceSetAllNotDefault(resource.getUserId());
-        // 保存user_resource,并设定为默认视频
-        resourceDao.createUserResource(resource.getResourceId(), resource.getUserId(), "1");
-
-        rspInfo.initSuccess(actionInfo.getActionId());
-        rspInfo.setResourceData(resource);
         return rspInfo;
     }
 
@@ -65,18 +70,9 @@ public class ResourceService {
         if (null != resourceList && resourceList.size() > 0) {
             boolean isExistDefaultResource = false;
             for (ResourceData resource : resourceList) {
-                if ("1".equals(resource.getIsDefault())) {
-                    isExistDefaultResource = true;
-                    break;
-                }
-            }
-            // 存在视频但不存在默认视频
-            if (!isExistDefaultResource) {
-                resourceDao.updateUserResourceSetDefault(actionInfo.getUserId(), resourceList.get(resourceList.size() - 1).getResourceId());
             }
         }
         rspInfo.initSuccess(actionInfo.getActionId());
-        rspInfo.setResourceIdList(resourceIdList);
         return rspInfo;
     }
 }
