@@ -1,8 +1,7 @@
 package com.rat.service;
 
 import com.rat.common.Constant;
-import com.rat.entity.network.request.NewVersionActionInfo;
-import com.rat.entity.network.request.ResourceFindAllActionInfo;
+import com.rat.entity.network.request.base.ActionInfoWithPageData;
 import com.rat.entity.network.response.NewVersionRspInfo;
 import com.rat.entity.network.response.ResourceNamesRspInfo;
 import com.rat.utils.StringUtil;
@@ -29,7 +28,7 @@ public class SystemService {
      * @param actionInfo
      * @return
      */
-    public NewVersionRspInfo getNewVersion(NewVersionActionInfo actionInfo) {
+    public NewVersionRspInfo getNewVersion(ActionInfoWithPageData actionInfo) {
         NewVersionRspInfo rspInfo = new NewVersionRspInfo();
         if (StringUtil.isNullOrBlank(Constant.versionCode) || StringUtil.isNullOrBlank(Constant.versionName)) {
             rspInfo.initError4System(actionInfo.getActionId());
@@ -50,7 +49,7 @@ public class SystemService {
      * @param actionInfo
      * @return
      */
-    public ResourceNamesRspInfo getResourceNames(ResourceFindAllActionInfo actionInfo) {
+    public ResourceNamesRspInfo getResourceNames(ActionInfoWithPageData actionInfo) {
         ResourceNamesRspInfo rspInfo = new ResourceNamesRspInfo();
         if (StringUtil.isNullOrBlank(Constant.resourceNames)) {
             rspInfo.initError4System(actionInfo.getActionId());

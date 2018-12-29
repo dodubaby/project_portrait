@@ -14,14 +14,19 @@ import java.util.List;
  */
 @Repository
 public interface FileDao {
+    @SelectProvider(type = SqlProvider.class, method = "fileFindAll")
+    List<File> findAll(@Param("dataIndexStart") int dataIndexStart, @Param("dataIndexEnd") int dataIndexEnd);
+
+    @SelectProvider(type = SqlProvider.class, method = "findBySuffixOrderByLineCount")
+    List<File> findBySuffixOrderByLineCount(@Param("suffix") String suffix, @Param("dataIndexStart") int dataIndexStart, @Param("dataIndexEnd") int dataIndexEnd);
+
+
     @Select("select * from userinfo where userId=#{userId} limit 0,1")
     File findById(@Param("userId") Long userId);
 
     @Select("select * from userinfo where account=#{account} and accountType=#{accountType} limit 0,1")
     File findByAccount(@Param("accountType") int accountType, @Param("account") String account);
 
-    @SelectProvider(type = SqlProvider.class, method = "fileFindAll")
-    List<File> findAll(@Param("dataIndexStart") int dataIndexStart, @Param("dataIndexEnd") int dataIndexEnd);
 
     @Insert("insert into userinfo (" +
             "headUrl,nickName,account,accountType,age,sex,bigImg,cityCode,cityName,workCode,workName,educationCode,educationName,houseCode,houseName,marriageCode,marriageName,introduce,remark,token4RongCloud" +

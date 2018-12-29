@@ -83,8 +83,8 @@ def createTables():
                        'name varchar(255) DEFAULT NULL,'
                        'suffix varchar(255) DEFAULT NULL,'
                        'class_full_name varchar(255) DEFAULT NULL,'
-                       'line_count varchar(255) DEFAULT NULL,'
-                       'size varchar(255) DEFAULT NULL,'
+                       'line_count bigint DEFAULT NULL,'
+                       'size bigint DEFAULT NULL,'
                        'PRIMARY KEY (id)'
                        ') ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci'
                        % TABLE_NAME_FILE)

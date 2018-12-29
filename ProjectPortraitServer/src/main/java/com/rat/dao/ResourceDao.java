@@ -1,7 +1,7 @@
 package com.rat.dao;
 
 import com.rat.entity.local.ResourceData;
-import com.rat.entity.local.File;
+import com.rat.entity.local.ResourceDataStatistics;
 import com.rat.provider.SqlProvider;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
@@ -17,6 +17,12 @@ import java.util.List;
 public interface ResourceDao {
     @SelectProvider(type = SqlProvider.class, method = "resourceFindAll")
     List<ResourceData> findAll(@Param("dataIndexStart") int dataIndexStart, @Param("dataIndexEnd") int dataIndexEnd);
+
+    @Select("select resource_value, count(id) as count from resource group by resource_value having count >1 order by count desc")
+    List<ResourceDataStatistics> findStatisticsForCount(@Param("dataIndexStart") int dataIndexStart, @Param("dataIndexEnd") int dataIndexEnd);
+
+    @SelectProvider(type = SqlProvider.class, method = "resourceFindByValue")
+    List<ResourceData> findByValue(@Param("value") String value);
 
     @Select("select v.* from resourceinfo v, user_resource uv where uv.userId=#{userId} and uv.resourceId = v.resourceId")
     List<ResourceData> findByUser(@Param("userId") Long userId);

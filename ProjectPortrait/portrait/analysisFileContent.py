@@ -15,7 +15,7 @@ TARGET_DATA = 'L.jinzhu'
 
 
 def analysisAllFileContent():
-    fileList = db.readNeedAnalysisFileList(2000)
+    fileList = db.readNeedAnalysisFileList(5000)
     for file in fileList:
         fileId = str(file[0])
         fileFullName = str(file[1])

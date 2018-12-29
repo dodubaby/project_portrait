@@ -1,6 +1,11 @@
 package com.rat.entity.network.response.base;
 
+import com.rat.common.Constant;
+import com.rat.controller.RequestController;
 import com.rat.entity.enums.ResponseType;
+import com.rat.utils.GsonUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * author : L.jinzhu
@@ -8,61 +13,34 @@ import com.rat.entity.enums.ResponseType;
  * introduce : 响应实体
  */
 public class ResponseInfo extends AbstractResponseInfo {
+    private static Logger logger = LoggerFactory.getLogger(RequestController.class);
+
     protected int actionId;
     protected int statusCode;
     protected String statusMsg;
 
-    public void initSuccess(int actionId) {
-        this.actionId = actionId;
-        this.statusCode = ResponseType.SUCCESS.getCode();
-        this.statusMsg = ResponseType.SUCCESS.getMessage();
-    }
-
-    public void initError(int actionId, ResponseType responseType) {
+    public void init(int actionId, ResponseType responseType) {
         this.actionId = actionId;
         this.statusCode = responseType.getCode();
         this.statusMsg = responseType.getMessage();
     }
 
+    public void initSuccess(int actionId) {
+        init(actionId, ResponseType.SUCCESS);
+    }
+
     public void initError4System(int actionId) {
-        this.actionId = actionId;
-        this.statusCode = ResponseType.ERROR.getCode();
-        this.statusMsg = ResponseType.ERROR.getMessage();
+        init(actionId, ResponseType.ERROR);
     }
 
     public void initError4Param(int actionId) {
-        this.actionId = actionId;
-        this.statusCode = ResponseType.ERROR_4_PARAM.getCode();
-        this.statusMsg = ResponseType.ERROR_4_PARAM.getMessage();
+        init(actionId, ResponseType.ERROR_4_PARAM);
     }
 
-    public void initError4OtherPlatform(int actionId) {
-        this.actionId = actionId;
-        this.statusCode = ResponseType.ERROR_4_OTHER_PLATFORM.getCode();
-        this.statusMsg = ResponseType.ERROR_4_OTHER_PLATFORM.getMessage();
-    }
-
-    public int getActionId() {
-        return actionId;
-    }
-
-    public void setActionId(int actionId) {
-        this.actionId = actionId;
-    }
-
-    public int getStatusCode() {
-        return statusCode;
-    }
-
-    public void setStatusCode(int statusCode) {
-        this.statusCode = statusCode;
-    }
-
-    public String getStatusMsg() {
-        return statusMsg;
-    }
-
-    public void setStatusMsg(String statusMsg) {
-        this.statusMsg = statusMsg;
+    public static String getErrorResponse4Param(int actionId) {
+        ResponseInfo response = new ResponseInfo();
+        response.initError4Param(actionId);
+        logger.error(Constant.LOG_RESPONSE + ": " + response.toString());
+        return GsonUtil.toJson(response);
     }
 }

@@ -11,29 +11,20 @@ public class SqlProvider {
     public String fileFindAll(Map<String, Object> para) {
         StringBuffer sql = new StringBuffer();
         sql.append("select * from file where 1=1");
+        // 分页
+        sql.append(getCountLimitCondition(para));
+        return sql.toString();
+    }
 
-//        // 年齡
-//        if (null != para.get("ageStart") && null != para.get("ageEnd")) {
-//            int ageStart = (int) para.get("ageStart");
-//            int ageEnd = (int) para.get("ageEnd");
-//            if (ageEnd >= ageStart && 0 != ageEnd) {
-//                sql.append(" and age between " + ageStart + " and " + ageEnd);
-//            }
-//        }
-//        // 性别
-//        if (null != para.get("sex")) {
-//            String sex = (String) para.get("sex");
-//            if (StringUtil.isNotBlank(sex)) {
-//                sql.append(" and sex = " + sex);
-//            }
-//        }
-//        // 城市
-//        if (null != para.get("cityCode")) {
-//            String cityCode = (String) para.get("cityCode");
-//            if (StringUtil.isNotBlank(cityCode)) {
-//                sql.append(" and cityCode = " + cityCode);
-//            }
-//        }
+    public String findBySuffixOrderByLineCount(Map<String, Object> para) {
+        StringBuffer sql = new StringBuffer();
+        sql.append("select * from file where 1=1");
+        // 文件后缀
+        if (null != para.get("suffix")) {
+            String suffix = (String) para.get("suffix");
+            sql.append(" and suffix = '" + suffix + "'");
+        }
+        sql.append(" order by line_count desc");
         // 分页
         sql.append(getCountLimitCondition(para));
         return sql.toString();
@@ -44,6 +35,17 @@ public class SqlProvider {
         sql.append("select * from resource where 1=1");
         // 分页
         sql.append(getCountLimitCondition(para));
+        return sql.toString();
+    }
+
+    public String resourceFindByValue(Map<String, Object> para) {
+        StringBuffer sql = new StringBuffer();
+        sql.append("select * from resource where 1=1");
+        // 文件后缀
+        if (null != para.get("value")) {
+            String value = (String) para.get("value");
+            sql.append(" and resource_value like '%" + value + "%'");
+        }
         return sql.toString();
     }
 

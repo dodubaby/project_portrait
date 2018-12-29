@@ -3,7 +3,7 @@ package com.rat.service;
 import com.rat.dao.ReferenceDao;
 import com.rat.entity.local.Reference;
 import com.rat.entity.network.entity.DataPage;
-import com.rat.entity.network.request.ReferenceFindAllActionInfo;
+import com.rat.entity.network.request.base.ActionInfoWithPageData;
 import com.rat.entity.network.response.ReferenceFindAllRspInfo;
 import com.rat.utils.DataPageUtil;
 import org.slf4j.Logger;
@@ -28,7 +28,7 @@ public class ReferenceService {
     public ReferenceService() {
     }
 
-    public ReferenceFindAllRspInfo findAll(ReferenceFindAllActionInfo actionInfo) {
+    public ReferenceFindAllRspInfo findAll(ActionInfoWithPageData actionInfo) {
         DataPage dataPage = DataPageUtil.getPage(actionInfo.getPageNumber(), actionInfo.getDataGetType());
         List<Reference> referenceList = referenceDao.findAll(dataPage.getDataIndexStart(), dataPage.getDataIndexEnd());
         ReferenceFindAllRspInfo rspInfo = new ReferenceFindAllRspInfo();
@@ -45,8 +45,7 @@ public class ReferenceService {
      * @param actionInfo
      * @return
      */
-    public ReferenceFindAllRspInfo findAllByUserId(ReferenceFindAllActionInfo actionInfo) {
-
+    public ReferenceFindAllRspInfo findAllByUserId(ActionInfoWithPageData actionInfo) {
         ReferenceFindAllRspInfo rspInfo = new ReferenceFindAllRspInfo();
         rspInfo.initSuccess(actionInfo.getActionId());
 
@@ -59,7 +58,7 @@ public class ReferenceService {
      * @param actionInfo
      * @return
      */
-    public ReferenceFindAllRspInfo findAllByReferenceedUserId(ReferenceFindAllActionInfo actionInfo) {
+    public ReferenceFindAllRspInfo findAllByReferenceedUserId(ActionInfoWithPageData actionInfo) {
         ReferenceFindAllRspInfo rspInfo = new ReferenceFindAllRspInfo();
 
         return rspInfo;

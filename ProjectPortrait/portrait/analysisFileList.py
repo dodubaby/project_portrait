@@ -25,7 +25,7 @@ def analysisFileList(path):
             print "++++++ File: " + fullName
             print "++++++ File: " + "dir"
             # 保存数据
-            db.saveFileData("dir", fullName, path, file, "", "", "", "")
+            db.saveFileData("dir", fullName, path, file, "", "", 0, 0)
             # 继续遍历文件夹
             analysisFileList(fullName)
         elif fileUtil.isFile(fullName):

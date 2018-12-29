@@ -6,10 +6,12 @@ import com.rat.common.RequestCode;
 import com.rat.entity.enums.DataGetType;
 import com.rat.entity.network.request.*;
 import com.rat.entity.network.request.base.ActionInfo;
+import com.rat.entity.network.request.base.ActionInfoWithPageData;
 import com.rat.entity.network.request.base.RequestInfo;
 import com.rat.entity.network.response.base.ResponseInfo;
 import com.rat.service.*;
 import com.rat.utils.GsonUtil;
+import com.rat.utils.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -61,39 +63,57 @@ public class RequestController {
             actionId = Integer.parseInt(map.get("actionId"));
         } catch (Throwable e) {
             // 请求解析异常
-            response = new ResponseInfo();
-            response.initError4Param(0);
-            logger.info(Constant.LOG_RESPONSE + ": " + response.toString());
-            return GsonUtil.toJson(response);
+            return ResponseInfo.getErrorResponse4Param(0);
         }
         ActionInfo actionInfo;
         switch (actionId) {
             // 文件获取全部
             case RequestCode.FILE_FIND_ALL:
-                actionInfo = new FileFindAllActionInfo(actionId, 0, DataGetType.DOWN.getCode());
-                response = fileService.findAll((FileFindAllActionInfo) actionInfo);
+                actionInfo = new ActionInfoWithPageData(actionId, 0, DataGetType.DOWN.getCode());
+                response = fileService.findAll((ActionInfoWithPageData) actionInfo);
+                break;
+            // 文件获取:by类型for行数
+            case RequestCode.FILE_FIND_BY_SUFFIX_ORDER_BY_LINE_COUNT:
+                String suffix = map.get("suffix");
+                if (StringUtil.isNullOrBlank(suffix)) {
+                    return ResponseInfo.getErrorResponse4Param(actionId);
+                }
+                actionInfo = new FileFindBySuffixOrderByLineCountActionInfo(actionId, 0, DataGetType.DOWN.getCode(), suffix);
+                response = fileService.findAllBySuffixOrderByLineCount((FileFindBySuffixOrderByLineCountActionInfo) actionInfo);
                 break;
             // 资源获取全部
             case RequestCode.RESOURCE_FIND_ALL:
-                actionInfo = new ResourceFindAllActionInfo(actionId, 0, DataGetType.DOWN.getCode());
-                response = resourceService.findAll((ResourceFindAllActionInfo) actionInfo);
+                actionInfo = new ActionInfoWithPageData(actionId, 0, DataGetType.DOWN.getCode());
+                response = resourceService.findAll((ActionInfoWithPageData) actionInfo);
+                break;
+            // 资源获取:统计by数量
+            case RequestCode.RESOURCE_FIND_STATISTICS_BY_COUNT:
+                actionInfo = new ActionInfoWithPageData(actionId, 0, DataGetType.DOWN.getCode());
+                response = resourceService.findStatisticsForCount((ActionInfoWithPageData) actionInfo);
+                break;
+            // 资源获取:by value
+            case RequestCode.RESOURCE_FIND_BY_VALUE:
+                String value = map.get("value");
+                if (StringUtil.isNullOrBlank(value)) {
+                    return ResponseInfo.getErrorResponse4Param(actionId);
+                }
+                actionInfo = new ResourceFindByValueActionInfo(actionId, value);
+                response = resourceService.findByValue((ResourceFindByValueActionInfo) actionInfo);
                 break;
             // 资源引用获取全部
             case RequestCode.REFERENCE_FIND_ALL:
-                actionInfo = new ReferenceFindAllActionInfo(actionId, 0, DataGetType.DOWN.getCode());
-                response = referenceService.findAll((ReferenceFindAllActionInfo) actionInfo);
+                actionInfo = new ActionInfoWithPageData(actionId, 0, DataGetType.DOWN.getCode());
+                response = referenceService.findAll((ActionInfoWithPageData) actionInfo);
                 break;
             // 目标数据获取全部
             case RequestCode.TARGET_DATA_FIND_ALL:
                 actionInfo = new TargetDataFindAllActionInfo(actionId, 0, DataGetType.DOWN.getCode());
                 response = targetDataService.findAll((TargetDataFindAllActionInfo) actionInfo);
                 break;
-
             // 请求解析异常
             default:
-                response = new ResponseInfo();
-                response.initError4Param(actionId);
-                break;
+                // 请求解析异常
+                return ResponseInfo.getErrorResponse4Param(0);
         }
         logger.info(Constant.LOG_RESPONSE + ": " + response.toString());
         return GsonUtil.toJson(response);
@@ -122,7 +142,7 @@ public class RequestController {
         switch (requestInfo.getActionInfo().getActionId()) {
             // 文件获取全部
             case RequestCode.FILE_FIND_ALL:
-                FileFindAllActionInfo fileFindAllActionInfo = GsonUtil.fromJson(actionInfoStr, FileFindAllActionInfo.class);
+                ActionInfoWithPageData fileFindAllActionInfo = GsonUtil.fromJson(actionInfoStr, ActionInfoWithPageData.class);
                 response = fileService.findAll(fileFindAllActionInfo);
                 break;
             // 用户更新
@@ -156,23 +176,23 @@ public class RequestController {
                 break;
             // 获取user主动关注的人
             case RequestCode.FOLLOW_FIND_BY_USER:
-                ReferenceFindAllActionInfo referenceFindAllByUserActionInfo = GsonUtil.fromJson(actionInfoStr, ReferenceFindAllActionInfo.class);
+                ActionInfoWithPageData referenceFindAllByUserActionInfo = GsonUtil.fromJson(actionInfoStr, ActionInfoWithPageData.class);
                 response = referenceService.findAllByUserId(referenceFindAllByUserActionInfo);
                 break;
             // 获取关注user的人
             case RequestCode.FOLLOW_FIND_BY_FOLLOWED_USER:
-                ReferenceFindAllActionInfo referenceFindAllByReferenceedUserActionInfo = GsonUtil.fromJson(actionInfoStr, ReferenceFindAllActionInfo.class);
+                ActionInfoWithPageData referenceFindAllByReferenceedUserActionInfo = GsonUtil.fromJson(actionInfoStr, ActionInfoWithPageData.class);
                 response = referenceService.findAllByReferenceedUserId(referenceFindAllByReferenceedUserActionInfo);
                 break;
 
             // 最新版本
             case RequestCode.SYSTEM_NEW_VERSION:
-                NewVersionActionInfo newVersionActionInfo = GsonUtil.fromJson(actionInfoStr, NewVersionActionInfo.class);
+                ActionInfoWithPageData newVersionActionInfo = GsonUtil.fromJson(actionInfoStr, ActionInfoWithPageData.class);
                 response = systemService.getNewVersion(newVersionActionInfo);
                 break;
             // 视频名称列表
             case RequestCode.SYSTEM_VIDEO_NAMES:
-                ResourceFindAllActionInfo resourceFindAllActionInfo = GsonUtil.fromJson(actionInfoStr, ResourceFindAllActionInfo.class);
+                ActionInfoWithPageData resourceFindAllActionInfo = GsonUtil.fromJson(actionInfoStr, ActionInfoWithPageData.class);
                 response = systemService.getResourceNames(resourceFindAllActionInfo);
                 break;
             default:

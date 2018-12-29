@@ -4,8 +4,8 @@ import com.rat.common.RequestCode;
 import com.rat.entity.enums.DataGetType;
 import com.rat.entity.local.Reference;
 import com.rat.entity.local.ResourceData;
-import com.rat.entity.local.TargetData;
 import com.rat.entity.network.request.*;
+import com.rat.entity.network.request.base.ActionInfo;
 import com.rat.entity.network.request.base.RequestInfo;
 import com.rat.entity.network.response.FileFindAllRspInfo;
 import com.rat.utils.GsonUtil;
@@ -166,10 +166,9 @@ public class UnitTestController {
     }
 
 
-
     @org.junit.Test
     public void newVersion() throws Exception {
-        NewVersionActionInfo actionInfo = new NewVersionActionInfo(RequestCode.SYSTEM_NEW_VERSION);
+        ActionInfo actionInfo = new ActionInfo(RequestCode.SYSTEM_NEW_VERSION);
         requestInfo.setActionInfo(actionInfo);
         String postJson = GsonUtil.toJson(requestInfo);
         System.out.println("=============== 参数准备完成 =============================================");

@@ -10,9 +10,10 @@ import com.rat.entity.local.File;
 import com.rat.entity.local.ResourceData;
 import com.rat.entity.local.UserDetail;
 import com.rat.entity.network.entity.DataPage;
-import com.rat.entity.network.request.FileFindAllActionInfo;
+import com.rat.entity.network.request.FileFindBySuffixOrderByLineCountActionInfo;
 import com.rat.entity.network.request.UserFindDetailActionInfo;
 import com.rat.entity.network.request.UserUpdateActionInfo;
+import com.rat.entity.network.request.base.ActionInfoWithPageData;
 import com.rat.entity.network.response.FileFindAllRspInfo;
 import com.rat.entity.network.response.UserFindDetailRspInfo;
 import com.rat.entity.network.response.UserUpdateRspInfo;
@@ -45,8 +46,7 @@ public class FileService {
     public FileService() {
     }
 
-
-    public FileFindAllRspInfo findAll(FileFindAllActionInfo actionInfo) {
+    public FileFindAllRspInfo findAll(ActionInfoWithPageData actionInfo) {
         DataPage dataPage = DataPageUtil.getPage(actionInfo.getPageNumber(), actionInfo.getDataGetType());
         List<File> fileList = fileDao.findAll(dataPage.getDataIndexStart(), dataPage.getDataIndexEnd());
         FileFindAllRspInfo rspInfo = new FileFindAllRspInfo();
@@ -56,6 +56,18 @@ public class FileService {
         rspInfo.setIsEndPage(DataPageUtil.isEndPage(fileList.size()));
         return rspInfo;
     }
+
+    public FileFindAllRspInfo findAllBySuffixOrderByLineCount(FileFindBySuffixOrderByLineCountActionInfo actionInfo) {
+        DataPage dataPage = DataPageUtil.getPage(actionInfo.getPageNumber(), actionInfo.getDataGetType());
+        List<File> fileList = fileDao.findBySuffixOrderByLineCount(actionInfo.getSuffix(), dataPage.getDataIndexStart(), dataPage.getDataIndexEnd());
+        FileFindAllRspInfo rspInfo = new FileFindAllRspInfo();
+        rspInfo.initSuccess(actionInfo.getActionId());
+        rspInfo.setFileList(fileList);
+        rspInfo.setCurrentPage(dataPage.getCurrentPage());
+        rspInfo.setIsEndPage(DataPageUtil.isEndPage(fileList.size()));
+        return rspInfo;
+    }
+
 
     public UserUpdateRspInfo update(UserUpdateActionInfo actionInfo) {
         UserUpdateRspInfo rspInfo = new UserUpdateRspInfo();
@@ -76,7 +88,7 @@ public class FileService {
         UserDetail userDetail = new UserDetail();
         File file = fileDao.findById(actionInfo.getUserId());
         if (null == file) {
-            rspInfo.initError(actionInfo.getActionId(), ResponseType.ERROR_4_USER_IS_NOT_EXIST);
+            rspInfo.init(actionInfo.getActionId(), ResponseType.ERROR_4_USER_IS_NOT_EXIST);
             return rspInfo;
         }
         // 綁定用户
