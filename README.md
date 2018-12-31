@@ -12,7 +12,7 @@
 【技术方案：Java】
 
 
-## ProjectPortraitPortal-门户\管理系统
+## ProjectPortraitConsole-系统控制台、数据展示门户
 获取数据整合系统提供的数据，并通过可视化展示方案进行展示处理
 【技术方案：前端框架Vue、D3.js】
 
