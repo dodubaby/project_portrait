@@ -18,6 +18,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
@@ -50,14 +52,19 @@ public class RequestController {
         initSystemProfiles();
     }
 
+    @ModelAttribute
+    public void setReqAndRes(HttpServletRequest request, HttpServletResponse response) {
+        response.setHeader("Access-Control-Allow-Origin", "*");// 解决 js ajax跨域访问
+    }
+
     /**
      * 拦截GET请求
      */
     @RequestMapping(value = "/request", method = {RequestMethod.GET})
-    @ResponseBody
+    @ResponseBody()
     public String run(@RequestParam(required = false) Map<String, String> map) {
         logger.info(Constant.LOG_REQUEST + " [GET] param size: " + map.size());
-        ResponseInfo response;
+        ResponseInfo responseBody;
         int actionId;
         try {
             actionId = Integer.parseInt(map.get("actionId"));
@@ -70,7 +77,7 @@ public class RequestController {
             // 文件获取全部
             case RequestCode.FILE_FIND_ALL:
                 actionInfo = new ActionInfoWithPageData(actionId, 0, DataGetType.DOWN.getCode());
-                response = fileService.findAll((ActionInfoWithPageData) actionInfo);
+                responseBody = fileService.findAll((ActionInfoWithPageData) actionInfo);
                 break;
             // 文件获取:by类型for行数
             case RequestCode.FILE_FIND_BY_SUFFIX_ORDER_BY_LINE_COUNT:
@@ -79,17 +86,17 @@ public class RequestController {
                     return ResponseInfo.getErrorResponse4Param(actionId);
                 }
                 actionInfo = new FileFindBySuffixOrderByLineCountActionInfo(actionId, 0, DataGetType.DOWN.getCode(), suffix);
-                response = fileService.findAllBySuffixOrderByLineCount((FileFindBySuffixOrderByLineCountActionInfo) actionInfo);
+                responseBody = fileService.findAllBySuffixOrderByLineCount((FileFindBySuffixOrderByLineCountActionInfo) actionInfo);
                 break;
             // 资源获取全部
             case RequestCode.RESOURCE_FIND_ALL:
                 actionInfo = new ActionInfoWithPageData(actionId, 0, DataGetType.DOWN.getCode());
-                response = resourceService.findAll((ActionInfoWithPageData) actionInfo);
+                responseBody = resourceService.findAll((ActionInfoWithPageData) actionInfo);
                 break;
             // 资源获取:统计by数量
             case RequestCode.RESOURCE_FIND_STATISTICS_BY_COUNT:
                 actionInfo = new ActionInfoWithPageData(actionId, 0, DataGetType.DOWN.getCode());
-                response = resourceService.findStatisticsForCount((ActionInfoWithPageData) actionInfo);
+                responseBody = resourceService.findStatisticsForCount((ActionInfoWithPageData) actionInfo);
                 break;
             // 资源获取:by value
             case RequestCode.RESOURCE_FIND_BY_VALUE:
@@ -98,25 +105,25 @@ public class RequestController {
                     return ResponseInfo.getErrorResponse4Param(actionId);
                 }
                 actionInfo = new ResourceFindByValueActionInfo(actionId, value);
-                response = resourceService.findByValue((ResourceFindByValueActionInfo) actionInfo);
+                responseBody = resourceService.findByValue((ResourceFindByValueActionInfo) actionInfo);
                 break;
             // 资源引用获取全部
             case RequestCode.REFERENCE_FIND_ALL:
                 actionInfo = new ActionInfoWithPageData(actionId, 0, DataGetType.DOWN.getCode());
-                response = referenceService.findAll((ActionInfoWithPageData) actionInfo);
+                responseBody = referenceService.findAll((ActionInfoWithPageData) actionInfo);
                 break;
             // 目标数据获取全部
             case RequestCode.TARGET_DATA_FIND_ALL:
                 actionInfo = new TargetDataFindAllActionInfo(actionId, 0, DataGetType.DOWN.getCode());
-                response = targetDataService.findAll((TargetDataFindAllActionInfo) actionInfo);
+                responseBody = targetDataService.findAll((TargetDataFindAllActionInfo) actionInfo);
                 break;
             // 请求解析异常
             default:
                 // 请求解析异常
                 return ResponseInfo.getErrorResponse4Param(0);
         }
-        logger.info(Constant.LOG_RESPONSE + ": " + response.toString());
-        return GsonUtil.toJson(response);
+        logger.info(Constant.LOG_RESPONSE + ": " + responseBody.toString());
+        return GsonUtil.toJson(responseBody);
     }
 
     /**

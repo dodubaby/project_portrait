@@ -7,27 +7,22 @@
       border
       fit
       highlight-current-row>
-      <el-table-column align="center" label="ID" width="95">
+      <el-table-column label="ID" width="95" align="center" >
         <template slot-scope="scope">
           {{ scope.$index }}
         </template>
       </el-table-column>
-      <el-table-column label="TitleAAA">
+      <el-table-column label="资源value" width="400" align="center">
         <template slot-scope="scope">
-          {{ scope.row.title }}
+          <span>{{ scope.row.resourceValue }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Author" width="110" align="center">
+      <el-table-column label="声明数量" width="110" align="center">
         <template slot-scope="scope">
-          <span>{{ scope.row.author }}</span>
+          {{ scope.row.count }}
         </template>
       </el-table-column>
-      <el-table-column label="Pageviews" width="110" align="center">
-        <template slot-scope="scope">
-          {{ scope.row.pageviews }}
-        </template>
-      </el-table-column>
-      <el-table-column class-name="status-col" label="StatusAAA" width="110" align="center">
+      <el-table-column class-name="status-col" label="操作" width="110" align="center">
         <template slot-scope="scope">
           <el-tag :type="scope.row.status | statusFilter">{{ scope.row.status }}</el-tag>
         </template>
@@ -69,7 +64,7 @@ export default {
     fetchData() {
       this.listLoading = true
       resourceFindStatisticsByCount(this.listQuery).then(response => {
-        this.list = response.data.resourceDataStatisticsList
+        this.list = response.resourceDataStatisticsList
         this.listLoading = false
       })
     }

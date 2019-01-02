@@ -136,7 +136,7 @@ export const constantRouterMap = [
       {
         path: 'resourceRepeat',
         name: 'resourceRepeat',
-        component: () => import('@/function/better/index'),
+        component: () => import('@/function/better/resourceRepeat'),
         meta: { title: '资源重复', icon: 'table' }
       },
       {
@@ -190,6 +190,12 @@ export const constantRouterMap = [
         name: 'allBean',
         component: () => import('@/function/customrule/index'),
         meta: { title: '-All bean', icon: 'tree' }
+      },
+      {
+        path: 'getContext',
+        name: 'getContext',
+        component: () => import('@/function/customrule/index'),
+        meta: { title: '-GetContext', icon: 'tree' }
       },
       {
         path: 'allUICode',

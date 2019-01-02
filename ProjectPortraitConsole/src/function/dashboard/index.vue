@@ -1,7 +1,7 @@
 <template>
 
   <div style="padding:30px;">
-    <el-alert :closable="false" title="Welcome to Project Portrait" description="" type="success">
+    <el-alert :closable="false" title="Welcome to Project Portrait" description="欢迎来到 项目画像（分析）系统" type="success">
       <router-view/>
     </el-alert>
     <el-alert :closable="false" title="Welcome to Project Portrait" description="欢迎来到 项目画像（分析）系统" type="warn">
@@ -28,17 +28,17 @@
 </template>
 
 <script>
-  import {mapGetters} from 'vuex'
+import mapGetters from 'vuex'
 
-  export default {
-    name: 'Dashboard',
-    computed: {
-      ...mapGetters([
-        'name',
-        'roles'
-      ])
-    }
+export default {
+  name: 'Dashboard',
+  computed: {
+    ...mapGetters([
+      'name',
+      'roles'
+    ])
   }
+}
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
