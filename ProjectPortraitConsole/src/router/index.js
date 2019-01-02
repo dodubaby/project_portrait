@@ -148,7 +148,7 @@ export const constantRouterMap = [
       {
         path: 'fileLine',
         name: 'fileLine',
-        component: () => import('@/function/better/index'),
+        component: () => import('@/function/better/fileLine'),
         meta: { title: '文件行数', icon: 'tree' }
       },
       {

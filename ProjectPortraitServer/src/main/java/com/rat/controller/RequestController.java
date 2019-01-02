@@ -11,6 +11,7 @@ import com.rat.entity.network.request.base.RequestInfo;
 import com.rat.entity.network.response.base.ResponseInfo;
 import com.rat.service.*;
 import com.rat.utils.GsonUtil;
+import com.rat.utils.SafeParseUtils;
 import com.rat.utils.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -82,10 +83,14 @@ public class RequestController {
             // 文件获取:by类型for行数
             case RequestCode.FILE_FIND_BY_SUFFIX_ORDER_BY_LINE_COUNT:
                 String suffix = map.get("suffix");
+                int maxLineCount = 0;
                 if (StringUtil.isNullOrBlank(suffix)) {
                     return ResponseInfo.getErrorResponse4Param(actionId);
                 }
-                actionInfo = new FileFindBySuffixOrderByLineCountActionInfo(actionId, 0, DataGetType.DOWN.getCode(), suffix);
+                if (map.containsKey("maxLineCount")) {
+                    maxLineCount = SafeParseUtils.parseInt(map.get("maxLineCount"));
+                }
+                actionInfo = new FileFindBySuffixOrderByLineCountActionInfo(actionId, 0, DataGetType.DOWN.getCode(), suffix, maxLineCount);
                 responseBody = fileService.findAllBySuffixOrderByLineCount((FileFindBySuffixOrderByLineCountActionInfo) actionInfo);
                 break;
             // 资源获取全部

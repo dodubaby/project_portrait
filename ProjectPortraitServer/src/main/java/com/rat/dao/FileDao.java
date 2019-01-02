@@ -18,7 +18,7 @@ public interface FileDao {
     List<File> findAll(@Param("dataIndexStart") int dataIndexStart, @Param("dataIndexEnd") int dataIndexEnd);
 
     @SelectProvider(type = SqlProvider.class, method = "findBySuffixOrderByLineCount")
-    List<File> findBySuffixOrderByLineCount(@Param("suffix") String suffix, @Param("dataIndexStart") int dataIndexStart, @Param("dataIndexEnd") int dataIndexEnd);
+    List<File> findBySuffixOrderByLineCount(@Param("suffix") String suffix, @Param("maxLineCount") int maxLineCount, @Param("dataIndexStart") int dataIndexStart, @Param("dataIndexEnd") int dataIndexEnd);
 
 
     @Select("select * from userinfo where userId=#{userId} limit 0,1")

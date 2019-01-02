@@ -10,10 +10,12 @@ import com.rat.entity.network.request.base.ActionInfoWithPageData;
  */
 public class FileFindBySuffixOrderByLineCountActionInfo extends ActionInfoWithPageData {
     private String suffix;
+    private int maxLineCount;
 
-    public FileFindBySuffixOrderByLineCountActionInfo(int actionId, int pageNumber, int dataGetType, String suffix) {
+    public FileFindBySuffixOrderByLineCountActionInfo(int actionId, int pageNumber, int dataGetType, String suffix, int maxLineCount) {
         super(actionId, pageNumber, dataGetType);
         this.suffix = suffix;
+        this.maxLineCount = maxLineCount;
     }
 
     public String getSuffix() {
@@ -22,5 +24,13 @@ public class FileFindBySuffixOrderByLineCountActionInfo extends ActionInfoWithPa
 
     public void setSuffix(String suffix) {
         this.suffix = suffix;
+    }
+
+    public int getMaxLineCount() {
+        return maxLineCount;
+    }
+
+    public void setMaxLineCount(int maxLineCount) {
+        this.maxLineCount = maxLineCount;
     }
 }

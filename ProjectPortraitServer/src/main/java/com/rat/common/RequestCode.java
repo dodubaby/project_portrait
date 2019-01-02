@@ -12,7 +12,6 @@ public class RequestCode {
     public static final int RESOURCE_FIND_ALL = 2001;
     public static final int RESOURCE_FIND_STATISTICS_BY_COUNT = 2002;
     public static final int RESOURCE_FIND_BY_VALUE = 2003;
-
     // reference
     public static final int REFERENCE_FIND_ALL = 3001;
     // targetData

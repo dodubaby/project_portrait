@@ -24,6 +24,14 @@ public class SqlProvider {
             String suffix = (String) para.get("suffix");
             sql.append(" and suffix = '" + suffix + "'");
         }
+        // 最大行数
+        int maxLineCount = 0;
+        if (null != para.get("maxLineCount")) {
+            maxLineCount = (int) para.get("maxLineCount");
+        }
+        maxLineCount = maxLineCount < 400 ? 400 : maxLineCount;
+        sql.append(" and line_count >= " + maxLineCount);
+
         sql.append(" order by line_count desc");
         // 分页
         sql.append(getCountLimitCondition(para));

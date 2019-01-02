@@ -59,7 +59,7 @@ public class FileService {
 
     public FileFindAllRspInfo findAllBySuffixOrderByLineCount(FileFindBySuffixOrderByLineCountActionInfo actionInfo) {
         DataPage dataPage = DataPageUtil.getPage(actionInfo.getPageNumber(), actionInfo.getDataGetType());
-        List<File> fileList = fileDao.findBySuffixOrderByLineCount(actionInfo.getSuffix(), dataPage.getDataIndexStart(), dataPage.getDataIndexEnd());
+        List<File> fileList = fileDao.findBySuffixOrderByLineCount(actionInfo.getSuffix(), actionInfo.getMaxLineCount(), dataPage.getDataIndexStart(), dataPage.getDataIndexEnd());
         FileFindAllRspInfo rspInfo = new FileFindAllRspInfo();
         rspInfo.initSuccess(actionInfo.getActionId());
         rspInfo.setFileList(fileList);

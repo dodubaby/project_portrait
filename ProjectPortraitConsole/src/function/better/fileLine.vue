@@ -7,38 +7,47 @@
       border
       fit
       highlight-current-row>
-      <el-table-column label="ID" width="90" align="center" >
+      <el-table-column label="索引" width="90" align="center" >
         <template slot-scope="scope">
           {{ scope.$index }}
         </template>
       </el-table-column>
-      <el-table-column label="资源value" width="400" align="center">
+      <el-table-column label="行数（行）" width="100" align="center">
         <template slot-scope="scope">
-          <span>{{ scope.row.resourceValue }}</span>
+          {{ scope.row.lineCount }}
         </template>
       </el-table-column>
-      <el-table-column label="声明数量" width="110" align="center">
+      <el-table-column label="大小（KB）" width="100" align="center">
         <template slot-scope="scope">
-          {{ scope.row.count }}
+          {{ scope.row.size }}
         </template>
       </el-table-column>
-      <el-table-column class-name="status-col" label="操作" width="110" align="center">
+      <el-table-column label="文件名" width="300" align="center">
+        <template slot-scope="scope">
+          {{ scope.row.name }}
+        </template>
+      </el-table-column>
+      <el-table-column label="后缀" width="100" align="center">
+        <template slot-scope="scope">
+          {{ scope.row.suffix }}
+        </template>
+      </el-table-column>
+      <el-table-column label="全路径" align="left">
+        <template slot-scope="scope">
+          {{ scope.row.classFullName }}
+        </template>
+      </el-table-column>
+      <el-table-column class-name="status-col" label="操作" width="100" align="center">
         <template slot-scope="scope">
           <el-tag :type="scope.row.status | statusFilter">{{ scope.row.status }}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column align="center" prop="created_at" label="Display_time" width="200">
-        <template slot-scope="scope">
-          <i class="el-icon-time"/>
-          <span>{{ scope.row.display_time }}</span>
-        </template>
-      </el-table-column>
-    </el-table>
+   </el-table>
   </div>
 </template>
 
 <script>
-import {resourceFindStatisticsByCount} from '@/api/ppserver'
+import {fileFindBySuffixOrderByLineCount} from '@/api/ppserver'
 
 export default {
   filters: {
@@ -63,8 +72,8 @@ export default {
   methods: {
     fetchData() {
       this.listLoading = true
-      resourceFindStatisticsByCount(this.listQuery).then(response => {
-        this.list = response.resourceDataStatisticsList
+      fileFindBySuffixOrderByLineCount(this.listQuery).then(response => {
+        this.list = response.fileList
         this.listLoading = false
       })
     }
