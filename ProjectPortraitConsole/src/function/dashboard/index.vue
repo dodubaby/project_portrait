@@ -32,12 +32,12 @@ import mapGetters from 'vuex'
 
 export default {
   name: 'Dashboard',
-  computed: {
-    ...mapGetters([
-      'name',
-      'roles'
-    ])
-  }
+//  computed: {
+//    ...mapGetters([
+//      'name',
+//      'roles'
+//    ])
+//  }
 }
 </script>
 

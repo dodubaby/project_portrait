@@ -80,7 +80,7 @@ export const constantRouterMap = [
       {
         path: 'class',
         name: 'class',
-        component: () => import('@/function/reference/index'),
+        component: () => import('@/function/reference/class'),
         meta: { title: '类引用关系', icon: 'table' }
       },
       {
