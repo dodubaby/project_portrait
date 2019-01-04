@@ -16,6 +16,12 @@ public class Reference implements Serializable {
     private String referenceData;
     private long referenceLine;
 
+    // TODO by L.jinzhu for 待优化
+    // 仅用于UI展示
+    private String source;
+    private String target;
+    private String type;
+
     public long getId() {
         return id;
     }
@@ -30,6 +36,7 @@ public class Reference implements Serializable {
 
     public void setFileId(long fileId) {
         this.fileId = fileId;
+        setSource(String.valueOf(fileId));
     }
 
     public long getReferenceDataId() {
@@ -38,6 +45,7 @@ public class Reference implements Serializable {
 
     public void setReferenceDataId(long referenceDataId) {
         this.referenceDataId = referenceDataId;
+        setTarget(String.valueOf(referenceDataId));
     }
 
     public String getReferenceDataType() {
@@ -62,5 +70,29 @@ public class Reference implements Serializable {
 
     public void setReferenceLine(long referenceLine) {
         this.referenceLine = referenceLine;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
+
+    public String getTarget() {
+        return target;
+    }
+
+    public void setTarget(String target) {
+        this.target = target;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = "suit";
     }
 }

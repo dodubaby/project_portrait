@@ -14,4 +14,10 @@ export function resourceFindStatisticsByCount(params) {
   })
 }
 // reference
+export function referenceFindAll(params) {
+  return request({
+    url: '?actionId=3001',
+    method: 'get'
+  })
+}
 // targetData

@@ -64,7 +64,7 @@ export const constantRouterMap = [
       {
         path: 'hierarchy',
         name: 'hierarchy',
-        component: () => import('@/function/global/index'),
+        component: () => import('@/function/global/hierarchy'),
         meta: { title: '层级关系统计', icon: 'tree' }
       }
     ]
