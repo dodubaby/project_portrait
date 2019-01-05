@@ -12,6 +12,7 @@ TABLE_NAME_FILE = "file"
 TABLE_NAME_RESOURCE = "resource"
 TABLE_NAME_REFERENCE = "reference"
 TABLE_NAME_TARGET_DATA = "target_data"
+TABLE_NAME_TAG = "tag"
 
 # 数据库配置
 config = {
@@ -125,6 +126,16 @@ def createTables():
                        'PRIMARY KEY (id)'
                        ') ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci'
                        % TABLE_NAME_TARGET_DATA)
+
+        # 创建tag表
+        cursor.execute('DROP TABLE IF EXISTS %s' % TABLE_NAME_TAG)
+        cursor.execute('CREATE TABLE %s('
+                       'id bigint unsigned zerofill NOT NULL AUTO_INCREMENT,'
+                       'type varchar(255) DEFAULT NULL, '
+                       'value varchar(255) DEFAULT NULL, '
+                       'PRIMARY KEY (id)'
+                       ') ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci'
+                       % TABLE_NAME_TAG)
 
         conn.commit()
     except:

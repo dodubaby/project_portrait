@@ -7,6 +7,7 @@ import com.rat.dao.TargetDataDao;
 import com.rat.entity.enums.ReferenceStatus;
 import com.rat.entity.enums.ResponseType;
 import com.rat.entity.local.File;
+import com.rat.entity.local.ParentChild;
 import com.rat.entity.local.ResourceData;
 import com.rat.entity.local.UserDetail;
 import com.rat.entity.network.entity.DataPage;
@@ -48,10 +49,19 @@ public class FileService {
 
     public FileFindAllRspInfo findAll(ActionInfoWithPageData actionInfo) {
         DataPage dataPage = DataPageUtil.getPage(actionInfo.getPageNumber(), actionInfo.getDataGetType());
+        // 获取文件列表
         List<File> fileList = fileDao.findAll(dataPage.getDataIndexStart(), dataPage.getDataIndexEnd());
+        // 获取文件列表（带层级）
+        ParentChild root = new ParentChild("root");
+        for (File file : fileList) {
+            String str = file.getClassFullName();
+            String[] strArray = str.split("\\.");
+            root = FileService.addChildList(root, strArray);
+        }
         FileFindAllRspInfo rspInfo = new FileFindAllRspInfo();
         rspInfo.initSuccess(actionInfo.getActionId());
         rspInfo.setFileList(fileList);
+        rspInfo.setFileListWithHierarchy(root);
         rspInfo.setCurrentPage(dataPage.getCurrentPage());
         rspInfo.setIsEndPage(DataPageUtil.isEndPage(fileList.size()));
         return rspInfo;
@@ -117,6 +127,15 @@ public class FileService {
         rspInfo.initSuccess(actionInfo.getActionId());
         rspInfo.setUserDetail(userDetail);
         return rspInfo;
+    }
+
+    public static ParentChild addChildList(ParentChild root, String[] strArray) {
+        ParentChild current = root;
+        for (String newStr : strArray) {
+            ParentChild newChild = new ParentChild(newStr);
+            current = current.addChild(newChild);
+        }
+        return root;
     }
 }
 

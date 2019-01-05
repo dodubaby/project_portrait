@@ -6,6 +6,12 @@ export function fileFindBySuffixOrderByLineCount(params) {
     method: 'get'
   })
 }
+export function fileFindAll(params) {
+  return request({
+    url: '?actionId=1001',
+    method: 'get'
+  })
+}
 // resource
 export function resourceFindStatisticsByCount(params) {
   return request({

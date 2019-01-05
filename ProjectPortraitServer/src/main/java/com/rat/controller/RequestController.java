@@ -152,11 +152,6 @@ public class RequestController {
         JSONObject jsonObject = JSONObject.parseObject(json);
         String actionInfoStr = jsonObject.getString("actionInfo");
         switch (requestInfo.getActionInfo().getActionId()) {
-            // 文件获取全部
-            case RequestCode.FILE_FIND_ALL:
-                ActionInfoWithPageData fileFindAllActionInfo = GsonUtil.fromJson(actionInfoStr, ActionInfoWithPageData.class);
-                response = fileService.findAll(fileFindAllActionInfo);
-                break;
             // 用户更新
             case RequestCode.USER_UPDATE:
                 UserUpdateActionInfo userUpdateActionInfo = GsonUtil.fromJson(actionInfoStr, UserUpdateActionInfo.class);

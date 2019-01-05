@@ -1,5 +1,5 @@
 <template>
-  <div style="padding:30px;">
+  <div style="padding:30px; overflow: scroll">
     <el-alert :closable="false" type="success"
               title="视图说明"
               description="项目熟悉、风险范围评估、优先级评估"
@@ -10,7 +10,7 @@
   </div>
 </template>
 <script>
-import {referenceFindAll} from '@/api/ppserver'
+import {fileFindAll} from '@/api/ppserver'
 
 export default {
   data() {
@@ -21,58 +21,44 @@ export default {
   },
   methods: {
     fetchData() {
-      referenceFindAll(this.listQuery).then(response => {
-        var links = response.referenceList
-        this.draw(links);
+      fileFindAll(this.listQuery).then(response => {
+        var root = response.fileListWithHierarchy
+        this.draw(root);
       })
-//      var links = [
-//        {source: "哈哈哈哈哈哈哈", target: "Amazon", type: "licensing"},
-//        {source: "Microsoft", target: "HTC", type: "licensing"},
-//        {source: "Samsung", target: "Apple", type: "suit"},
-//        {source: "Motorola", target: "哈哈哈哈哈哈哈", type: "suit"},
-//        {source: "Nokia", target: "哈哈哈哈哈哈哈", type: "resolved"},
-//        {source: "Kodak", target: "RIM", type: "suit"},
-//        {source: "Nokia", target: "Qualcomm", type: "suit"},
-//        {source: "aaa", target: "RIM", type: "suit"}
-//      ];
+//      var root = {
+//        "name": "com",
+//        "children": [{
+//          "name": "111",
+//          "children": [{
+//            "name": "222",
+//            "children": [{
+//              "name": "333",
+//            }, {
+//              "name": "444",
+//            }, {
+//              "name": "555",
+//            }, {
+//              "name": "666",
+//            }]
+//          }]
+//        }, {
+//          "name": "ISchedulable"
+//        }, {
+//          "name": "Parallel",
+//          "children": [{
+//            "name": "111122222"
+//          }]
+//        }, {
+//          "name": "Pause",
+//        }]
+//      };
     },
 
-    draw(links){
+    draw(root){
       var m = [20, 120, 20, 120],
-        w = 1280 - m[1] - m[3],
-        h = 800 - m[0] - m[2],
-        i = 0,
-
-        root = {
-          "name": "com",
-          "children": [{
-            "name": "111",
-            "children": [{
-              "name": "222",
-              "children": [{
-                "name": "333",
-              }, {
-                "name": "444",
-              }, {
-                "name": "555",
-              }, {
-                "name": "666",
-              }]
-            }]
-          }, {
-            "name": "ISchedulable",
-            "deal": "2",
-            "size": 1041
-          }, {
-            "name": "Parallel",
-            "size": 5176
-          }, {
-            "name": "Pause",
-            "size": 449
-          }
-          ]
-        };
-
+        w = 3000 - m[1] - m[3],
+        h = 1000 - m[0] - m[2],
+        i = 0;
       var tree = d3.layout.tree()
         .size([h, w]);
 
@@ -115,7 +101,7 @@ export default {
 
         // Normalize for fixed-depth.
         nodes.forEach(function (d) {
-          d.y = d.depth * 180;
+          d.y = d.depth * 160;
         });
 
         // Update the nodes…
@@ -150,7 +136,10 @@ export default {
             return d.children || d._children ? "end" : "start";
           })
           .text(function (d) {
-            return d.name;
+            return d.name+'-t';
+          })
+          .on("click", function (d) {
+            alert('处理归属者标签、功能标签、其他标签\n查找引用关系\nIDE中打开文件');
           })
           .style("fill-opacity", 1e-6);
 

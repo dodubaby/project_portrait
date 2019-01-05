@@ -46,7 +46,7 @@ export default {
         link.target = nodes[link.target] || (nodes[link.target] = {name: link.target});
       });
 
-      var width = 1000,
+      var width = 1280,
         height = 600;
 
       var force = d3.layout.force()

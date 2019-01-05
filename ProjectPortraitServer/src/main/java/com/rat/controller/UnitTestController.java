@@ -2,12 +2,14 @@ package com.rat.controller;
 
 import com.rat.common.RequestCode;
 import com.rat.entity.enums.DataGetType;
+import com.rat.entity.local.ParentChild;
 import com.rat.entity.local.Reference;
 import com.rat.entity.local.ResourceData;
 import com.rat.entity.network.request.*;
 import com.rat.entity.network.request.base.ActionInfo;
 import com.rat.entity.network.request.base.RequestInfo;
 import com.rat.entity.network.response.FileFindAllRspInfo;
+import com.rat.service.FileService;
 import com.rat.utils.GsonUtil;
 import org.junit.Before;
 import org.junit.runner.RunWith;
@@ -167,7 +169,7 @@ public class UnitTestController {
 
 
     @org.junit.Test
-    public void newVersion() throws Exception {
+    public void newVersionTest() throws Exception {
         ActionInfo actionInfo = new ActionInfo(RequestCode.SYSTEM_NEW_VERSION);
         requestInfo.setActionInfo(actionInfo);
         String postJson = GsonUtil.toJson(requestInfo);
@@ -181,5 +183,21 @@ public class UnitTestController {
         String result = mvcResult.getResponse().getContentAsString();
         System.out.println("=============== 请求获得响应 =============================================");
         System.out.println("====" + result);
+    }
+
+
+    @org.junit.Test
+    public void parentChildTest() throws Exception {
+        ParentChild root = new ParentChild("root");
+        String str1 = "com.a.b1.c1.d1";
+        String str2 = "com.a.b.c.d";
+        String[] strArray1 = str1.split("\\.");
+        String[] strArray2 = str2.split("\\.");
+
+        root = FileService.addChildList(root, strArray1);
+        root = FileService.addChildList(root, strArray2);
+
+        System.out.println("====");
+        System.out.println(root);
     }
 }
