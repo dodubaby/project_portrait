@@ -16,6 +16,8 @@ public class RequestCode {
     public static final int REFERENCE_FIND_ALL = 3001;
     // targetData
     public static final int TARGET_DATA_FIND_ALL = 4001;
+    // tag
+    public static final int TAG_FIND_BY_TYPE = 5001;
 
     public static final int USER_FIND_ALL = 1003;
     public static final int USER_FIND_DETAIL = 1004;

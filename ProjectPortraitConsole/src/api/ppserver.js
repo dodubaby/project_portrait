@@ -1,4 +1,4 @@
-import request from '@/utils/request'
+import request from "@/utils/request";
 // file
 export function fileFindBySuffixOrderByLineCount(params) {
   return request({
@@ -27,3 +27,10 @@ export function referenceFindAll(params) {
   })
 }
 // targetData
+// tag
+export function tagFindByType(type) {
+  return request({
+    url: '?actionId=5001&type=' + type,
+    method: 'get'
+  })
+}

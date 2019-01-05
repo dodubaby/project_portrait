@@ -136,7 +136,7 @@ export default {
             return d.children || d._children ? "end" : "start";
           })
           .text(function (d) {
-            return d.name+'-t';
+            return d.name+'_t';
           })
           .on("click", function (d) {
             alert('处理归属者标签、功能标签、其他标签\n查找引用关系\nIDE中打开文件');

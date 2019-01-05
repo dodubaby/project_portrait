@@ -7,7 +7,7 @@
       border
       fit
       highlight-current-row>
-      <el-table-column label="索引" width="90" align="center" >
+      <el-table-column label="ID" width="90" align="center" >
         <template slot-scope="scope">
           {{ scope.$index }}
         </template>
@@ -37,9 +37,14 @@
           {{ scope.row.classFullName }}
         </template>
       </el-table-column>
-      <el-table-column class-name="status-col" label="操作" width="100" align="center">
+      <el-table-column class-name="status-col" label="tag" width="70" align="center">
         <template slot-scope="scope">
-          <el-tag :type="scope.row.status | statusFilter">{{ scope.row.status }}</el-tag>
+          <el-tag :type="scope.row.status | statusFilter">tag</el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column class-name="status-col" label="操作" width="200" align="center">
+        <template slot-scope="scope">
+          <el-button size="small" @click="buttonClick(scope.row.name)">查找引用关系</el-button>
         </template>
       </el-table-column>
    </el-table>
@@ -48,9 +53,10 @@
 
 <script>
 import {fileFindBySuffixOrderByLineCount} from '@/api/ppserver'
+import ElButton from "../../../node_modules/element-ui/packages/button/src/button";
 
 export default {
-  filters: {
+  components: {ElButton}, filters: {
     statusFilter(status) {
       const statusMap = {
         published: 'success',
@@ -76,6 +82,9 @@ export default {
         this.list = response.fileList
         this.listLoading = false
       })
+    },
+    buttonClick(data){
+      alert("查询【" + data + "】的所有引用关系")
     }
   }
 }

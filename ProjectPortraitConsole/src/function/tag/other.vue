@@ -12,30 +12,19 @@
           {{ scope.$index }}
         </template>
       </el-table-column>
-      <el-table-column label="资源value" width="400" align="center">
+      <el-table-column label="标签" width="300" align="center">
         <template slot-scope="scope">
-          <span>{{ scope.row.resourceValue }}</span>
+          {{ scope.row.value }}
         </template>
       </el-table-column>
-      <el-table-column label="声明数量" width="110" align="center">
+      <el-table-column label="类型" width="100" align="center">
         <template slot-scope="scope">
-          {{ scope.row.count }}
-        </template>
-      </el-table-column>
-      <el-table-column align="center" prop="created_at" label="状态" width="100">
-        <template slot-scope="scope">
-          <i class="el-icon-circle-check-outline"/>
-          <span>{{ scope.row.display_time }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column class-name="status-col" label="tag" width="70" align="center">
-        <template slot-scope="scope">
-          <el-tag :type="scope.row.status | statusFilter">tag</el-tag>
+          <span>{{ scope.row.type }}</span>
         </template>
       </el-table-column>
       <el-table-column class-name="status-col" label="操作" width="200" align="center">
         <template slot-scope="scope">
-          <el-button size="small" @click="buttonClick(scope.row.resourceValue)">查找资源详情</el-button>
+          <el-button size="small" @click="buttonClick(scope.row.value)">查询标签对应文件</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -43,7 +32,7 @@
 </template>
 
 <script>
-import {resourceFindStatisticsByCount} from '@/api/ppserver'
+import {tagFindByType} from '@/api/ppserver'
 
 export default {
   filters: {
@@ -68,13 +57,13 @@ export default {
   methods: {
     fetchData() {
       this.listLoading = true
-      resourceFindStatisticsByCount(this.listQuery).then(response => {
-        this.list = response.resourceDataStatisticsList
+      tagFindByType('other').then(response => {
+        this.list = response.tagList
         this.listLoading = false
       })
     },
     buttonClick(data){
-      alert("查询【" + data + "】资源详情")
+      alert("查询【" + data + "】标签对应文件")
     }
   }
 }
