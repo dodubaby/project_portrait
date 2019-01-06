@@ -228,13 +228,13 @@ export const constantRouterMap = [
       {
         path: 'command',
         name: 'command',
-        component: () => import('@/function/console/index'),
+        component: () => import('@/function/console/command'),
         meta: { title: '命令', icon: 'table' }
       },
       {
         path: 'log',
         name: 'log',
-        component: () => import('@/function/console/index'),
+        component: () => import('@/function/console/log'),
         meta: { title: '系统日志', icon: 'tree' }
       }
     ]

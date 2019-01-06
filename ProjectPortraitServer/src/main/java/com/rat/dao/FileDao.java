@@ -20,9 +20,8 @@ public interface FileDao {
     @SelectProvider(type = SqlProvider.class, method = "findBySuffixOrderByLineCount")
     List<File> findBySuffixOrderByLineCount(@Param("suffix") String suffix, @Param("maxLineCount") int maxLineCount, @Param("dataIndexStart") int dataIndexStart, @Param("dataIndexEnd") int dataIndexEnd);
 
-
-    @Select("select * from userinfo where userId=#{userId} limit 0,1")
-    File findById(@Param("userId") Long userId);
+    @Select("select name from file where id=#{fileId} limit 0,1")
+    String findNameById(@Param("fileId") Long fileId);
 
     @Select("select * from userinfo where account=#{account} and accountType=#{accountType} limit 0,1")
     File findByAccount(@Param("accountType") int accountType, @Param("account") String account);

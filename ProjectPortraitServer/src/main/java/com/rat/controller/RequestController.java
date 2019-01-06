@@ -114,7 +114,7 @@ public class RequestController {
                 actionInfo = new ResourceFindByValueActionInfo(actionId, value);
                 responseBody = resourceService.findByValue((ResourceFindByValueActionInfo) actionInfo);
                 break;
-            // 资源引用获取全部
+            // 引用获取全部
             case RequestCode.REFERENCE_FIND_ALL:
                 actionInfo = new ActionInfoWithPageData(actionId, 0, DataGetType.DOWN.getCode());
                 responseBody = referenceService.findAll((ActionInfoWithPageData) actionInfo);
@@ -192,17 +192,6 @@ public class RequestController {
             case RequestCode.FOLLOW:
                 ReferenceActionInfo referenceActionInfo = GsonUtil.fromJson(actionInfoStr, ReferenceActionInfo.class);
                 break;
-            // 获取user主动关注的人
-            case RequestCode.FOLLOW_FIND_BY_USER:
-                ActionInfoWithPageData referenceFindAllByUserActionInfo = GsonUtil.fromJson(actionInfoStr, ActionInfoWithPageData.class);
-                response = referenceService.findAllByUserId(referenceFindAllByUserActionInfo);
-                break;
-            // 获取关注user的人
-            case RequestCode.FOLLOW_FIND_BY_FOLLOWED_USER:
-                ActionInfoWithPageData referenceFindAllByReferenceedUserActionInfo = GsonUtil.fromJson(actionInfoStr, ActionInfoWithPageData.class);
-                response = referenceService.findAllByReferenceedUserId(referenceFindAllByReferenceedUserActionInfo);
-                break;
-
             // 最新版本
             case RequestCode.SYSTEM_NEW_VERSION:
                 ActionInfoWithPageData newVersionActionInfo = GsonUtil.fromJson(actionInfoStr, ActionInfoWithPageData.class);

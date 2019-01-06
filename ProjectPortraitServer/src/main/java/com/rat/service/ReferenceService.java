@@ -1,5 +1,6 @@
 package com.rat.service;
 
+import com.rat.dao.FileDao;
 import com.rat.dao.ReferenceDao;
 import com.rat.entity.local.Reference;
 import com.rat.entity.network.entity.DataPage;
@@ -24,6 +25,8 @@ public class ReferenceService {
     private static Logger logger = LoggerFactory.getLogger(ReferenceService.class);
     @Resource
     private ReferenceDao referenceDao;
+    @Resource
+    private FileDao fileDao;
 
     public ReferenceService() {
     }
@@ -31,6 +34,11 @@ public class ReferenceService {
     public ReferenceFindAllRspInfo findAll(ActionInfoWithPageData actionInfo) {
         DataPage dataPage = DataPageUtil.getPage(actionInfo.getPageNumber(), actionInfo.getDataGetType());
         List<Reference> referenceList = referenceDao.findAll(dataPage.getDataIndexStart(), dataPage.getDataIndexEnd());
+        // TODO by L.jinzhu for sql 待优化
+        for (Reference reference : referenceList) {
+            reference.setFileName(fileDao.findNameById(reference.getFileId()));
+            reference.setReferenceDataName(fileDao.findNameById(reference.getReferenceDataId()));
+        }
         ReferenceFindAllRspInfo rspInfo = new ReferenceFindAllRspInfo();
         rspInfo.initSuccess(actionInfo.getActionId());
         rspInfo.setReferenceList(referenceList);
@@ -38,30 +46,4 @@ public class ReferenceService {
         rspInfo.setIsEndPage(DataPageUtil.isEndPage(referenceList.size()));
         return rspInfo;
     }
-
-    /**
-     * 通过关注人查找
-     *
-     * @param actionInfo
-     * @return
-     */
-    public ReferenceFindAllRspInfo findAllByUserId(ActionInfoWithPageData actionInfo) {
-        ReferenceFindAllRspInfo rspInfo = new ReferenceFindAllRspInfo();
-        rspInfo.initSuccess(actionInfo.getActionId());
-
-        return rspInfo;
-    }
-
-    /**
-     * 通过被关注人查找
-     *
-     * @param actionInfo
-     * @return
-     */
-    public ReferenceFindAllRspInfo findAllByReferenceedUserId(ActionInfoWithPageData actionInfo) {
-        ReferenceFindAllRspInfo rspInfo = new ReferenceFindAllRspInfo();
-
-        return rspInfo;
-    }
 }
-
