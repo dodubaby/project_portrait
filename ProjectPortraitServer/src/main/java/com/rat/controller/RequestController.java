@@ -133,8 +133,6 @@ public class RequestController {
                 actionInfo = new TagFindByTypeActionInfo(actionId, 0, DataGetType.DOWN.getCode(), type);
                 responseBody = tagService.findByType((TagFindByTypeActionInfo) actionInfo);
                 break;
-
-
             // 请求解析异常
             default:
                 // 请求解析异常

@@ -1,84 +1,44 @@
 # encoding: utf-8
-#!/usr/bin/python3
+# !/usr/bin/python3
 
-print("Hello,Python1")
-print("Hello,Python2")
-
-# 注释
-import keyword
-
-print("Python关键字")
-print(keyword.kwlist)  # 注释
+from db.dbOperate import *
+from db.db import *
+from portrait.analysisFileContent import *
+from portrait.analysisFileList import *
+from portrait.analysisResourceList import *
+import util.timeUtil as timeUtil
 
 """
-多行注释
+main
 """
 
-'''
-多行注释
-'''
 
-if True:
-    print("True")
-if False:
-    print("False")
+def main():
+    time = timeUtil.timeStart()
 
-str = "aaaaaaaaaa " \
-      + "bbbbbbbbbb " \
-      + "cccccccccc " \
-      + "ddddddddddd "
+    # 数据库连接
+    connect()
 
+    # 数据库表初始化
+    createDatabases()
+    createTables()
 
-total = {"a", "b", "c", "d"}
+    # 初始化基础数据
+    initBaseData()
 
-print(str)
-print(total)
+    # 分析文件列表
+    # analysisFileList("../../lianjia_android_nh_plugin")
 
-a = 1
-print(a)
+    # 分析资源列表
+    # analysisResourceList()
 
-a = True
-print(a)
+    # 分析文件内容
+    analysisAllFileContent()
 
-a = 3.3
-print(a)
+    # 数据库断开
+    disconnect()
 
-b = 1 + 2 * a
-print(b)
-
-a = "this " "is " "a " "string"
-print(a)
-
-a = "this\n" "huanhang"
-print(a)
-
-a = r"this \n 不换行"
-print(a)
-
-a = "我只显示一遍 " * 3
-print(a)
-
-a = """这是一个段落，
-1可以由多行组成
-2可以由多行组成
-3可以由多行组成"""
-print(a)
-
-a = "12345678"
-print("截取a的结果：" + a[0])
-print("截取a的结果：" + a[0:-2])
-print("截取a的结果：" + a[1:])
-
-a = ''
-b = ''
-
-def test(a):
-    print("方法内：" + a)
-    return a * 3
+    timeUtil.timeEnd(time)
 
 
-print("方法返回：" + test("我是参数"))
-
-
-print('我是第二行')
-print('我是第三行')
+main()

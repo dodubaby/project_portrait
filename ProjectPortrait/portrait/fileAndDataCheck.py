@@ -6,7 +6,7 @@
 """
 
 
-def ignore(str):
+def ignoreFile(str):
     if str.startswith("."):
         return True
     if str.startswith("__"):
@@ -19,34 +19,23 @@ def ignore(str):
         return True
     if str.endswith("rar"):
         return True
-    else:
-        return False
-
-
-"""
-是否是资源文件
-"""
-
-
-def isResourceFile(str):
-    if (ignore(str)):
-        return False
-    # TODO 在此处就确定是资源文件，不去后面确定了，比如他们都在 value 文件夹下面
-
-    if str.end("xml"):
+    if str.endswith("hprof"):
+        return True
+    if str.endswith(".json"):
         return True
     else:
         return False
 
 
 """
-test
+忽略文件
 """
 
 
-def test():
-    # print ignore(".ddd")
-    print ()
-
-
-test()
+def ignoreReferenceData(str):
+    if str.startswith("android."):
+        return True
+    if str.startswith("java."):
+        return True
+    else:
+        return False

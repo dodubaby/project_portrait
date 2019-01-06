@@ -1,10 +1,10 @@
 # encoding: utf-8
 # !/usr/bin/python3
 
-from util.fileUtil import readFileContent
-from db import db
-import util.timeUtil as timeUtil
 import regular.regular as regular
+from db import db
+from fileAndDataCheck import ignoreReferenceData
+from util.fileUtil import readFileContent
 
 # 自定义数据
 TARGET_DATA = 'L.jinzhu'
@@ -49,6 +49,8 @@ def analysisReference(fileId, lineContent, lineNum):
 
     # Java引用Java
     referenceData = regular.regular(lineContent, "import ", ";")
+    if (ignoreReferenceData(referenceData)):  # 忽略部分
+        return
     if (referenceData != ""):
         db.saveReferenceForJava(fileId, referenceData, lineNum)
         return
@@ -77,16 +79,3 @@ def analysisTargetData(fileId, lineContent, lineNum):
     if (TARGET_DATA in lineContent):
         db.saveTargetData(fileId, TARGET_DATA, lineNum)
 
-
-"""
-test
-"""
-
-
-def test():
-    time = timeUtil.timeStart()
-    analysisAllFileContent()
-    timeUtil.timeEnd(time)
-
-
-test()

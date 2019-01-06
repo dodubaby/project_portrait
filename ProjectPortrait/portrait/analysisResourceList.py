@@ -4,7 +4,6 @@
 import regular.regular as regular
 from db import db
 from util.fileUtil import *
-import util.timeUtil as timeUtil
 
 """
 解析资源列表
@@ -84,16 +83,3 @@ def resourceFileCheck(iter_f):
     print "检查资源文件结果：" + str(isFileOK)
     return isFileOK
 
-
-"""
-test
-"""
-
-
-def test():
-    time = timeUtil.timeStart()
-    # analysisResourceList()
-    timeUtil.timeEnd(time)
-
-
-test()

@@ -2,8 +2,10 @@
 # !/usr/bin/python3
 
 import traceback
+
 import MySQLdb as mdb
-import util.timeUtil as timeUtil
+
+import const as const
 
 # 数据库名
 DB_NAME = 'project_portrait'
@@ -30,11 +32,20 @@ config = {
 
 
 def connect():
-    conn = mdb.connect(**config)
+    const.dbconnect = mdb.connect(**config)
 
     # 如果使用事务引擎，可以设置自动提交事务，或者在每次操作完成后手动提交事务conn.commit()
-    conn.autocommit(True)
-    return conn
+    const.dbconnect.autocommit(True)
+
+
+"""
+断开数据库
+"""
+
+
+def disconnect():
+    # 关闭数据库连接
+    const.dbconnect.close()
 
 
 """
@@ -44,13 +55,12 @@ def connect():
 
 def createDatabases():
     try:
-        conn = connect()
+        conn = const.dbconnect
         # 使用cursor()方法获取操作游标
         cursor = conn.cursor()
         # 因该模块底层其实是调用CAPI的，所以，需要先得到当前指向数据库的指针。
         cursor.execute('DROP DATABASE IF EXISTS %s' % DB_NAME)
         cursor.execute('CREATE DATABASE IF NOT EXISTS %s' % DB_NAME)
-        conn.commit()
     except:
         traceback.print_exc()
         # 发生错误时会滚
@@ -58,8 +68,6 @@ def createDatabases():
     finally:
         # 关闭游标连接
         cursor.close()
-        # 关闭数据库连接
-        conn.close()
 
 
 """
@@ -69,7 +77,7 @@ def createDatabases():
 
 def createTables():
     try:
-        conn = connect()
+        conn = const.dbconnect
         conn.select_db(DB_NAME)
         # 使用cursor()方法获取操作游标
         cursor = conn.cursor()
@@ -136,8 +144,6 @@ def createTables():
                        'PRIMARY KEY (id)'
                        ') ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci'
                        % TABLE_NAME_TAG)
-
-        conn.commit()
     except:
         traceback.print_exc()
         # 发生错误时会滚
@@ -145,15 +151,3 @@ def createTables():
     finally:
         # 关闭游标连接
         cursor.close()
-        # 关闭数据库连接
-        conn.close()
-
-
-def test():
-    time = timeUtil.timeStart()
-    # createDatabases()
-    # createTables()
-    timeUtil.timeEnd(time)
-
-
-test()

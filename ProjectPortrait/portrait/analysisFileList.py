@@ -2,11 +2,10 @@
 # !/usr/bin/python3
 import os
 
-from db import db
-from fileCheck import ignore
-import util.fileUtil  as fileUtil
-import util.timeUtil as timeUtil
 import regular.regular as regular
+import util.fileUtil  as fileUtil
+from db import db
+from fileAndDataCheck import ignoreFile
 
 """
 解析文件列表
@@ -17,7 +16,7 @@ def analysisFileList(path):
     files = fileUtil.readFileList(path)
     for file in files:  # 遍历文件夹
         # 忽略文件
-        if (ignore(file)):
+        if (ignoreFile(file)):
             continue
         # 解析文件/文件夹
         fullName = path + "/" + file
@@ -45,17 +44,3 @@ def analysisFileList(path):
         else:
             print "xxxxxx File: error! " + fullName
             print "xxxxxx File: error! "
-
-
-"""
-test
-"""
-
-
-def test():
-    time = timeUtil.timeStart()
-    analysisFileList("../../../")
-    timeUtil.timeEnd(time)
-
-
-test()

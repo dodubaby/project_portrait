@@ -3,8 +3,68 @@
 
 import traceback
 
-import dbOperate as db
-import util.timeUtil as timeUtil
+import const as const
+
+"""
+初始化基础数据
+"""
+
+
+def initBaseData():
+    try:
+        conn = const.dbconnect
+        cursor = conn.cursor()
+        sql = 'INSERT INTO project_portrait.tag(type, value) values(%s,%s)'
+        value = ['owner', '梁金柱']
+        cursor.execute(sql, value)
+        value = ['owner', '唐茯苓']
+        cursor.execute(sql, value)
+        value = ['owner', '常志达']
+        cursor.execute(sql, value)
+        value = ['owner', '陈少']
+        cursor.execute(sql, value)
+        value = ['owner', '符飚']
+        cursor.execute(sql, value)
+        value = ['owner', '付朝阳']
+        cursor.execute(sql, value)
+        value = ['owner', '何健']
+        cursor.execute(sql, value)
+        value = ['owner', '李鹏']
+        cursor.execute(sql, value)
+        value = ['owner', '李小琳']
+        cursor.execute(sql, value)
+        value = ['owner', '谢孔营']
+        cursor.execute(sql, value)
+        value = ['owner', '张和彬']
+        cursor.execute(sql, value)
+        value = ['owner', '赵瑞超']
+        cursor.execute(sql, value)
+        value = ['function', 'log工具类']
+        cursor.execute(sql, value)
+        value = ['function', '楼盘详情页面']
+        cursor.execute(sql, value)
+        value = ['function', '楼盘推荐页面']
+        cursor.execute(sql, value)
+        value = ['function', '通用dialog']
+        cursor.execute(sql, value)
+        value = ['function', 'Url跳转类']
+        cursor.execute(sql, value)
+        value = ['other', '待删除']
+        cursor.execute(sql, value)
+        value = ['other', '此类与xx重复']
+        cursor.execute(sql, value)
+        value = ['other', '待整合新的位置']
+        cursor.execute(sql, value)
+        value = ['other', '这个类需要拆掉']
+        cursor.execute(sql, value)
+    except:
+        traceback.print_exc()
+        # 发生错误时会滚
+        conn.rollback()
+    finally:
+        # 关闭游标连接
+        cursor.close()
+
 
 """
 保存文件内容-单条
@@ -13,12 +73,11 @@ import util.timeUtil as timeUtil
 
 def saveFileData(type, full_name, path, name, suffix, class_full_name, line_count, size):
     try:
-        conn = db.connect()
+        conn = const.dbconnect
         cursor = conn.cursor()
         sql = 'INSERT INTO file(type, full_name, path, name, suffix, class_full_name, line_count, size) values(%s,%s,%s,%s,%s,%s,%s,%s)'
         value = [type, full_name, path, name, suffix, class_full_name, line_count, size]
         cursor.execute(sql, value)
-        conn.commit()
     except:
         traceback.print_exc()
         # 发生错误时会滚
@@ -26,8 +85,6 @@ def saveFileData(type, full_name, path, name, suffix, class_full_name, line_coun
     finally:
         # 关闭游标连接
         cursor.close()
-        # 关闭数据库连接
-        conn.close()
 
 
 """
@@ -37,12 +94,11 @@ def saveFileData(type, full_name, path, name, suffix, class_full_name, line_coun
 
 def saveResourceData(resource_type, resource_key, resource_value, file_id, file_full_name):
     try:
-        conn = db.connect()
+        conn = const.dbconnect
         cursor = conn.cursor()
         sql = 'INSERT INTO resource(resource_type, resource_key, resource_value, file_id, file_full_name) values(%s,%s,%s,%s,%s)'
         value = [resource_type, resource_key, resource_value, file_id, file_full_name]
         cursor.execute(sql, value)
-        conn.commit()
     except:
         traceback.print_exc()
         # 发生错误时会滚
@@ -50,8 +106,6 @@ def saveResourceData(resource_type, resource_key, resource_value, file_id, file_
     finally:
         # 关闭游标连接
         cursor.close()
-        # 关闭数据库连接
-        conn.close()
 
 
 """
@@ -61,7 +115,7 @@ def saveResourceData(resource_type, resource_key, resource_value, file_id, file_
 
 def saveReferenceForJava(file_id, reference_data, reference_line):
     try:
-        conn = db.connect()
+        conn = const.dbconnect
         cursor = conn.cursor()
         sql = 'INSERT INTO reference(file_id, reference_data_id, reference_data_type, reference_data, reference_line) VALUES(' \
               '%s,' \
@@ -72,7 +126,6 @@ def saveReferenceForJava(file_id, reference_data, reference_line):
               ')'
         value = [file_id, reference_data, "java", reference_data, reference_line]
         cursor.execute(sql, value)
-        conn.commit()
     except:
         traceback.print_exc()
         # 发生错误时会滚
@@ -80,8 +133,6 @@ def saveReferenceForJava(file_id, reference_data, reference_line):
     finally:
         # 关闭游标连接
         cursor.close()
-        # 关闭数据库连接
-        conn.close()
 
 
 """
@@ -91,7 +142,7 @@ def saveReferenceForJava(file_id, reference_data, reference_line):
 
 def saveReferenceForResource(file_id, reference_data, reference_line):
     try:
-        conn = db.connect()
+        conn = const.dbconnect
         cursor = conn.cursor()
         sql = 'INSERT INTO reference(file_id, reference_data_id, reference_data_type, reference_data, reference_line) VALUES(' \
               '%s,' \
@@ -103,7 +154,6 @@ def saveReferenceForResource(file_id, reference_data, reference_line):
         reference_data_simple = reference_data.split(".")[1]  # color.aaa -> aaa
         value = [file_id, reference_data_simple, "resource", reference_data, reference_line]
         cursor.execute(sql, value)
-        conn.commit()
     except:
         traceback.print_exc()
         # 发生错误时会滚
@@ -111,8 +161,6 @@ def saveReferenceForResource(file_id, reference_data, reference_line):
     finally:
         # 关闭游标连接
         cursor.close()
-        # 关闭数据库连接
-        conn.close()
 
 
 """
@@ -122,12 +170,11 @@ def saveReferenceForResource(file_id, reference_data, reference_line):
 
 def saveTargetData(file_id, target_data, target_data_line):
     try:
-        conn = db.connect()
+        conn = const.dbconnect
         cursor = conn.cursor()
         sql = 'INSERT INTO target_data(file_id, target_data, target_data_line) VALUES(%s, %s, %s)'
         value = [file_id, target_data, target_data_line]
         cursor.execute(sql, value)
-        conn.commit()
     except:
         traceback.print_exc()
         # 发生错误时会滚
@@ -135,8 +182,6 @@ def saveTargetData(file_id, target_data, target_data_line):
     finally:
         # 关闭游标连接
         cursor.close()
-        # 关闭数据库连接
-        conn.close()
 
 
 """
@@ -146,7 +191,7 @@ def saveTargetData(file_id, target_data, target_data_line):
 
 def readResourceFileList():
     try:
-        conn = db.connect()
+        conn = const.dbconnect
         cursor = conn.cursor()
         sql = 'SELECT id,full_name FROM file WHERE name in (%s,%s)'
         value = ['colors.xml', 'strings.xml']
@@ -162,8 +207,6 @@ def readResourceFileList():
     finally:
         # 关闭游标连接
         cursor.close()
-        # 关闭数据库连接
-        conn.close()
 
 
 """
@@ -173,7 +216,7 @@ def readResourceFileList():
 
 def readNeedAnalysisFileList(count):
     try:
-        conn = db.connect()
+        conn = const.dbconnect
         cursor = conn.cursor()
         sql = 'SELECT id,full_name FROM file WHERE type = "file" AND suffix IN ("java", "xml")'
         if (count > 0):
@@ -191,16 +234,3 @@ def readNeedAnalysisFileList(count):
     finally:
         # 关闭游标连接
         cursor.close()
-        # 关闭数据库连接
-        conn.close()
-
-
-def test():
-    time = timeUtil.timeStart()
-    # saveFileData("1", "2", "333", "1", "2", "333", "333")
-    # readResourceFileList()
-    # readAllFileList(20)
-    timeUtil.timeEnd(time)
-
-
-test()
