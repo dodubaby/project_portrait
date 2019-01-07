@@ -10,7 +10,7 @@ import java.util.Map;
 public class SqlProvider {
     public String fileFindAll(Map<String, Object> para) {
         StringBuffer sql = new StringBuffer();
-        sql.append("select * from file where 1=1 and reference_data_type = java");
+        sql.append("select * from file where 1=1");
         // 分页
         sql.append(getCountLimitCondition(para));
         return sql.toString();
@@ -67,7 +67,8 @@ public class SqlProvider {
 
     public String referenceFindAll(Map<String, Object> para) {
         StringBuffer sql = new StringBuffer();
-        sql.append("select * from reference where 1=1");
+        // TODO by L.jinzhu for test
+        sql.append("select * from reference where 1=1 and reference_data_type ='java'");
         // 分页
         sql.append(getCountLimitCondition(para));
         return sql.toString();

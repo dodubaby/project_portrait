@@ -1,5 +1,5 @@
 <template>
-  <div style="padding:30px;">
+  <div style="padding:30px; overflow: scroll">
     <el-alert :closable="false" type="success"
               title="视图说明"
               description="实线代表xxx，虚线代表xxx，绿色线代表xxx"
@@ -46,8 +46,8 @@ export default {
         link.target = nodes[link.target] || (nodes[link.target] = {name: link.target});
       });
 
-      var width = 1280,
-        height = 600;
+      var width = 1500,
+        height = 1500;
 
       var force = d3.layout.force()
         .nodes(d3.values(nodes))

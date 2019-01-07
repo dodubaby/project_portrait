@@ -23,4 +23,6 @@ public class Constant {
 
     // 视频名称列表
     public static String resourceNames = "";
+
+    public static String DATA_ERROR = "DataErrord";
 }

@@ -1,5 +1,8 @@
 package com.rat.entity.local;
 
+import com.rat.common.Constant;
+import com.rat.utils.StringUtil;
+
 import java.io.Serializable;
 
 /**
@@ -77,6 +80,9 @@ public class Reference implements Serializable {
     }
 
     public void setSource(String source) {
+        if (StringUtil.isNullOrBlank(source)) {
+            source = Constant.DATA_ERROR;
+        }
         this.source = source;
     }
 
@@ -85,6 +91,9 @@ public class Reference implements Serializable {
     }
 
     public void setTarget(String target) {
+        if (StringUtil.isNullOrBlank(target)) {
+            target = Constant.DATA_ERROR;
+        }
         this.target = target;
     }
 
@@ -108,6 +117,7 @@ public class Reference implements Serializable {
     public void setReferenceDataName(String referenceDataName) {
         this.referenceDataName = referenceDataName;
         setTarget(String.valueOf(referenceDataName));
+        setType("");
     }
 
     public void setType(String type) {

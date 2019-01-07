@@ -1,6 +1,7 @@
 package com.rat.entity.local;
 
 import com.google.gson.annotations.SerializedName;
+import com.rat.common.Constant;
 import com.rat.utils.StringUtil;
 
 import java.io.Serializable;
@@ -20,7 +21,7 @@ public class ParentChild implements Serializable {
 
     public ParentChild(String name) {
         if (StringUtil.isNullOrBlank(name)) {
-            name = "DataError";
+            name = Constant.DATA_ERROR;
         }
         this.name = name;
     }
