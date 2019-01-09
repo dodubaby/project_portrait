@@ -1,5 +1,7 @@
 package com.rat.provider;
 
+import com.rat.utils.SafeParseUtils;
+
 import java.util.List;
 import java.util.Map;
 
@@ -67,10 +69,19 @@ public class SqlProvider {
 
     public String referenceFindAll(Map<String, Object> para) {
         StringBuffer sql = new StringBuffer();
-        // TODO by L.jinzhu for test
         sql.append("select * from reference where 1=1 and reference_data_type ='java'");
-        // 分页
-        sql.append(getCountLimitCondition(para));
+
+        // 被引用的数据
+        if (null != para.get("referenceId")) {
+            Long referenceId = SafeParseUtils.parseLong(para.get("referenceId").toString());
+            if (0 != referenceId) {
+                sql.append(" and reference_data_id = " + referenceId);
+            } else {
+                sql.append(" limit 1000");// 强制分页
+            }
+        } else {
+            sql.append(" limit 1000");// 强制分页
+        }
         return sql.toString();
     }
 

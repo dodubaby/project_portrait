@@ -5,6 +5,8 @@ package com.rat.common;
  * 公共数据
  */
 public class Constant {
+    public static final String LOG_TAG = "[-----pps-----] ";
+
     public static final String LOG_REQUEST = "[-----request-----] ";
     public static final String LOG_RESPONSE = "[-----response-----] ";
 

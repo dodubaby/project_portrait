@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * author : L.jinzhu
- * date : 2015/8/12
+ * date : 2018/12/11
  * introduce : 响应实体
  */
 public class FileFindAllRspInfo extends ResponseInfoWithPageData {

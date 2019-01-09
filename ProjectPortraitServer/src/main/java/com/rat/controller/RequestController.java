@@ -116,8 +116,9 @@ public class RequestController {
                 break;
             // 引用获取全部
             case RequestCode.REFERENCE_FIND_ALL:
-                actionInfo = new ActionInfoWithPageData(actionId, 0, DataGetType.DOWN.getCode());
-                responseBody = referenceService.findAll((ActionInfoWithPageData) actionInfo);
+                String key = map.get("key");
+                actionInfo = new ReferenceActionInfo(actionId, key);
+                responseBody = referenceService.findAll((ReferenceActionInfo) actionInfo);
                 break;
             // 目标数据获取全部
             case RequestCode.TARGET_DATA_FIND_ALL:
@@ -187,10 +188,6 @@ public class RequestController {
             case RequestCode.VIDEO_DELETE:
                 ResourceDeleteActionInfo resourceDeleteActionInfo = GsonUtil.fromJson(actionInfoStr, ResourceDeleteActionInfo.class);
                 response = resourceService.delete(resourceDeleteActionInfo);
-                break;
-            // 关注、取消关注
-            case RequestCode.FOLLOW:
-                ReferenceActionInfo referenceActionInfo = GsonUtil.fromJson(actionInfoStr, ReferenceActionInfo.class);
                 break;
             // 最新版本
             case RequestCode.SYSTEM_NEW_VERSION:

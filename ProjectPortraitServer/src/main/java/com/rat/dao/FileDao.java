@@ -23,9 +23,8 @@ public interface FileDao {
     @Select("select name from file where id=#{fileId} limit 0,1")
     String findNameById(@Param("fileId") Long fileId);
 
-    @Select("select * from userinfo where account=#{account} and accountType=#{accountType} limit 0,1")
-    File findByAccount(@Param("accountType") int accountType, @Param("account") String account);
-
+    @Select("select id from file where name=#{name} limit 0,1")
+    Long findIdByName(@Param("name") String name);
 
     @Insert("insert into userinfo (" +
             "headUrl,nickName,account,accountType,age,sex,bigImg,cityCode,cityName,workCode,workName,educationCode,educationName,houseCode,houseName,marriageCode,marriageName,introduce,remark,token4RongCloud" +

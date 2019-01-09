@@ -20,9 +20,9 @@ export function resourceFindStatisticsByCount(params) {
   })
 }
 // reference
-export function referenceFindAll(params) {
+export function referenceFindAll(key) {
   return request({
-    url: '?actionId=3001',
+    url: '?actionId=3001&key=' + key,
     method: 'get'
   })
 }

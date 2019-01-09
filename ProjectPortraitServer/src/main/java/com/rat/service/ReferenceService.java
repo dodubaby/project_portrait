@@ -1,17 +1,19 @@
 package com.rat.service;
 
+import com.rat.common.Constant;
 import com.rat.dao.FileDao;
 import com.rat.dao.ReferenceDao;
 import com.rat.entity.local.Reference;
-import com.rat.entity.network.entity.DataPage;
-import com.rat.entity.network.request.base.ActionInfoWithPageData;
+import com.rat.entity.network.request.ReferenceActionInfo;
 import com.rat.entity.network.response.ReferenceFindAllRspInfo;
-import com.rat.utils.DataPageUtil;
+import com.rat.utils.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,13 +30,28 @@ public class ReferenceService {
     @Resource
     private FileDao fileDao;
 
+    List<Reference> referenceList;
+    List<Long> cacheDataList;
+
     public ReferenceService() {
     }
 
-    public ReferenceFindAllRspInfo findAll(ActionInfoWithPageData actionInfo) {
-        DataPage dataPage = DataPageUtil.getPage(actionInfo.getPageNumber(), actionInfo.getDataGetType());
-        List<Reference> referenceList = referenceDao.findAll(dataPage.getDataIndexStart(), dataPage.getDataIndexEnd());
-        // TODO by L.jinzhu for sql 待优化
+    public ReferenceFindAllRspInfo findAll(ReferenceActionInfo actionInfo) {
+        String key = actionInfo.getKey();
+        // 无key，获取所有
+        if (StringUtil.isNullOrBlank(key)) {
+            referenceList = referenceDao.findAll(new Long(0));
+        }
+        // 有key，获取key对应数据
+        else {
+            referenceList = new ArrayList<>();
+            cacheDataList = new ArrayList<>();
+            // 先通过key（文件名）获取文件id
+            Long id = fileDao.findIdByName(key);
+            // 循环获取引用数据
+            findByReferenceIdCirculation(id);
+        }
+        // 为最终的引用关系列表，添加文件名称、引用数据名称等
         for (Reference reference : referenceList) {
             reference.setFileName(fileDao.findNameById(reference.getFileId()));
             reference.setReferenceDataName(fileDao.findNameById(reference.getReferenceDataId()));
@@ -42,8 +59,33 @@ public class ReferenceService {
         ReferenceFindAllRspInfo rspInfo = new ReferenceFindAllRspInfo();
         rspInfo.initSuccess(actionInfo.getActionId());
         rspInfo.setReferenceList(referenceList);
-        rspInfo.setCurrentPage(dataPage.getCurrentPage());
-        rspInfo.setIsEndPage(DataPageUtil.isEndPage(referenceList.size()));
         return rspInfo;
+    }
+
+    /**
+     * 循环获取引用数据
+     *
+     * @param referenceId
+     * @return
+     */
+    private void findByReferenceIdCirculation(Long referenceId) {
+        if (null == referenceId || 0 == referenceId) {
+            return;
+        }
+        // 重复数据不查询
+        if (cacheDataList.contains(referenceId)) {
+            logger.info(Constant.LOG_TAG + ": 查询一次，结果：old data，ignore");
+            return;
+        }
+        cacheDataList.add(referenceId);
+        List<Reference> tempList = referenceDao.findAll(referenceId);
+        if (CollectionUtils.isEmpty(tempList)) {
+            return;
+        }
+        logger.info(Constant.LOG_TAG + ": 查询一次，结果：" + tempList.size());
+        referenceList.addAll(tempList);
+        for (Reference reference : tempList) {
+            findByReferenceIdCirculation(reference.getFileId());
+        }
     }
 }

@@ -2,7 +2,7 @@ package com.rat.entity.network.response.base;
 
 /**
  * author : L.jinzhu
- * date : 2015/8/12
+ * date : 2018/12/11
  * introduce : 响应实体
  */
 public class ResponseInfoWithPageData extends ResponseInfo {

@@ -16,7 +16,7 @@ import java.util.List;
 @Repository
 public interface ReferenceDao {
     @SelectProvider(type = SqlProvider.class, method = "referenceFindAll")
-    List<Reference> findAll(@Param("dataIndexStart") int dataIndexStart, @Param("dataIndexEnd") int dataIndexEnd);
+    List<Reference> findAll(@Param("referenceId") Long referenceId);
 
     @Insert("insert into referenceinfo (userId,referenceedUserId) values (#{userId},#{referenceedUserId})")
     void create(@Param("userId") Long userId, @Param("referenceedUserId") Long referenceedUserId);

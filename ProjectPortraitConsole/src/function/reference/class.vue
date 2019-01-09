@@ -6,6 +6,16 @@
     >
       <router-view/>
     </el-alert>
+    <div style="padding:20px;  ">
+      <el-button size="big" @click="fetchData('RecommendView.java')" style="width: 250px">检索[RecommendView.java]
+      </el-button>
+      <el-button size="big" @click="fetchData('MessageUtils.java')" style="width: 250px">检索[MessageUtils.java]
+      </el-button>
+      <el-button size="big" @click="fetchData('SafeParseUtils.java')" style="width: 250px">检索[SafeParseUtils.java]
+      </el-button>
+      <el-button size="big" @click="fetchData('')" style="width: 250px">检索[所有java]</el-button>
+    </div>
+
     <div id="container"/>
   </div>
 </template>
@@ -17,11 +27,11 @@ export default {
     return {}
   },
   mounted() {
-    this.fetchData()
+    // this.fetchData()
   },
   methods: {
-    fetchData() {
-      referenceFindAll(this.listQuery).then(response => {
+    fetchData(key) {
+      referenceFindAll(key).then(response => {
         var links = response.referenceList
         this.draw(links);
       })

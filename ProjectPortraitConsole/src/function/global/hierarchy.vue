@@ -129,19 +129,29 @@ export default {
 
         nodeEnter.append("svg:text")
           .attr("x", function (d) {
-            return d.children || d._children ? -10 : 10;
+            return d.children || d._children ? -15 : 15;
           })
           .attr("dy", ".35em")
           .attr("text-anchor", function (d) {
             return d.children || d._children ? "end" : "start";
           })
           .text(function (d) {
-            return d.name+'_t';
+            return d.name + "[t.u]";
           })
           .on("click", function (d) {
             alert('处理归属者标签、功能标签、其他标签\n查找引用关系\nIDE中打开文件');
           })
           .style("fill-opacity", 1e-6);
+        nodeEnter.append('svg:text')
+          .text('__')
+          .attr("x", function (d) {
+            return d.children || d._children ? -15 : 15;
+          })
+          .attr("dy", ".40em")
+          .attr("text-anchor", function (d) {
+            return d.children || d._children ? "end" : "start";
+          })
+          .style("fill", 'red');
 
         // Transition nodes to their new position.
         var nodeUpdate = node.transition()
