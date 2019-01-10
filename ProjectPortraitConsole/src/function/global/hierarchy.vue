@@ -101,7 +101,7 @@ export default {
 
         // Normalize for fixed-depth.
         nodes.forEach(function (d) {
-          d.y = d.depth * 160;
+          d.y = d.depth * 250;
         });
 
         // Update the nodes…
