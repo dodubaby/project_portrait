@@ -65,7 +65,7 @@ export const constantRouterMap = [
         path: 'hierarchy',
         name: 'hierarchy',
         component: () => import('@/function/global/hierarchy'),
-        meta: { title: '层级关系统计', icon: 'tree' }
+        meta: { title: '层级关系', icon: 'tree' }
       }
     ]
   },
@@ -103,25 +103,19 @@ export const constantRouterMap = [
         path: 'owner',
         name: 'owner',
         component: () => import('@/function/tag/owner'),
-        meta: { title: '归属者标签', icon: 'table' }
+        meta: { title: 'owner标签', icon: 'table' }
       },
       {
         path: 'function',
         name: 'function',
         component: () => import('@/function/tag/function'),
-        meta: { title: '功能标签', icon: 'tree' }
+        meta: { title: 'function标签', icon: 'tree' }
       },
       {
         path: 'other',
         name: 'other',
         component: () => import('@/function/tag/other'),
-        meta: { title: '其他标签', icon: 'table' }
-      },
-      {
-        path: 'manage',
-        name: 'manage',
-        component: () => import('@/function/tag/manager'),
-        meta: { title: '标签管理', icon: 'table' }
+        meta: { title: 'other标签', icon: 'table' }
       }
     ]
   },
@@ -131,7 +125,7 @@ export const constantRouterMap = [
     component: Layout,
     redirect: '/better/resourceRepeat',
     name: 'better',
-    meta: { title: '优化维度', icon: 'example' },
+    meta: { title: '优化/质量筛查', icon: 'example' },
     children: [
       {
         path: 'resourceRepeat',
