@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function login(username, password) {
   return request({
-    url: '?actionId=1001&key=login',
+    url: '?actionId=0002',
     method: 'get'
   })
 }
