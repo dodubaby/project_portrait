@@ -16,25 +16,25 @@ TABLE_NAME_REFERENCE = "reference"
 TABLE_NAME_TARGET_DATA = "target_data"
 TABLE_NAME_TAG = "tag"
 
-# # 数据库配置
-# config = {
-#     'host': '127.0.0.1',
-#     'port': 3306,
-#     'user': 'root',
-#     'passwd': '1qaz@WSX',
-#     'db': DB_NAME,
-#     'charset': 'utf8'
-# }
-
-# 数据库配置（测试服务器）
+# 数据库配置
 config = {
-    'host': '10.33.106.127',
+    'host': '127.0.0.1',
     'port': 3306,
-    'user': 'newhouse',
-    'passwd': 'newhouse',
+    'user': 'root',
+    'passwd': '1qaz@WSX',
     'db': DB_NAME,
     'charset': 'utf8'
 }
+
+# 数据库配置（测试服务器）
+# config = {
+#     'host': '10.33.106.127',
+#     'port': 3306,
+#     'user': 'newhouse',
+#     'passwd': 'newhouse',
+#     'db': DB_NAME,
+#     'charset': 'utf8'
+# }
 
 """
 连接数据库

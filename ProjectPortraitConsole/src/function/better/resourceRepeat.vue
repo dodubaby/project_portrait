@@ -6,6 +6,7 @@
       element-loading-text="Loading"
       border
       fit
+      stripe
       highlight-current-row>
       <el-table-column label="ID" width="90" align="center" >
         <template slot-scope="scope">
@@ -35,7 +36,7 @@
       </el-table-column>
       <el-table-column class-name="status-col" label="操作" width="200" align="center">
         <template slot-scope="scope">
-          <el-button size="small" @click="buttonClick(scope.row.resourceValue)">查找资源详情</el-button>
+          <el-button size="small" plain @click="buttonClick(scope.row.resourceValue)">查找资源详情</el-button>
         </template>
       </el-table-column>
     </el-table>

@@ -1,8 +1,8 @@
 package com.rat.provider;
 
 import com.rat.utils.SafeParseUtils;
+import com.rat.utils.StringUtil;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -13,8 +13,19 @@ public class SqlProvider {
     public String fileFindAll(Map<String, Object> para) {
         StringBuffer sql = new StringBuffer();
         sql.append("select * from file where 1=1");
-        // 分页
-        sql.append(getCountLimitCondition(para));
+        // 文件后缀
+        if (null != para.get("suffix")) {
+            String suffix = (String) para.get("suffix");
+            sql.append(" and suffix = '" + suffix + "'");
+        }
+        // 起始根节点
+        if (null != para.get("rootKey")) {
+            String rootKey = (String) para.get("rootKey");
+            // 不等于空的时候，才拼接条件
+            if (StringUtil.isNotBlank(rootKey)) {
+                sql.append(" and path like '%" + rootKey + "%'");
+            }
+        }
         return sql.toString();
     }
 

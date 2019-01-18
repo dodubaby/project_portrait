@@ -4,10 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.rat.common.Constant;
 import com.rat.common.RequestCode;
 import com.rat.entity.enums.DataGetType;
-import com.rat.entity.network.request.FileFindBySuffixOrderByLineCountActionInfo;
-import com.rat.entity.network.request.ReferenceActionInfo;
-import com.rat.entity.network.request.ResourceFindByValueActionInfo;
-import com.rat.entity.network.request.TagFindByTypeActionInfo;
+import com.rat.entity.network.request.*;
 import com.rat.entity.network.request.base.ActionInfo;
 import com.rat.entity.network.request.base.ActionInfoWithPageData;
 import com.rat.entity.network.request.base.RequestInfo;
@@ -79,6 +76,7 @@ public class RequestController {
             return ResponseInfo.getErrorResponse4Param(0);
         }
         ActionInfo actionInfo;
+        String suffix;// 文件后缀
         switch (actionId) {
             // 用户login
             case RequestCode.SYSTEM_USER_LOGIN:
@@ -88,12 +86,14 @@ public class RequestController {
                 break;
             // 文件获取全部
             case RequestCode.FILE_FIND_ALL:
-                actionInfo = new ActionInfoWithPageData(actionId, 0, DataGetType.DOWN.getCode());
-                responseBody = fileService.findAll((ActionInfoWithPageData) actionInfo);
+                String rootKey = map.get("rootKey");
+                suffix = map.get("suffix");
+                actionInfo = new FileFindAllActionInfo(actionId, suffix, rootKey);
+                responseBody = fileService.findAll((FileFindAllActionInfo) actionInfo);
                 break;
             // 文件获取:by类型for行数
             case RequestCode.FILE_FIND_BY_SUFFIX_ORDER_BY_LINE_COUNT:
-                String suffix = map.get("suffix");
+                suffix = map.get("suffix");
                 int maxLineCount = 0;
                 if (StringUtil.isNullOrBlank(suffix)) {
                     return ResponseInfo.getErrorResponse4Param(actionId);

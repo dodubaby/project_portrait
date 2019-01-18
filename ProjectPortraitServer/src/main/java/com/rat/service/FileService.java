@@ -4,11 +4,12 @@ import com.rat.dao.FileDao;
 import com.rat.entity.local.File;
 import com.rat.entity.local.ParentChild;
 import com.rat.entity.network.entity.DataPage;
+import com.rat.entity.network.request.FileFindAllActionInfo;
 import com.rat.entity.network.request.FileFindBySuffixOrderByLineCountActionInfo;
-import com.rat.entity.network.request.base.ActionInfoWithPageData;
 import com.rat.entity.network.response.FileFindAllRspInfo;
 import com.rat.service.base.BaseService;
 import com.rat.utils.DataPageUtil;
+import com.rat.utils.StringUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -27,23 +28,30 @@ public class FileService extends BaseService {
     public FileService() {
     }
 
-    public FileFindAllRspInfo findAll(ActionInfoWithPageData actionInfo) {
-        DataPage dataPage = DataPageUtil.getPage(actionInfo.getPageNumber(), actionInfo.getDataGetType());
+    public FileFindAllRspInfo findAll(FileFindAllActionInfo actionInfo) {
         // 获取文件列表
-        List<File> fileList = fileDao.findAll(dataPage.getDataIndexStart(), dataPage.getDataIndexEnd());
-        // 获取文件列表（带层级）
+        List<File> fileList = fileDao.findAll(actionInfo.getSuffix(), actionInfo.getRootKey());
+        // 获取文件列表（带层级，只有Java文件）
         ParentChild root = new ParentChild("root");
         for (File file : fileList) {
             String str = file.getClassFullName();
+            if (StringUtil.isNullOrBlank(str)) {
+                continue;
+            }
+            String rootKey = actionInfo.getRootKey();// 查询的起始根节点
+            if (StringUtil.isNotBlank(rootKey)) {  // 起始根节点存在，展示起始根节点后面的内容
+                if (!str.contains(rootKey)) {
+                    continue;
+                }
+                str = str.substring(str.indexOf(rootKey));
+            }
             String[] strArray = str.split("\\.");
-            root = FileService.addChildList(root, strArray);
+            root = addChildList(root, strArray);
         }
         FileFindAllRspInfo rspInfo = new FileFindAllRspInfo();
         rspInfo.initSuccess(actionInfo.getActionId());
         rspInfo.setFileList(fileList);
         rspInfo.setFileListWithHierarchy(root);
-        rspInfo.setCurrentPage(dataPage.getCurrentPage());
-        rspInfo.setIsEndPage(DataPageUtil.isEndPage(fileList.size()));
         return rspInfo;
     }
 

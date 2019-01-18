@@ -1,27 +1,76 @@
 <template>
   <div style="padding:30px; overflow: scroll">
-    <el-alert :closable="false" type="success"
+    <el-alert :closable="false" type="info"
               title="视图说明"
-              description="项目熟悉、风险范围评估、优先级评估"
-    >
-      <router-view/>
-    </el-alert>
+              description="项目熟悉、风险范围评估、优先级评估"/>
+
+    <el-form ref="form" :model="form" label-width="120px" style="margin-top: 20px;">
+      <el-form-item label="展示根节点">
+        <el-input v-model="form.rootKey" style="width:300px;"/>
+        <el-tag>空代表检索所有</el-tag>
+      </el-form-item>
+      <el-form-item label="Tag-owner">
+        <el-checkbox-group v-model="form.type">
+          <el-checkbox label="item1" name="type"/>
+          <el-checkbox label="item2" name="type"/>
+          <el-checkbox label="item3" name="type"/>
+          <el-checkbox label="item4" name="type"/>
+          <el-checkbox label="item5" name="type"/>
+        </el-checkbox-group>
+      </el-form-item>
+      <el-form-item label="Tag-function">
+        <el-checkbox-group v-model="form.type">
+          <el-checkbox label="item6" name="type"/>
+          <el-checkbox label="item7" name="type"/>
+        </el-checkbox-group>
+      </el-form-item>
+      <el-form-item label="Tag-other">
+        <el-checkbox-group v-model="form.type">
+          <el-checkbox label="item8" name="type"/>
+          <el-checkbox label="item9" name="type"/>
+          <el-checkbox label="item10" name="type"/>
+        </el-checkbox-group>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" plain @click="fetchData">查询</el-button>
+        <el-button plain @click="onReset">重置所有选项</el-button>
+      </el-form-item>
+    </el-form>
     <div id="container"/>
   </div>
 </template>
 <script>
 import {fileFindAll} from '@/api/ppserver'
+import ElCol from "element-ui/packages/col/src/col";
+import ElTag from "../../../node_modules/element-ui/packages/tag/src/tag";
+import ElButton from "../../../node_modules/element-ui/packages/button/src/button";
 
 export default {
-  data() {
-    return {}
+  components: {ElButton, ElTag, ElCol}, data() {
+    return {
+      form: {
+        rootKey: '',
+        region: '',
+        date1: '',
+        date2: '',
+        delivery: false,
+        type: [],
+        resource: '',
+        desc: ''
+      }
+    }
   },
   mounted() {
-    this.fetchData()
   },
   methods: {
+    onReset() {
+      this.$message({
+        message: 'reset',
+        type: 'warning'
+      })
+    },
     fetchData() {
-      fileFindAll(this.listQuery).then(response => {
+      fileFindAll(this.form.rootKey).then(response => {
         var root = response.fileListWithHierarchy
         this.draw(root);
       })
@@ -251,5 +300,9 @@ export default {
     fill: none;
     stroke: #ccc;
     stroke-width: 1.5px;
+  }
+
+  .line {
+    text-align: center;
   }
 </style>

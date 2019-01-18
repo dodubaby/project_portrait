@@ -1,54 +1,39 @@
 <template>
-
   <div style="padding:30px;">
-    <el-alert :closable="false" title="Welcome to Project Portrait" description="欢迎来到 项目画像（分析）系统" type="success">
-      <router-view/>
-    </el-alert>
-    <el-alert :closable="false" title="Welcome to Project Portrait" description="欢迎来到 项目画像（分析）系统" type="warn">
-      <router-view/>
-    </el-alert>
-    <el-alert :closable="false" title="Welcome to Project Portrait" description="欢迎来到 项目画像（分析）系统" type="error">
-      <router-view/>
-    </el-alert>
-    <el-alert :closable="false" title="Welcome to Project Portrait" description="欢迎来到 项目画像（分析）系统" type="warn">
-      <router-view/>
-    </el-alert>
-    <el-alert :closable="false" title="Welcome to Project Portrait" description="欢迎来到 项目画像（分析）系统" type="success">
-      <router-view/>
-    </el-alert>
-    <el-alert :closable="false" title="Welcome to Project Portrait" description="欢迎来到 项目画像（分析）系统" type="warn">
-      <router-view/>
-    </el-alert>
-    <el-alert :closable="false" title="Welcome to Project Portrait" description="欢迎来到 项目画像（分析）系统" type="error">
-      <router-view/>
-    </el-alert>
-    <!--<div class="dashboard-text">name:{{ name }}</div>-->
-    <!--<div class="dashboard-text">roles:<span v-for="role in roles" :key="role">{{ role }}</span></div>-->
+    <el-carousel :interval="3000" type="card" indicatorPosition="none" height="250px">
+      <el-carousel-item style="align-content: center">
+        <h1>Welcome to Project Portrait</h1>
+      </el-carousel-item>
+      <el-carousel-item>
+        <h1>欢迎来到 项目画像（分析）系统</h1>
+      </el-carousel-item>
+      <el-carousel-item>
+        <h1>Welcome to Project Portrait</h1>
+      </el-carousel-item>
+      <el-carousel-item>
+        <h1>欢迎来到 项目画像（分析）系统</h1>
+      </el-carousel-item>
+    </el-carousel>
   </div>
 </template>
 
-<script>
-import mapGetters from 'vuex'
+<style>
+  .el-carousel__item h1 {
+    color: #475669;
+    font-size: 30px;
+    align-content: center;
+    align-items: center;
+    align-self: center;
+    opacity: 0.75;
+    line-height: 200px;
+    margin: 20px;
+  }
 
-export default {
-  name: 'Dashboard',
-//  computed: {
-//    ...mapGetters([
-//      'name',
-//      'roles'
-//    ])
-//  }
-}
-</script>
+  .el-carousel__item:nth-child(2n) {
+    background-color: #99a9bf;
+  }
 
-<style rel="stylesheet/scss" lang="scss" scoped>
-  .dashboard {
-    &-container {
-      margin: 30px;
-    }
-    &-text {
-      font-size: 10px;
-      line-height: 20px;
-    }
+  .el-carousel__item:nth-child(2n+1) {
+    background-color: #d3dce6;
   }
 </style>

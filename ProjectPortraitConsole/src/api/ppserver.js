@@ -6,9 +6,9 @@ export function fileFindBySuffixOrderByLineCount(params) {
     method: 'get'
   })
 }
-export function fileFindAll(params) {
+export function fileFindAll(rootKey) {
   return request({
-    url: '?actionId=1001',
+    url: '?actionId=1001&rootKey=' + rootKey,
     method: 'get'
   })
 }

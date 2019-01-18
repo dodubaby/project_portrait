@@ -6,6 +6,7 @@
       element-loading-text="Loading"
       border
       fit
+      stripe
       highlight-current-row>
       <el-table-column label="ID" width="90" align="center" >
         <template slot-scope="scope">

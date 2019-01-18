@@ -2,7 +2,9 @@ package com.rat.dao;
 
 import com.rat.entity.local.File;
 import com.rat.provider.SqlProvider;
-import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.SelectProvider;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -15,7 +17,7 @@ import java.util.List;
 @Repository
 public interface FileDao {
     @SelectProvider(type = SqlProvider.class, method = "fileFindAll")
-    List<File> findAll(@Param("dataIndexStart") int dataIndexStart, @Param("dataIndexEnd") int dataIndexEnd);
+    List<File> findAll(@Param("suffix") String suffix, @Param("rootKey") String rootKey);
 
     @SelectProvider(type = SqlProvider.class, method = "findBySuffixOrderByLineCount")
     List<File> findBySuffixOrderByLineCount(@Param("suffix") String suffix, @Param("maxLineCount") int maxLineCount, @Param("dataIndexStart") int dataIndexStart, @Param("dataIndexEnd") int dataIndexEnd);
