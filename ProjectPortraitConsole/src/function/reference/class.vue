@@ -66,7 +66,10 @@ export default {
         .on("tick", tick)
         .start();
 
-      var svg = d3.select("#container").append("svg")
+      // 清理历史视图
+      d3.select("#container").select("svg").remove()
+      // 添加新视图
+      var svg = d3.select("#container").insert("svg:svg")
         .attr("width", width)
         .attr("height", height);
 
