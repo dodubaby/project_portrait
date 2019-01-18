@@ -9,7 +9,7 @@ import java.io.Serializable;
  * 实体类
  *
  * @author L.jinzhu
- * @date 2017-03-31 18:07
+ * @date 2018-03-31 18:07
  */
 public class Reference implements Serializable {
     private long id;

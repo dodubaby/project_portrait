@@ -6,9 +6,8 @@ import com.rat.dao.ReferenceDao;
 import com.rat.entity.local.Reference;
 import com.rat.entity.network.request.ReferenceActionInfo;
 import com.rat.entity.network.response.ReferenceFindAllRspInfo;
+import com.rat.service.base.BaseService;
 import com.rat.utils.StringUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -19,12 +18,10 @@ import java.util.List;
 /**
  * 引用服务
  *
- * @author L.jinzhu 2017/3/30
+ * @author L.jinzhu 2018/3/30
  */
 @Service
-public class ReferenceService {
-
-    private static Logger logger = LoggerFactory.getLogger(ReferenceService.class);
+public class ReferenceService extends BaseService {
     @Resource
     private ReferenceDao referenceDao;
     @Resource

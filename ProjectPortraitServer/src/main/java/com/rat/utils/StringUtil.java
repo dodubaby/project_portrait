@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 /**
  * @author L.jinzhu
  * @Description: 封装一些常用的字符串处理方法
- * @date 2017-04-01 10:37
+ * @date 2018-04-01 10:37
  */
 public class StringUtil {
     public static boolean isNotBlank(String src) {

@@ -1,26 +1,14 @@
 package com.rat.service;
 
 import com.rat.dao.FileDao;
-import com.rat.dao.ReferenceDao;
-import com.rat.dao.ResourceDao;
-import com.rat.dao.TargetDataDao;
-import com.rat.entity.enums.ReferenceStatus;
-import com.rat.entity.enums.ResponseType;
 import com.rat.entity.local.File;
 import com.rat.entity.local.ParentChild;
-import com.rat.entity.local.ResourceData;
-import com.rat.entity.local.UserDetail;
 import com.rat.entity.network.entity.DataPage;
 import com.rat.entity.network.request.FileFindBySuffixOrderByLineCountActionInfo;
-import com.rat.entity.network.request.UserFindDetailActionInfo;
-import com.rat.entity.network.request.UserUpdateActionInfo;
 import com.rat.entity.network.request.base.ActionInfoWithPageData;
 import com.rat.entity.network.response.FileFindAllRspInfo;
-import com.rat.entity.network.response.UserFindDetailRspInfo;
-import com.rat.entity.network.response.UserUpdateRspInfo;
+import com.rat.service.base.BaseService;
 import com.rat.utils.DataPageUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -29,20 +17,12 @@ import java.util.List;
 /**
  * 文件服务
  *
- * @author L.jinzhu 2017/3/30
+ * @author L.jinzhu 2018/3/30
  */
 @Service
-public class FileService {
-
-    private static Logger logger = LoggerFactory.getLogger(FileService.class);
+public class FileService extends BaseService {
     @Resource
     private FileDao fileDao;
-    @Resource
-    private ResourceDao resourceDao;
-    @Resource
-    private ReferenceDao referenceDao;
-    @Resource
-    private TargetDataDao targetDataDao;
 
     public FileService() {
     }
@@ -78,28 +58,6 @@ public class FileService {
         return rspInfo;
     }
 
-
-    public UserUpdateRspInfo update(UserUpdateActionInfo actionInfo) {
-        UserUpdateRspInfo rspInfo = new UserUpdateRspInfo();
-        File file = actionInfo.getFile();
-        if (null == file) {
-            rspInfo.initError4Param(actionInfo.getActionId());
-            return rspInfo;
-        }
-
-        fileDao.update(actionInfo.getFile());
-
-        rspInfo.initSuccess(actionInfo.getActionId());
-        return rspInfo;
-    }
-
-    public UserFindDetailRspInfo findDetail(UserFindDetailActionInfo actionInfo) {
-        UserFindDetailRspInfo rspInfo = new UserFindDetailRspInfo();
-        UserDetail userDetail = new UserDetail();
-        rspInfo.initSuccess(actionInfo.getActionId());
-        rspInfo.setUserDetail(userDetail);
-        return rspInfo;
-    }
 
     public static ParentChild addChildList(ParentChild root, String[] strArray) {
         ParentChild current = root;

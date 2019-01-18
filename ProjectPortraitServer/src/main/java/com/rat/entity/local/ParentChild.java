@@ -12,7 +12,7 @@ import java.util.List;
  * 实体类
  *
  * @author L.jinzhu
- * @date 2017-03-31 18:07
+ * @date 2018-03-31 18:07
  */
 public class ParentChild implements Serializable {
     private String name;

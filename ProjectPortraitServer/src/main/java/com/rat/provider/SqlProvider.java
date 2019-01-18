@@ -85,52 +85,51 @@ public class SqlProvider {
         return sql.toString();
     }
 
-    public String deleteResource(Map<String, Object> para) {
-        StringBuffer sql = new StringBuffer();
-        sql.append("delete from resourceinfo where 1=1");
+//    public String deleteResource(Map<String, Object> para) {
+//        StringBuffer sql = new StringBuffer();
+//        sql.append("delete from resourceinfo where 1=1");
+//
+//        if (null != para.get("resourceList")) {
+//            List<Long> resourceList = (List<Long>) para.get("resourceList");
+//            if (null != resourceList && 0 != resourceList.size()) {
+//                String str = "(";
+//                for (Long id : resourceList) {
+//                    str += id + ",";
+//                }
+//                str = str.substring(0, str.lastIndexOf(","));
+//                str += ")";
+//                sql.append(" and resourceId in " + str);
+//            } else {
+//                sql.append(" and 1=2");
+//            }
+//        } else {
+//            sql.append(" and 1=2");
+//        }
+//        return sql.toString();
+//    }
 
-        if (null != para.get("resourceList")) {
-            List<Long> resourceList = (List<Long>) para.get("resourceList");
-            if (null != resourceList && 0 != resourceList.size()) {
-                String str = "(";
-                for (Long id : resourceList) {
-                    str += id + ",";
-                }
-                str = str.substring(0, str.lastIndexOf(","));
-                str += ")";
-                sql.append(" and resourceId in " + str);
-            } else {
-                sql.append(" and 1=2");
-            }
-        } else {
-            sql.append(" and 1=2");
-        }
-        return sql.toString();
-    }
-
-    public String deleteUserResource(Map<String, Object> para) {
-        StringBuffer sql = new StringBuffer();
-        sql.append("delete from user_resource where 1=1");
-
-        if (null != para.get("resourceList")) {
-            List<Long> resourceList = (List<Long>) para.get("resourceList");
-            if (null != resourceList && 0 != resourceList.size()) {
-                String str = "(";
-                for (Long id : resourceList) {
-                    str += id + ",";
-                }
-                str = str.substring(0, str.lastIndexOf(","));
-                str += ")";
-                sql.append(" and resourceId in " + str);
-            } else {
-                sql.append(" and 1=2");
-            }
-        } else {
-            sql.append(" and 1=2");
-        }
-        return sql.toString();
-    }
-
+//    public String deleteUserResource(Map<String, Object> para) {
+//        StringBuffer sql = new StringBuffer();
+//        sql.append("delete from user_resource where 1=1");
+//
+//        if (null != para.get("resourceList")) {
+//            List<Long> resourceList = (List<Long>) para.get("resourceList");
+//            if (null != resourceList && 0 != resourceList.size()) {
+//                String str = "(";
+//                for (Long id : resourceList) {
+//                    str += id + ",";
+//                }
+//                str = str.substring(0, str.lastIndexOf(","));
+//                str += ")";
+//                sql.append(" and resourceId in " + str);
+//            } else {
+//                sql.append(" and 1=2");
+//            }
+//        } else {
+//            sql.append(" and 1=2");
+//        }
+//        return sql.toString();
+//    }
 
     private String getCountLimitCondition(Map<String, Object> para) {
         String countLimit;

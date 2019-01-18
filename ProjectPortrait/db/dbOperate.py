@@ -16,12 +16,22 @@ TABLE_NAME_REFERENCE = "reference"
 TABLE_NAME_TARGET_DATA = "target_data"
 TABLE_NAME_TAG = "tag"
 
-# 数据库配置
+# # 数据库配置
+# config = {
+#     'host': '127.0.0.1',
+#     'port': 3306,
+#     'user': 'root',
+#     'passwd': '1qaz@WSX',
+#     'db': DB_NAME,
+#     'charset': 'utf8'
+# }
+
+# 数据库配置（测试服务器）
 config = {
-    'host': '127.0.0.1',
+    'host': '10.33.106.127',
     'port': 3306,
-    'user': 'root',
-    'passwd': '1qaz@WSX',
+    'user': 'newhouse',
+    'passwd': 'newhouse',
     'db': DB_NAME,
     'charset': 'utf8'
 }
@@ -83,7 +93,7 @@ def createTables():
         cursor = conn.cursor()
 
         # 创建file表
-        cursor.execute('DROP TABLE IF EXISTS %s' % TABLE_NAME_FILE)
+        #cursor.execute('DROP TABLE IF EXISTS %s' % TABLE_NAME_FILE)
         cursor.execute('CREATE TABLE %s('
                        'id bigint unsigned zerofill NOT NULL AUTO_INCREMENT,'
                        'type varchar(255) DEFAULT NULL,'
@@ -95,11 +105,11 @@ def createTables():
                        'line_count bigint DEFAULT NULL,'
                        'size bigint DEFAULT NULL,'
                        'PRIMARY KEY (id)'
-                       ') ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci'
+                       ') ENGINE=InnoDB DEFAULT CHARSET=utf8'
                        % TABLE_NAME_FILE)
 
         # 创建resource表
-        cursor.execute('DROP TABLE IF EXISTS %s' % TABLE_NAME_RESOURCE)
+        #cursor.execute('DROP TABLE IF EXISTS %s' % TABLE_NAME_RESOURCE)
         cursor.execute('CREATE TABLE %s('
                        'id bigint unsigned zerofill NOT NULL AUTO_INCREMENT,'
                        'resource_type varchar(255) DEFAULT NULL,'
@@ -108,11 +118,11 @@ def createTables():
                        'file_id varchar(255) DEFAULT NULL, '
                        'file_full_name varchar(255) DEFAULT NULL,'
                        'PRIMARY KEY (id)'
-                       ') ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci'
+                       ') ENGINE=InnoDB DEFAULT CHARSET=utf8'
                        % TABLE_NAME_RESOURCE)
 
         # 创建reference表
-        cursor.execute('DROP TABLE IF EXISTS %s' % TABLE_NAME_REFERENCE)
+        #cursor.execute('DROP TABLE IF EXISTS %s' % TABLE_NAME_REFERENCE)
         cursor.execute('CREATE TABLE %s('
                        'id bigint unsigned zerofill NOT NULL AUTO_INCREMENT,'
                        'file_id bigint DEFAULT NULL,'
@@ -121,28 +131,28 @@ def createTables():
                        'reference_data varchar(255) DEFAULT NULL, '
                        'reference_line bigint DEFAULT NULL,'
                        'PRIMARY KEY (id)'
-                       ') ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci'
+                       ') ENGINE=InnoDB DEFAULT CHARSET=utf8'
                        % TABLE_NAME_REFERENCE)
 
         # 创建targetData表
-        cursor.execute('DROP TABLE IF EXISTS %s' % TABLE_NAME_TARGET_DATA)
+        #cursor.execute('DROP TABLE IF EXISTS %s' % TABLE_NAME_TARGET_DATA)
         cursor.execute('CREATE TABLE %s('
                        'id bigint unsigned zerofill NOT NULL AUTO_INCREMENT,'
                        'file_id bigint DEFAULT NULL,'
                        'target_data varchar(255) DEFAULT NULL, '
                        'target_data_line bigint DEFAULT NULL,'
                        'PRIMARY KEY (id)'
-                       ') ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci'
+                       ') ENGINE=InnoDB DEFAULT CHARSET=utf8'
                        % TABLE_NAME_TARGET_DATA)
 
         # 创建tag表
-        cursor.execute('DROP TABLE IF EXISTS %s' % TABLE_NAME_TAG)
+        #cursor.execute('DROP TABLE IF EXISTS %s' % TABLE_NAME_TAG)
         cursor.execute('CREATE TABLE %s('
                        'id bigint unsigned zerofill NOT NULL AUTO_INCREMENT,'
                        'type varchar(255) DEFAULT NULL, '
                        'value varchar(255) DEFAULT NULL, '
                        'PRIMARY KEY (id)'
-                       ') ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci'
+                       ') ENGINE=InnoDB DEFAULT CHARSET=utf8'
                        % TABLE_NAME_TAG)
     except:
         traceback.print_exc()

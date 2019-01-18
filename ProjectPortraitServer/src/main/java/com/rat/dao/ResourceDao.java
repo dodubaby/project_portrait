@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * dao层
  *
- * @author L.jinzhu on 2017/3/30
+ * @author L.jinzhu on 2018/3/30
  */
 @Repository
 public interface ResourceDao {
@@ -56,10 +56,4 @@ public interface ResourceDao {
 
     @Update("update user_resource set isDefault = 0 where userId=#{userId}")
     void updateUserResourceSetAllNotDefault(@Param("userId") Long userId);
-
-    @DeleteProvider(type = SqlProvider.class, method = "deleteResource")
-    int deleteResource(@Param("resourceList") List<Long> resourceList);
-
-    @DeleteProvider(type = SqlProvider.class, method = "deleteUserResource")
-    int deleteUserResource(@Param("resourceList") List<Long> resourceList);
 }

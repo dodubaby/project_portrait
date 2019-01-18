@@ -13,9 +13,6 @@ public class Constant {
     // 分页数据（配置文件）
     public static int DATA_COUNT_OF_PAGE = 5; // 分页数据
 
-    // 用户默认背景大图（配置文件）
-    public static String userDefaultBigImage = "default";
-
     // 版本更新数据（配置文件）
     public static String versionCode = "";
     public static String versionName = "";
@@ -23,8 +20,5 @@ public class Constant {
     public static String downloadUrl = "";
     public static String des = "";
 
-    // 视频名称列表
-    public static String resourceNames = "";
-
-    public static String DATA_ERROR = "DataErrord";
+    public static String DATA_ERROR = "DataError";
 }

@@ -4,7 +4,10 @@ import com.alibaba.fastjson.JSONObject;
 import com.rat.common.Constant;
 import com.rat.common.RequestCode;
 import com.rat.entity.enums.DataGetType;
-import com.rat.entity.network.request.*;
+import com.rat.entity.network.request.FileFindBySuffixOrderByLineCountActionInfo;
+import com.rat.entity.network.request.ReferenceActionInfo;
+import com.rat.entity.network.request.ResourceFindByValueActionInfo;
+import com.rat.entity.network.request.TagFindByTypeActionInfo;
 import com.rat.entity.network.request.base.ActionInfo;
 import com.rat.entity.network.request.base.ActionInfoWithPageData;
 import com.rat.entity.network.request.base.RequestInfo;
@@ -30,7 +33,7 @@ import java.util.Properties;
 /**
  * 请求回调接口
  *
- * @author L.jinzhu 2017/3/30
+ * @author L.jinzhu 2018/3/30
  */
 @Controller
 @RequestMapping("/pp")
@@ -77,6 +80,12 @@ public class RequestController {
         }
         ActionInfo actionInfo;
         switch (actionId) {
+            // 用户login
+            case RequestCode.SYSTEM_USER_LOGIN:
+                // TODO by L.jinzhu 暂时不控制权限
+                responseBody = new ResponseInfo();
+                responseBody.initSuccess(actionId);
+                break;
             // 文件获取全部
             case RequestCode.FILE_FIND_ALL:
                 actionInfo = new ActionInfoWithPageData(actionId, 0, DataGetType.DOWN.getCode());
@@ -122,8 +131,8 @@ public class RequestController {
                 break;
             // 目标数据获取全部
             case RequestCode.TARGET_DATA_FIND_ALL:
-                actionInfo = new TargetDataFindAllActionInfo(actionId, 0, DataGetType.DOWN.getCode());
-                responseBody = targetDataService.findAll((TargetDataFindAllActionInfo) actionInfo);
+                actionInfo = new ActionInfoWithPageData(actionId, 0, DataGetType.DOWN.getCode());
+                responseBody = targetDataService.findAll((ActionInfoWithPageData) actionInfo);
                 break;
             // Tag获取:by type
             case RequestCode.TAG_FIND_BY_TYPE:
@@ -164,41 +173,16 @@ public class RequestController {
         JSONObject jsonObject = JSONObject.parseObject(json);
         String actionInfoStr = jsonObject.getString("actionInfo");
         switch (requestInfo.getActionInfo().getActionId()) {
-            // 用户更新
-            case RequestCode.USER_UPDATE:
-                UserUpdateActionInfo userUpdateActionInfo = GsonUtil.fromJson(actionInfoStr, UserUpdateActionInfo.class);
-                response = fileService.update(userUpdateActionInfo);
-                break;
-            // 获取所有用户
-            case RequestCode.USER_FIND_ALL:
-                UserFindAllActionInfo userFindAllActionInfo = GsonUtil.fromJson(actionInfoStr, UserFindAllActionInfo.class);
-//                response = fileService.findAll(fileFindAllActionInfo);
-                break;
-            // 获取用户详情
-            case RequestCode.USER_FIND_DETAIL:
-                UserFindDetailActionInfo userFindDetailActionInfo = GsonUtil.fromJson(actionInfoStr, UserFindDetailActionInfo.class);
-                response = fileService.findDetail(userFindDetailActionInfo);
-                break;
-            // 创建视频
-            case RequestCode.VIDEO_CREATE:
-                ResourceCreateActionInfo resourceCreateActionInfo = GsonUtil.fromJson(actionInfoStr, ResourceCreateActionInfo.class);
-                response = resourceService.create(resourceCreateActionInfo);
-                break;
-            // 删除视频
-            case RequestCode.VIDEO_DELETE:
-                ResourceDeleteActionInfo resourceDeleteActionInfo = GsonUtil.fromJson(actionInfoStr, ResourceDeleteActionInfo.class);
-                response = resourceService.delete(resourceDeleteActionInfo);
-                break;
-            // 最新版本
-            case RequestCode.SYSTEM_NEW_VERSION:
-                ActionInfoWithPageData newVersionActionInfo = GsonUtil.fromJson(actionInfoStr, ActionInfoWithPageData.class);
-                response = systemService.getNewVersion(newVersionActionInfo);
-                break;
-            // 视频名称列表
-            case RequestCode.SYSTEM_VIDEO_NAMES:
-                ActionInfoWithPageData resourceFindAllActionInfo = GsonUtil.fromJson(actionInfoStr, ActionInfoWithPageData.class);
-                response = systemService.getResourceNames(resourceFindAllActionInfo);
-                break;
+//            // 用户更新
+//            case RequestCode.USER_UPDATE:
+//                UserUpdateActionInfo userUpdateActionInfo = GsonUtil.fromJson(actionInfoStr, UserUpdateActionInfo.class);
+//                response = fileService.update(userUpdateActionInfo);
+//                break;
+//            // 获取用户详情
+//            case RequestCode.USER_FIND_DETAIL:
+//                UserFindDetailActionInfo userFindDetailActionInfo = GsonUtil.fromJson(actionInfoStr, UserFindDetailActionInfo.class);
+//                response = fileService.findDetail(userFindDetailActionInfo);
+//                break;
             default:
                 response = new ResponseInfo();
                 response.initError4Param(requestInfo.getActionInfo().getActionId());
@@ -222,10 +206,8 @@ public class RequestController {
             InputStreamReader in = new InputStreamReader(new FileInputStream(propFile), "UTF-8");
             prop.load(in);
             Constant.DATA_COUNT_OF_PAGE = Integer.parseInt(prop.getProperty("dataCountOfPage"));
-            Constant.userDefaultBigImage = prop.getProperty("userDefaultBigImage");
-            Constant.resourceNames = prop.getProperty("resourceNames");
             in.close();
-            logger.info("rat init system profiles success: dataCountOfPage: " + Constant.DATA_COUNT_OF_PAGE + " | userDefaultBigImage: " + Constant.userDefaultBigImage + " | resourceNames: " + Constant.resourceNames);
+            logger.info("rat init system profiles success: dataCountOfPage: " + Constant.DATA_COUNT_OF_PAGE);
         } catch (Throwable e) {
             logger.error("rat init system profiles error", e);
         }
