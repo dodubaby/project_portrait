@@ -1,6 +1,6 @@
 # encoding: utf-8
 # !/usr/bin/python3
-
+import datetime
 import traceback
 
 import const as const
@@ -9,6 +9,15 @@ import const as const
 初始化基础数据
 """
 
+"""
+记录扫描时间
+"""
+time = str(datetime.datetime.now())
+
+"""
+判断此次是否为增量扫描
+"""
+isNew = False
 
 def initBaseData():
     try:
@@ -75,8 +84,18 @@ def saveFileData(type, full_name, path, name, suffix, class_full_name, line_coun
     try:
         conn = const.dbconnect
         cursor = conn.cursor()
-        sql = 'INSERT INTO file(type, full_name, path, name, suffix, class_full_name, line_count, size) values(%s,%s,%s,%s,%s,%s,%s,%s)'
-        value = [type, full_name, path, name, suffix, class_full_name, line_count, size]
+        if isNew : #判断是否为新增扫描
+            sql = 'INSERT INTO file(type, full_name, path, name, suffix, class_full_name, line_count, size,is_new,scan_time) ' \
+                  'values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)' \
+                  'on duplicate key update line_count = %s, size = %s,is_new = %s,scan_time = %s'
+            value = [type, full_name, path, name, suffix, class_full_name, line_count, size, 1, time, line_count, size,
+                     0, time]
+        else :
+            sql = 'INSERT INTO file(type, full_name, path, name, suffix, class_full_name, line_count, size,is_new,scan_time) ' \
+                  'values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)' \
+                  'on duplicate key update line_count = %s, size = %s,scan_time = %s'
+            value = [type, full_name, path, name, suffix, class_full_name, line_count, size, 1, time, line_count, size,
+                     time]
         cursor.execute(sql, value)
     except:
         traceback.print_exc()
@@ -193,8 +212,8 @@ def readResourceFileList():
     try:
         conn = const.dbconnect
         cursor = conn.cursor()
-        sql = 'SELECT id,full_name FROM file WHERE name in (%s,%s)'
-        value = ['colors.xml', 'strings.xml']
+        sql = 'SELECT id,full_name,scan_time FROM file WHERE name in (%s,%s) and scan_time = %s'  #scan_time 来判断是否为当前已经删除
+        value = ['colors.xml', 'strings.xml', time]
         cursor.execute(sql, value)
         resultList = cursor.fetchall()
         for result in resultList:
@@ -218,11 +237,11 @@ def readNeedAnalysisFileList(count):
     try:
         conn = const.dbconnect
         cursor = conn.cursor()
-        sql = 'SELECT id,full_name FROM file WHERE type = "file" AND suffix IN ("java", "xml")'
+        sql = 'SELECT id,full_name FROM file WHERE type = "file" AND suffix IN ("java", "xml") AND scan_time = %s'
         if (count > 0):
             sql = sql + ' LIMIT ' + str(count)
         value = []
-        cursor.execute(sql, value)
+        cursor.execute(sql, value, time)
         resultList = cursor.fetchall()
         for result in resultList:
             print str(result[0]) + " | " + result[1]

@@ -19,11 +19,14 @@ def main():
     # 数据库连接
     connect()
 
-    # # 数据库表初始化
+    # 数据库表初始化
     # createDatabases()
     # createTables()
     # # 初始化基础数据
     # initBaseData()
+
+    #清空recourse表数据
+    clearResoure()
 
     # 分析文件列表
     analysisFileList("../../lianjia_android_nh_plugin")

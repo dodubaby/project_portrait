@@ -3,7 +3,7 @@
 
 import traceback
 
-import MySQLdb as mdb
+import pymysql as mdb
 
 import const as const
 
@@ -17,24 +17,24 @@ TABLE_NAME_TARGET_DATA = "target_data"
 TABLE_NAME_TAG = "tag"
 
 # 数据库配置
-config = {
-    'host': '127.0.0.1',
-    'port': 3306,
-    'user': 'root',
-    'passwd': '1qaz@WSX',
-    'db': DB_NAME,
-    'charset': 'utf8'
-}
-
-# 数据库配置（测试服务器）
 # config = {
-#     'host': '10.33.106.127',
+#     'host': '127.0.0.1',
 #     'port': 3306,
-#     'user': 'newhouse',
-#     'passwd': 'newhouse',
+#     'user': 'root',
+#     'passwd': '1qaz@WSX',
 #     'db': DB_NAME,
 #     'charset': 'utf8'
 # }
+
+# 数据库配置（测试服务器）
+config = {
+    'host': '10.33.106.127',
+    'port': 3306,
+    'user': 'newhouse',
+    'passwd': 'newhouse',
+    'db': DB_NAME,
+    'charset': 'utf8'
+}
 
 """
 连接数据库
@@ -104,7 +104,10 @@ def createTables():
                        'class_full_name varchar(255) DEFAULT NULL,'
                        'line_count bigint DEFAULT NULL,'
                        'size bigint DEFAULT NULL,'
-                       'PRIMARY KEY (id)'
+                       'is_new tinyint(1) default 1,'
+                       'scan_time varchar(255) DEFAULT NULL,'
+                       'PRIMARY KEY (id),'
+                       'UNIQUE KEY(full_name)'
                        ') ENGINE=InnoDB DEFAULT CHARSET=utf8'
                        % TABLE_NAME_FILE)
 
@@ -154,6 +157,24 @@ def createTables():
                        'PRIMARY KEY (id)'
                        ') ENGINE=InnoDB DEFAULT CHARSET=utf8'
                        % TABLE_NAME_TAG)
+    except:
+        traceback.print_exc()
+        # 发生错误时会滚
+        conn.rollback()
+    finally:
+        # 关闭游标连接
+        cursor.close()
+
+"""
+清除recourse表数据
+"""
+def clearResoure():
+    conn = const.dbconnect
+    conn.select_db(DB_NAME)
+    # 使用cursor()方法获取操作游标
+    cursor = conn.cursor()
+    try:
+        cursor.execute('truncate table %s' % TABLE_NAME_RESOURCE)
     except:
         traceback.print_exc()
         # 发生错误时会滚
