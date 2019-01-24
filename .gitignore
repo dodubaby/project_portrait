@@ -3,3 +3,9 @@
 .idea
 __pycache__
 *.pyc
+build
+generated-sources
+.war
+classes
+target
+node_modules
