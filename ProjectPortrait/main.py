@@ -20,10 +20,10 @@ def main():
     connect()
 
     # 数据库表初始化
-    # createDatabases()
-    # createTables()
+    createDatabases()
+    createTables()
     # # 初始化基础数据
-    # initBaseData()
+    initBaseData()
 
     #清空recourse表数据
     clearResoure()

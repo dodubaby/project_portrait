@@ -3,7 +3,7 @@
 
 import traceback
 
-import pymysql as mdb
+import MySQLdb as mdb
 
 import const as const
 
@@ -13,28 +13,28 @@ DB_NAME = 'project_portrait'
 TABLE_NAME_FILE = "file"
 TABLE_NAME_RESOURCE = "resource"
 TABLE_NAME_REFERENCE = "reference"
-TABLE_NAME_TARGET_DATA = "target_data"
+TABLE_NAME_TARGET_DATA = "target_data"  # TODO by L.jinzhu for targetData待删除，新增custom_rule_data
 TABLE_NAME_TAG = "tag"
 
 # 数据库配置
-# config = {
-#     'host': '127.0.0.1',
-#     'port': 3306,
-#     'user': 'root',
-#     'passwd': '1qaz@WSX',
-#     'db': DB_NAME,
-#     'charset': 'utf8'
-# }
-
-# 数据库配置（测试服务器）
 config = {
-    'host': '10.33.106.127',
+    'host': '127.0.0.1',
     'port': 3306,
-    'user': 'newhouse',
-    'passwd': 'newhouse',
+    'user': 'root',
+    'passwd': '1qaz@WSX',
     'db': DB_NAME,
     'charset': 'utf8'
 }
+
+# 数据库配置（测试服务器）
+# config = {
+#     'host': '10.33.106.127',
+#     'port': 3306,
+#     'user': 'newhouse',
+#     'passwd': 'newhouse',
+#     'db': DB_NAME,
+#     'charset': 'utf8'
+# }
 
 """
 连接数据库
@@ -93,7 +93,7 @@ def createTables():
         cursor = conn.cursor()
 
         # 创建file表
-        #cursor.execute('DROP TABLE IF EXISTS %s' % TABLE_NAME_FILE)
+        # cursor.execute('DROP TABLE IF EXISTS %s' % TABLE_NAME_FILE)
         cursor.execute('CREATE TABLE %s('
                        'id bigint unsigned zerofill NOT NULL AUTO_INCREMENT,'
                        'type varchar(255) DEFAULT NULL,'
@@ -112,7 +112,7 @@ def createTables():
                        % TABLE_NAME_FILE)
 
         # 创建resource表
-        #cursor.execute('DROP TABLE IF EXISTS %s' % TABLE_NAME_RESOURCE)
+        # cursor.execute('DROP TABLE IF EXISTS %s' % TABLE_NAME_RESOURCE)
         cursor.execute('CREATE TABLE %s('
                        'id bigint unsigned zerofill NOT NULL AUTO_INCREMENT,'
                        'resource_type varchar(255) DEFAULT NULL,'
@@ -125,7 +125,7 @@ def createTables():
                        % TABLE_NAME_RESOURCE)
 
         # 创建reference表
-        #cursor.execute('DROP TABLE IF EXISTS %s' % TABLE_NAME_REFERENCE)
+        # cursor.execute('DROP TABLE IF EXISTS %s' % TABLE_NAME_REFERENCE)
         cursor.execute('CREATE TABLE %s('
                        'id bigint unsigned zerofill NOT NULL AUTO_INCREMENT,'
                        'file_id bigint DEFAULT NULL,'
@@ -138,7 +138,7 @@ def createTables():
                        % TABLE_NAME_REFERENCE)
 
         # 创建targetData表
-        #cursor.execute('DROP TABLE IF EXISTS %s' % TABLE_NAME_TARGET_DATA)
+        # cursor.execute('DROP TABLE IF EXISTS %s' % TABLE_NAME_TARGET_DATA)
         cursor.execute('CREATE TABLE %s('
                        'id bigint unsigned zerofill NOT NULL AUTO_INCREMENT,'
                        'file_id bigint DEFAULT NULL,'
@@ -149,7 +149,7 @@ def createTables():
                        % TABLE_NAME_TARGET_DATA)
 
         # 创建tag表
-        #cursor.execute('DROP TABLE IF EXISTS %s' % TABLE_NAME_TAG)
+        # cursor.execute('DROP TABLE IF EXISTS %s' % TABLE_NAME_TAG)
         cursor.execute('CREATE TABLE %s('
                        'id bigint unsigned zerofill NOT NULL AUTO_INCREMENT,'
                        'type varchar(255) DEFAULT NULL, '
@@ -165,9 +165,12 @@ def createTables():
         # 关闭游标连接
         cursor.close()
 
+
 """
 清除recourse表数据
 """
+
+
 def clearResoure():
     conn = const.dbconnect
     conn.select_db(DB_NAME)

@@ -1,12 +1,17 @@
 <template>
   <div class="app-container">
+    <el-alert :closable="false" type="info"
+              title="Function说明"
+              description="xxxxxxx"
+              style="margin-bottom: 20px"
+              v-loading="loading"
+    />
     <el-table
-      v-loading="listLoading"
       :data="list"
-      element-loading-text="Loading"
       border
       fit
       stripe
+      height="2000"
       highlight-current-row>
       <el-table-column label="ID" width="90" align="center" >
         <template slot-scope="scope">
@@ -49,7 +54,7 @@ export default {
   data() {
     return {
       list: null,
-      listLoading: true
+      loading: false
     }
   },
   created() {
@@ -57,10 +62,10 @@ export default {
   },
   methods: {
     fetchData() {
-      this.listLoading = true
+      this.loading = true
       tagFindByType('owner').then(response => {
         this.list = response.tagList
-        this.listLoading = false
+        this.loading = false
       })
     },
     buttonClick(data){

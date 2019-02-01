@@ -1,9 +1,13 @@
 <template>
   <div class="app-container">
+    <el-alert :closable="false" type="info"
+              title="Function说明"
+              description="xxxxxxx"
+              style="margin-bottom: 20px"
+              v-loading="loading"
+    />
     <el-table
-      v-loading="listLoading"
       :data="list"
-      element-loading-text="Loading"
       border
       fit
       stripe
@@ -70,7 +74,7 @@ export default {
   data() {
     return {
       list: null,
-      listLoading: true
+      loading: true
     }
   },
   created() {
@@ -78,10 +82,10 @@ export default {
   },
   methods: {
     fetchData() {
-      this.listLoading = true
+      this.loading = true
       fileFindBySuffixOrderByLineCount(this.listQuery).then(response => {
         this.list = response.fileList
-        this.listLoading = false
+        this.loading = false
       })
     },
     buttonClick(data){

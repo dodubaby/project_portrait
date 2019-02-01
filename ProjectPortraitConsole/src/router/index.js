@@ -158,10 +158,10 @@ export const constantRouterMap = [
         meta: { title: '硬编码', icon: 'tree' }
       },
       {
-        path: 'customRuleCheck',
-        name: 'customRuleCheck',
+        path: 'badRule',
+        name: 'badRule',
         component: () => import('@/function/better/index'),
-        meta: { title: '自定义规则筛查', icon: 'tree' }
+        meta: { title: 'BadRuleCheck', icon: 'tree' }
       }
     ]
   },

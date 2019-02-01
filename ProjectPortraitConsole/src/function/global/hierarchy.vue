@@ -1,10 +1,11 @@
 <template>
   <div style="padding:30px; overflow: scroll">
     <el-alert :closable="false" type="info"
-              title="视图说明"
-              description="项目熟悉、风险范围评估、优先级评估"/>
-
-    <el-form ref="form" :model="form" label-width="120px" style="margin-top: 20px;">
+              title="Function说明"
+              description="项目熟悉、风险范围评估、优先级评估"
+              style="margin-bottom: 20px"/>
+    <el-form ref="form" :model="form" label-width="120px"
+             v-loading="loading">
       <el-form-item label="展示根节点">
         <el-input v-model="form.rootKey" style="width:300px;"/>
         <el-tag>空代表检索所有</el-tag>
@@ -44,9 +45,10 @@ import {fileFindAll} from '@/api/ppserver'
 import ElCol from "element-ui/packages/col/src/col";
 import ElTag from "../../../node_modules/element-ui/packages/tag/src/tag";
 import ElButton from "../../../node_modules/element-ui/packages/button/src/button";
+import ElMain from "../../../node_modules/element-ui/packages/main/src/main";
 
 export default {
-  components: {ElButton, ElTag, ElCol}, data() {
+  components: {ElMain, ElButton, ElTag, ElCol}, data() {
     return {
       form: {
         rootKey: '',
@@ -57,7 +59,8 @@ export default {
         type: [],
         resource: '',
         desc: ''
-      }
+      },
+      loading: false
     }
   },
   mounted() {
@@ -70,9 +73,11 @@ export default {
       })
     },
     fetchData() {
+      this.loading = true
       fileFindAll(this.form.rootKey).then(response => {
         var root = response.fileListWithHierarchy
         this.draw(root);
+        this.loading = false
       })
 //      var root = {
 //        "name": "com",

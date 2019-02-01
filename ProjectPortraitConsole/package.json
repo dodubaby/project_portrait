@@ -63,6 +63,7 @@
     "svg-sprite-loader": "3.8.0",
     "svgo": "1.0.5",
     "uglifyjs-webpack-plugin": "1.2.7",
+    "upath": "^1.1.0",
     "url-loader": "1.0.1",
     "vue-loader": "15.3.0",
     "vue-style-loader": "4.1.2",
@@ -70,7 +71,7 @@
     "webpack": "4.16.5",
     "webpack-bundle-analyzer": "2.13.1",
     "webpack-cli": "3.1.0",
-    "webpack-dev-server": "3.1.5",
+    "webpack-dev-server": "^3.1.14",
     "webpack-merge": "4.1.4"
   },
   "engines": {

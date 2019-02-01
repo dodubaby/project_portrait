@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-table
-      v-loading="listLoading"
+      v-loading="loading"
       :data="list"
       element-loading-text="Loading"
       border
@@ -60,7 +60,7 @@ export default {
   data() {
     return {
       list: null,
-      listLoading: true
+      loading: true
     }
   },
   created() {
@@ -68,10 +68,10 @@ export default {
   },
   methods: {
     fetchData() {
-      this.listLoading = true
+      this.loading = true
       getList(this.listQuery).then(response => {
         this.list = response.data.items
-        this.listLoading = false
+        this.loading = false
       })
     }
   }

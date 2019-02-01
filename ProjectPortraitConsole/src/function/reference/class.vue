@@ -4,7 +4,7 @@
               title="视图说明"
               description="实线代表xxx，虚线代表xxx，绿色线代表xxx"
     />
-    <div style="padding:20px;  ">
+    <div style="padding:20px; ">
       <el-button size="big" @click="fetchData('RecommendView.java')" style="width: 250px">检索[RecommendView.java]
       </el-button>
       <el-button size="big" @click="fetchData('MessageUtils.java')" style="width: 250px">检索[MessageUtils.java]

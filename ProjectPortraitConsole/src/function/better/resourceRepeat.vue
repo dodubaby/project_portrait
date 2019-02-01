@@ -1,14 +1,19 @@
 <template>
   <div class="app-container">
+    <el-alert :closable="false" type="info"
+              title="Function说明"
+              description="xxxxxxx"
+              style="margin-bottom: 20px"
+              v-loading="loading"
+    />
     <el-table
-      v-loading="listLoading"
       :data="list"
-      element-loading-text="Loading"
       border
       fit
+      height="2000"
       stripe
       highlight-current-row>
-      <el-table-column label="ID" width="90" align="center" >
+      <el-table-column label="ID" width="90" align="center">
         <template slot-scope="scope">
           {{ scope.$index }}
         </template>
@@ -60,7 +65,7 @@ export default {
   data() {
     return {
       list: null,
-      listLoading: true
+      loading: false
     }
   },
   created() {
@@ -68,10 +73,10 @@ export default {
   },
   methods: {
     fetchData() {
-      this.listLoading = true
+      this.loading = true
       resourceFindStatisticsByCount(this.listQuery).then(response => {
         this.list = response.resourceDataStatisticsList
-        this.listLoading = false
+        this.loading = false
       })
     },
     buttonClick(data){
