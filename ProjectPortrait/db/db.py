@@ -235,8 +235,33 @@ def readNeedAnalysisFileList(count):
         value = [const.scanTime]
         cursor.execute(sql, value)
         resultList = cursor.fetchall()
-        for result in resultList:
-            print str(result[0]) + " | " + result[1]
+        # for result in resultList:
+        #     print str(result[0]) + " | " + result[1]
+        return resultList
+    except:
+        traceback.print_exc()
+        # 发生错误时会滚
+        conn.rollback()
+    finally:
+        # 关闭游标连接
+        cursor.close()
+
+
+"""
+读取规则列表
+"""
+
+
+def readRuleList():
+    try:
+        conn = const.dbconnect
+        cursor = conn.cursor()
+        sql = 'SELECT * FROM rule'
+        value = []
+        cursor.execute(sql, value)
+        resultList = cursor.fetchall()
+        # for result in resultList:
+        #     print str(result[0]) + " | " + result[1]
         return resultList
     except:
         traceback.print_exc()

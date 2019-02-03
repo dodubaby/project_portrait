@@ -11,11 +11,12 @@ import const as const
 DB_NAME = 'project_portrait'
 
 # 数据库表名
-TABLE_NAME_FILE = "file"
-TABLE_NAME_RESOURCE = "resource"
-TABLE_NAME_REFERENCE = "reference"
-TABLE_NAME_TARGET_DATA = "target_data"  # TODO by L.jinzhu for targetData待删除，新增custom_rule_data
-TABLE_NAME_TAG = "tag"
+TABLE_NAME_FILE = "file"  # 文件
+TABLE_NAME_RESOURCE = "resource"  # 资源
+TABLE_NAME_REFERENCE = "reference"  # 引用关系
+TABLE_NAME_RULE = "rule"  # 规则
+TABLE_NAME_RULE_DATA = "rule_data"  # 规则数据
+TABLE_NAME_TAG = "tag"  # 标签
 
 # 数据库配置
 config = {
@@ -94,7 +95,7 @@ def createTables():
         cursor = conn.cursor()
 
         # 创建file表
-        # cursor.execute('DROP TABLE IF EXISTS %s' % TABLE_NAME_FILE)
+        cursor.execute('DROP TABLE IF EXISTS %s' % TABLE_NAME_FILE)
         cursor.execute('CREATE TABLE %s('
                        'id bigint unsigned zerofill NOT NULL AUTO_INCREMENT,'
                        'type varchar(255) DEFAULT NULL,'
@@ -109,11 +110,11 @@ def createTables():
                        'scan_time varchar(255) DEFAULT NULL,'
                        'PRIMARY KEY (id),'
                        'UNIQUE KEY(full_name)'
-                       ') ENGINE=InnoDB DEFAULT CHARSET=utf8'
+                       ') ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci'
                        % TABLE_NAME_FILE)
 
         # 创建resource表
-        # cursor.execute('DROP TABLE IF EXISTS %s' % TABLE_NAME_RESOURCE)
+        cursor.execute('DROP TABLE IF EXISTS %s' % TABLE_NAME_RESOURCE)
         cursor.execute('CREATE TABLE %s('
                        'id bigint unsigned zerofill NOT NULL AUTO_INCREMENT,'
                        'resource_type varchar(255) DEFAULT NULL,'
@@ -122,11 +123,11 @@ def createTables():
                        'file_id varchar(255) DEFAULT NULL, '
                        'file_full_name varchar(255) DEFAULT NULL,'
                        'PRIMARY KEY (id)'
-                       ') ENGINE=InnoDB DEFAULT CHARSET=utf8'
+                       ') ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci'
                        % TABLE_NAME_RESOURCE)
 
         # 创建reference表
-        # cursor.execute('DROP TABLE IF EXISTS %s' % TABLE_NAME_REFERENCE)
+        cursor.execute('DROP TABLE IF EXISTS %s' % TABLE_NAME_REFERENCE)
         cursor.execute('CREATE TABLE %s('
                        'id bigint unsigned zerofill NOT NULL AUTO_INCREMENT,'
                        'file_id bigint DEFAULT NULL,'
@@ -135,28 +136,43 @@ def createTables():
                        'reference_data varchar(255) DEFAULT NULL, '
                        'reference_line bigint DEFAULT NULL,'
                        'PRIMARY KEY (id)'
-                       ') ENGINE=InnoDB DEFAULT CHARSET=utf8'
+                       ') ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci'
                        % TABLE_NAME_REFERENCE)
 
-        # 创建targetData表
-        # cursor.execute('DROP TABLE IF EXISTS %s' % TABLE_NAME_TARGET_DATA)
+        # 创建rule表
+        cursor.execute('DROP TABLE IF EXISTS %s' % TABLE_NAME_RULE)
         cursor.execute('CREATE TABLE %s('
                        'id bigint unsigned zerofill NOT NULL AUTO_INCREMENT,'
-                       'file_id bigint DEFAULT NULL,'
-                       'target_data varchar(255) DEFAULT NULL, '
-                       'target_data_line bigint DEFAULT NULL,'
+                       'key_left varchar(255) DEFAULT NULL, '
+                       'key_right varchar(255) DEFAULT NULL, '
+                       'type varchar(40) DEFAULT NULL, '
+                       'remark varchar(255) DEFAULT NULL, '
+                       'creater varchar(40) DEFAULT NULL, '
+                       'create_time varchar(255) DEFAULT NULL,'
                        'PRIMARY KEY (id)'
-                       ') ENGINE=InnoDB DEFAULT CHARSET=utf8'
-                       % TABLE_NAME_TARGET_DATA)
+                       ') ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci'
+                       % TABLE_NAME_RULE)
+
+        # 创建rule_data表
+        cursor.execute('DROP TABLE IF EXISTS %s' % TABLE_NAME_RULE_DATA)
+        cursor.execute('CREATE TABLE %s('
+                       'id bigint unsigned zerofill NOT NULL AUTO_INCREMENT,'
+                       'rule_id bigint NOT NULL,'
+                       'file_id bigint DEFAULT NULL,'
+                       'data varchar(255) DEFAULT NULL, '
+                       'data_line bigint DEFAULT NULL,'
+                       'PRIMARY KEY (id)'
+                       ') ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci'
+                       % TABLE_NAME_RULE_DATA)
 
         # 创建tag表
-        # cursor.execute('DROP TABLE IF EXISTS %s' % TABLE_NAME_TAG)
+        cursor.execute('DROP TABLE IF EXISTS %s' % TABLE_NAME_TAG)
         cursor.execute('CREATE TABLE %s('
                        'id bigint unsigned zerofill NOT NULL AUTO_INCREMENT,'
                        'type varchar(255) DEFAULT NULL, '
                        'value varchar(255) DEFAULT NULL, '
                        'PRIMARY KEY (id)'
-                       ') ENGINE=InnoDB DEFAULT CHARSET=utf8'
+                       ') ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci'
                        % TABLE_NAME_TAG)
     except:
         traceback.print_exc()

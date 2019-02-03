@@ -26,21 +26,23 @@ def main():
     # 数据库连接
     connect()
 
-    # 数据库表初始化（系统初始化过程才执行此步骤）
-    createDatabases()
-    createTables()
-    # 初始化基础数据（系统初始化过程才执行此步骤）
-    initBaseData()
+    # # 系统初始化过程才执行此步骤 start
+    # # 数据库表初始化
+    # createTables()
+    # # 初始化基础数据
+    # initBaseData()
+    # # 系统初始化过程才执行此步骤 end
 
     # 清空recourse表数据
     clearTableData(TABLE_NAME_RESOURCE)
     clearTableData(TABLE_NAME_REFERENCE)
+    clearTableData(TABLE_NAME_RULE_DATA)
 
     # 分析文件列表
     analysisFileList("../../lianjia_android_nh_plugin")
 
-    # 分析资源列表
-    analysisResourceList()
+    # # 分析资源列表
+    # analysisResourceList()
 
     # 分析文件内容
     analysisAllFileContent()

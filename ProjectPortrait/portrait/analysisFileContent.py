@@ -1,16 +1,13 @@
 # encoding: utf-8
 # !/usr/bin/python3
 
-import regular.regular as regular
+import portrait.analysisFileContent4Reference as reference
+import portrait.analysisFileContent4Rule as rule
 from db import db
-from fileAndDataCheck import ignoreReferenceData
 from util.fileUtil import readFileContent
 
-# 自定义数据
-TARGET_DATA = 'L.jinzhu'
-
 """
-解析文件内容
+解析全部文件内容
 """
 
 
@@ -33,49 +30,6 @@ def analysisFileContent(fileId, fileFullName):
     for lineContent in iter_f:  # 遍历文件，一行行遍历，读取文本
         lineNum = lineNum + 1
         # 解析引用关系
-        analysisReference(fileId, lineContent, lineNum)
-        # 解析自定义数据
-        analysisTargetData(fileId, lineContent, lineNum)
-
-
-"""
-解析引用关系
-"""
-
-
-def analysisReference(fileId, lineContent, lineNum):
-    if (lineContent.strip() == ""):
-        return
-
-    # Java引用Java
-    referenceData = regular.regular(lineContent, "import ", ";")
-    if (ignoreReferenceData(referenceData)):  # 忽略部分
-        return
-    if (referenceData != ""):
-        db.saveReferenceForJava(fileId, referenceData, lineNum)
-        return
-
-    # Java引用资源:"R.color.xxx,"、"R.color.xxx)"
-    lineContent = lineContent.strip()
-    lineContent = lineContent.replace(r",", ")")
-    referenceData = regular.regular(lineContent.strip(), r"R\.", r"\)")
-    if (referenceData != "" and "." in referenceData):
-        db.saveReferenceForResource(fileId, referenceData, lineNum)
-        return
-
-    # Java引用Layout
-    # TODO
-
-    # Layout引用资源
-    # TODO
-
-
-"""
-解析自定义数据
-"""
-
-
-def analysisTargetData(fileId, lineContent, lineNum):
-    if (TARGET_DATA in lineContent):
-        db.saveTargetData(fileId, TARGET_DATA, lineNum)
-
+        reference.analysisReference(fileId, lineContent, lineNum)
+        # 解析规则数据
+        # rule.analysisRuleData(fileId, lineContent, lineNum)
