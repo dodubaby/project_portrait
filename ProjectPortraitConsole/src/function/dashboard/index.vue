@@ -14,6 +14,32 @@
         <h1>欢迎来到 项目画像（分析）系统</h1>
       </el-carousel-item>
     </el-carousel>
+
+    <el-row :gutter="10" style="margin-top: 30px">
+      <el-col :span="7">
+        <el-card shadow="always" header="项目概况 / 层级结构 / 关系">
+          <el-tag>项目全局</el-tag>
+          <el-tag>逻辑关系</el-tag>
+        </el-card>
+      </el-col>
+      <el-col :span="7">
+        <el-card shadow="always" header="功能管理 / 人效管理 / 质量把控与管理">
+          <el-tag>标签</el-tag>
+          <el-tag>优化/质量筛查</el-tag>
+        </el-card>
+      </el-col>
+      <el-col :span="5">
+        <el-card shadow="always" header="开发工具">
+          <el-tag>规则无限可能</el-tag>
+        </el-card>
+      </el-col>
+      <el-col :span="5">
+        <el-card shadow="always" header="系统">
+          <el-tag>控制台</el-tag>
+          <el-tag>关于</el-tag>
+        </el-card>
+      </el-col>
+    </el-row>
   </div>
 </template>
 

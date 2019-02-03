@@ -3,7 +3,7 @@
 import os
 
 import regular.regular as regular
-import util.fileUtil  as fileUtil
+import util.fileUtil as fileUtil
 from db import db
 from fileAndDataCheck import ignoreFile
 

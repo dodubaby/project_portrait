@@ -9,6 +9,7 @@ import const as const
 
 # 数据库名
 DB_NAME = 'project_portrait'
+
 # 数据库表名
 TABLE_NAME_FILE = "file"
 TABLE_NAME_RESOURCE = "resource"
@@ -167,17 +168,17 @@ def createTables():
 
 
 """
-清除recourse表数据
+清除表数据
 """
 
 
-def clearResoure():
+def clearTableData(tableName):
     conn = const.dbconnect
     conn.select_db(DB_NAME)
     # 使用cursor()方法获取操作游标
     cursor = conn.cursor()
     try:
-        cursor.execute('truncate table %s' % TABLE_NAME_RESOURCE)
+        cursor.execute('truncate table %s' % tableName)
     except:
         traceback.print_exc()
         # 发生错误时会滚
