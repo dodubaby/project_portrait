@@ -32,4 +32,4 @@ def analysisFileContent(fileId, fileFullName):
         # 解析引用关系
         reference.analysisReference(fileId, lineContent, lineNum)
         # 解析规则数据
-        # rule.analysisRuleData(fileId, lineContent, lineNum)
+        rule.analysisRuleData(fileId, lineContent, lineNum)

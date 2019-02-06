@@ -18,7 +18,6 @@ def writeFile(filePath, content, isAppend):
         f.write(content)
         f.write('\n')
 
-
 """
 读取文件列表
 """
@@ -101,7 +100,7 @@ def test():
     # writeFile('../data/平谷.txt', '平谷区', 'true')
     # test()
 
-    readFileList("../../../")
+    print ''
 
 
 test()

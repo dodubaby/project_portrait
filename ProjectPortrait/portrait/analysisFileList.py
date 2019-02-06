@@ -21,8 +21,8 @@ def analysisFileList(path):
         # 解析文件/文件夹
         fullName = path + "/" + file
         if fileUtil.isDir(fullName):
-            print "++++++ File: " + fullName
-            print "++++++ File: " + "dir"
+            print "FileList++++++ File: " + fullName
+            print "FileList++++++ File: " + "dir"
             # 保存数据
             db.saveFileData("dir", fullName, path, file, "", "", 0, 0)
             # 继续遍历文件夹
@@ -36,11 +36,11 @@ def analysisFileList(path):
             if ("java" == fileSuffix):
                 classFullName = regular.regularFileJava(fullName)
                 classFullName = classFullName.replace('/', '.').replace('java', '')
-            print "------ File: " + fullName
-            print "------ File: 大小" + str(fileSize) + " | 行数" + str(
+            print "FileList------ File: " + fullName
+            print "FileList------ File: 大小" + str(fileSize) + " | 行数" + str(
                 lineCount) + " | " + file + " | " + fileSuffix + " | " + classFullName
             # 保存数据
             db.saveFileData("file", fullName, path, file, fileSuffix, classFullName, lineCount, fileSize)
         else:
-            print "xxxxxx File: error! " + fullName
-            print "xxxxxx File: error! "
+            print "FileListxxxxxx File: error! " + fullName
+            print "FileListxxxxxx File: error! "

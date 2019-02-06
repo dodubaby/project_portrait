@@ -26,12 +26,12 @@ def main():
     # 数据库连接
     connect()
 
-    # # 系统初始化过程才执行此步骤 start
-    # # 数据库表初始化
+    # 系统初始化过程才执行此步骤 start
+    # 数据库表初始化
     # createTables()
-    # # 初始化基础数据
+    # 初始化基础数据
     # initBaseData()
-    # # 系统初始化过程才执行此步骤 end
+    # 系统初始化过程才执行此步骤 end
 
     # 清空recourse表数据
     clearTableData(TABLE_NAME_RESOURCE)
