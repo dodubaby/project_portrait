@@ -14,17 +14,14 @@ public class SqlProvider {
         StringBuffer sql = new StringBuffer();
         sql.append("select * from file where 1=1");
         // 文件后缀
-        if (null != para.get("suffix")) {
+        if (StringUtil.isNotBlank(para.get("suffix"))) {
             String suffix = (String) para.get("suffix");
             sql.append(" and suffix = '" + suffix + "'");
         }
         // 起始根节点
-        if (null != para.get("rootKey")) {
+        if (StringUtil.isNotBlank(para.get("rootKey"))) {
             String rootKey = (String) para.get("rootKey");
-            // 不等于空的时候，才拼接条件
-            if (StringUtil.isNotBlank(rootKey)) {
-                sql.append(" and path like '%" + rootKey + "%'");
-            }
+            sql.append(" and path like '%" + rootKey + "%'");
         }
         return sql.toString();
     }
@@ -33,13 +30,13 @@ public class SqlProvider {
         StringBuffer sql = new StringBuffer();
         sql.append("select * from file where 1=1");
         // 文件后缀
-        if (null != para.get("suffix")) {
+        if (StringUtil.isNotBlank(para.get("suffix"))) {
             String suffix = (String) para.get("suffix");
             sql.append(" and suffix = '" + suffix + "'");
         }
         // 最大行数
         int maxLineCount = 0;
-        if (null != para.get("maxLineCount")) {
+        if (StringUtil.isNotBlank(para.get("maxLineCount"))) {
             maxLineCount = (int) para.get("maxLineCount");
         }
         maxLineCount = maxLineCount < 400 ? 400 : maxLineCount;
@@ -63,18 +60,38 @@ public class SqlProvider {
         StringBuffer sql = new StringBuffer();
         sql.append("select * from resource where 1=1");
         // 文件后缀
-        if (null != para.get("value")) {
+        if (StringUtil.isNotBlank(para.get("value"))) {
             String value = (String) para.get("value");
             sql.append(" and resource_value like '%" + value + "%'");
         }
         return sql.toString();
     }
 
-    public String targetDataFindAll(Map<String, Object> para) {
+    public String ruleFindAll(Map<String, Object> para) {
         StringBuffer sql = new StringBuffer();
-        sql.append("select * from target_data where 1=1");
-        // 分页
-        sql.append(getCountLimitCondition(para));
+        sql.append("select * from rule where 1=1");
+        // 类型
+        if (StringUtil.isNotBlank(para.get("type"))) {
+            String type = (String) para.get("type");
+            sql.append(" and type = '" + type + "'");
+        }
+        return sql.toString();
+    }
+
+    public String ruleDataFindAll(Map<String, Object> para) {
+        StringBuffer sql = new StringBuffer();
+        sql.append("select * from rule_data where 1=1");
+        // 状态
+        if (StringUtil.isNotBlank(para.get("status"))) {
+            String status = (String) para.get("status");
+            sql.append(" and status = '" + status + "'");
+        }
+        // ruleIdList
+        if (StringUtil.isNotBlank(para.get("ruleIdList"))) {
+            String ruleIdList = (String) para.get("ruleIdList");
+            sql.append(" and rule_id in (" + ruleIdList + ")");
+        }
+        sql.append(" order by rule_id desc");
         return sql.toString();
     }
 
@@ -83,7 +100,7 @@ public class SqlProvider {
         sql.append("select * from reference where 1=1 and reference_data_type ='java'");
 
         // 被引用的数据
-        if (null != para.get("referenceId")) {
+        if (StringUtil.isNotBlank(para.get("referenceId"))) {
             Long referenceId = SafeParseUtils.parseLong(para.get("referenceId").toString());
             if (0 != referenceId) {
                 sql.append(" and reference_data_id = " + referenceId);
@@ -100,14 +117,14 @@ public class SqlProvider {
 //        StringBuffer sql = new StringBuffer();
 //        sql.append("delete from resourceinfo where 1=1");
 //
-//        if (null != para.get("resourceList")) {
+//        if (StringUtil.isNotBlank(  para.get("resourceList"))) {
 //            List<Long> resourceList = (List<Long>) para.get("resourceList");
-//            if (null != resourceList && 0 != resourceList.size()) {
+//            if (StringUtil.isNotBlank(  resourceList && 0 != resourceList.size())) {
 //                String str = "(";
 //                for (Long id : resourceList) {
 //                    str += id + ",";
 //                }
-//                str = str.substring(0, str.lastIndexOf(","));
+//                str = str.substring(0, str.lastIndexOf(",")));
 //                str += ")";
 //                sql.append(" and resourceId in " + str);
 //            } else {
@@ -123,14 +140,14 @@ public class SqlProvider {
 //        StringBuffer sql = new StringBuffer();
 //        sql.append("delete from user_resource where 1=1");
 //
-//        if (null != para.get("resourceList")) {
+//        if (StringUtil.isNotBlank(  para.get("resourceList"))) {
 //            List<Long> resourceList = (List<Long>) para.get("resourceList");
-//            if (null != resourceList && 0 != resourceList.size()) {
+//            if (StringUtil.isNotBlank(  resourceList && 0 != resourceList.size())) {
 //                String str = "(";
 //                for (Long id : resourceList) {
 //                    str += id + ",";
 //                }
-//                str = str.substring(0, str.lastIndexOf(","));
+//                str = str.substring(0, str.lastIndexOf(",")));
 //                str += ")";
 //                sql.append(" and resourceId in " + str);
 //            } else {
@@ -144,7 +161,7 @@ public class SqlProvider {
 
     private String getCountLimitCondition(Map<String, Object> para) {
         String countLimit;
-        if (null != para.get("dataIndexStart") && null != para.get("dataIndexEnd")) {
+        if (StringUtil.isNotBlank(para.get("dataIndexStart")) && StringUtil.isNotBlank(para.get("dataIndexEnd"))) {
             int dataIndexStart = (int) para.get("dataIndexStart");
             int dataIndexEnd = (int) para.get("dataIndexEnd");
             countLimit = " limit " + dataIndexStart + "," + dataIndexEnd;

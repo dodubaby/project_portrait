@@ -128,6 +128,12 @@ export const constantRouterMap = [
     meta: { title: '优化/质量筛查', icon: 'example' },
     children: [
       {
+        path: 'badRule',
+        name: 'badRule',
+        component: () => import('@/function/better/index'),
+        meta: { title: 'BadRuleCheck', icon: 'tree' }
+      },
+      {
         path: 'resourceRepeat',
         name: 'resourceRepeat',
         component: () => import('@/function/better/resourceRepeat'),
@@ -156,12 +162,6 @@ export const constantRouterMap = [
         name: 'hardCode',
         component: () => import('@/function/better/index'),
         meta: { title: '硬编码', icon: 'tree' }
-      },
-      {
-        path: 'badRule',
-        name: 'badRule',
-        component: () => import('@/function/better/index'),
-        meta: { title: 'BadRuleCheck', icon: 'tree' }
       }
     ]
   },

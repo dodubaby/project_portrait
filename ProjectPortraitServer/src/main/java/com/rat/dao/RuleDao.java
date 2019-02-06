@@ -1,6 +1,6 @@
 package com.rat.dao;
 
-import com.rat.entity.local.TargetData;
+import com.rat.entity.local.Rule;
 import com.rat.provider.SqlProvider;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.SelectProvider;
@@ -14,10 +14,9 @@ import java.util.List;
  * @author L.jinzhu on 2018/3/30
  */
 @Repository
-public interface TargetDataDao {
-    @SelectProvider(type = SqlProvider.class, method = "targetDataFindAll")
-    List<TargetData> findAll(@Param("dataIndexStart") int dataIndexStart, @Param("dataIndexEnd") int dataIndexEnd);
-
+public interface RuleDao {
+    @SelectProvider(type = SqlProvider.class, method = "ruleFindAll")
+    List<Rule> findAll(@Param("type") String type);
 //    @Insert("insert into securitycodeinfo (phoneNumber,code,type,sendTime) values (#{phoneNumber},#{code},#{type},#{sendTime})")
 //    void create(@Param("phoneNumber") String phoneNumber, @Param("code") String code, @Param("type") String type, @Param("sendTime") String sendTime);
 //
@@ -25,5 +24,5 @@ public interface TargetDataDao {
 //    void delete(@Param("phoneNumber") String phoneNumber, @Param("type") String type);
 //
 //    @Select("select * from securitycodeinfo where phoneNumber=#{phoneNumber} and type=#{type} and code=#{code} limit 0,1")
-//    TargetData find(@Param("phoneNumber") String phoneNumber, @Param("type") String type, @Param("code") String code);
+//    RuleData find(@Param("phoneNumber") String phoneNumber, @Param("type") String type, @Param("code") String code);
 }

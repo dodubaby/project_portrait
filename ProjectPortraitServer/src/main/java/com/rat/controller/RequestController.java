@@ -44,7 +44,7 @@ public class RequestController {
     @Resource
     private ReferenceService referenceService;
     @Resource
-    private TargetDataService targetDataService;
+    private RuleDataService ruleDataService;
     @Resource
     private SystemService systemService;
     @Resource
@@ -129,10 +129,12 @@ public class RequestController {
                 actionInfo = new ReferenceActionInfo(actionId, key);
                 responseBody = referenceService.findAll((ReferenceActionInfo) actionInfo);
                 break;
-            // 目标数据获取全部
-            case RequestCode.TARGET_DATA_FIND_ALL:
-                actionInfo = new ActionInfoWithPageData(actionId, 0, DataGetType.DOWN.getCode());
-                responseBody = targetDataService.findAll((ActionInfoWithPageData) actionInfo);
+            // 规则对应数据获取全部
+            case RequestCode.RULE_DATA_FIND_ALL:
+                String ruleType = map.get("ruleType");
+                String ruleDataStatus = map.get("ruleDataStatus");
+                actionInfo = new RuleDataFindAllActionInfo(actionId, ruleType, ruleDataStatus);
+                responseBody = ruleDataService.findAll((RuleDataFindAllActionInfo) actionInfo);
                 break;
             // Tag获取:by type
             case RequestCode.TAG_FIND_BY_TYPE:

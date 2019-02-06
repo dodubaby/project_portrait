@@ -28,9 +28,9 @@ def main():
 
     # 系统初始化过程才执行此步骤 start
     # 数据库表初始化
-    # createTables()
+    createTables()
     # 初始化基础数据
-    # initBaseData()
+    initBaseData()
     # 系统初始化过程才执行此步骤 end
 
     # 清空recourse表数据
@@ -41,7 +41,7 @@ def main():
     # 分析文件列表
     analysisFileList("../../lianjia_android_nh_plugin")
 
-    # # 分析资源列表
+    # 分析资源列表
     # analysisResourceList()
 
     # 分析文件内容

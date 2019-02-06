@@ -11,7 +11,6 @@
       border
       fit
       stripe
-      height="2000"
       highlight-current-row>
       <el-table-column label="ID" width="90" align="center" >
         <template slot-scope="scope">

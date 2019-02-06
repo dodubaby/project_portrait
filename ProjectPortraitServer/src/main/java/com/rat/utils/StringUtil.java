@@ -11,10 +11,6 @@ import java.util.regex.Pattern;
  * @date 2018-04-01 10:37
  */
 public class StringUtil {
-    public static boolean isNotBlank(String src) {
-        return !isNullOrBlank(src);
-    }
-
     private static final char HEX_DIGITS[] = {'0', '1', '2', '3', '4', '5',
             '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
 
@@ -95,6 +91,27 @@ public class StringUtil {
     }
 
     /**
+     * 判断一个对象是否为空
+     *
+     * @return
+     */
+    public static boolean isNullOrBlank(Object obj) {
+        if (null == obj) {
+            return true;
+        }
+        String str = String.valueOf(obj);
+        return isNullOrBlank(str);
+    }
+
+    public static boolean isNotBlank(String src) {
+        return !isNullOrBlank(src);
+    }
+
+    public static boolean isNotBlank(Object obj) {
+        return !isNullOrBlank(obj);
+    }
+
+    /**
      * 判断是否为群租
      *
      * @param groupId
@@ -165,12 +182,12 @@ public class StringUtil {
 
     public static String generateGUID() {
         String source = "abcdefghijklmnopqrstuvwxyz1234567890";
-        String target = new SimpleDateFormat("yyyyMMddHHmmss", Locale.CHINA)
+        String rule = new SimpleDateFormat("yyyyMMddHHmmss", Locale.CHINA)
                 .format(new Date());
         Random random = new Random();
         for (int i = 0; i < 8; i++) {
-            target += source.charAt(random.nextInt(source.length()));
+            rule += source.charAt(random.nextInt(source.length()));
         }
-        return target;
+        return rule;
     }
 }

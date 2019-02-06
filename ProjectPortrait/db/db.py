@@ -142,14 +142,14 @@ def saveReferenceForResource(file_id, reference_data, reference_line):
 """
 
 
-def saveRuleData(rule_id, file_id, data, data_line):
+def saveRuleData(rule_id, file_id, data, data_line, status):
     try:
         if (len(data) >= 255):
             data = data[0:200] + '...'
         conn = const.dbconnect
         cursor = conn.cursor()
-        sql = 'INSERT INTO rule_data(rule_id, file_id, data, data_line) VALUES(%s, %s, %s, %s)'
-        value = [rule_id, file_id, data, data_line]
+        sql = 'INSERT INTO rule_data(rule_id, file_id, data, data_line, status) VALUES(%s, %s, %s, %s, %s)'
+        value = [rule_id, file_id, data, data_line, status]
         cursor.execute(sql, value)
     except:
         traceback.print_exc()

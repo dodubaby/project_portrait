@@ -31,7 +31,7 @@ def analysisRuleData(fileId, lineContent, lineNum):
             ruleData = ""
 
         if (ruleData != ""):
-            db.saveRuleData(rule[0], fileId, lineContent, lineNum)
+            db.saveRuleData(rule[0], fileId, lineContent, lineNum, 'normal')
 
 
 """

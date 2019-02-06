@@ -10,7 +10,6 @@
       :data="list"
       border
       fit
-      height="2000"
       stripe
       highlight-current-row>
       <el-table-column label="ID" width="90" align="center">

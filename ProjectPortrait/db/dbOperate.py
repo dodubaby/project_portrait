@@ -161,6 +161,7 @@ def createTables():
                        'file_id bigint DEFAULT NULL,'
                        'data varchar(255) DEFAULT NULL, '
                        'data_line bigint DEFAULT NULL,'
+                       'status varchar(20) DEFAULT NULL, '
                        'PRIMARY KEY (id)'
                        ') ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci'
                        % TABLE_NAME_RULE_DATA)
