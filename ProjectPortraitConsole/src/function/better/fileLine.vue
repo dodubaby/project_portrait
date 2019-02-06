@@ -12,7 +12,7 @@
       fit
       stripe
       highlight-current-row>
-      <el-table-column label="ID" width="90" align="center" >
+      <el-table-column label="ID" width="90" align="center">
         <template slot-scope="scope">
           {{ scope.$index }}
         </template>

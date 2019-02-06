@@ -17,7 +17,7 @@
 
     <el-row :gutter="10" style="margin-top: 30px">
       <el-col :span="7">
-        <el-card shadow="always" header="项目概况 / 层级结构 / 关系">
+        <el-card shadow="always" header="项目概况 / 层级结构 / 引用关系">
           <el-tag>项目全局</el-tag>
           <el-tag>逻辑关系</el-tag>
         </el-card>

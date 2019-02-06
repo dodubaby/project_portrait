@@ -16,5 +16,5 @@ import java.util.List;
 @Repository
 public interface RuleDataDao {
     @SelectProvider(type = SqlProvider.class, method = "ruleDataFindAll")
-    List<RuleData> findAll(@Param("status") String status, @Param("ruleIdList") String ruleIdList);
+    List<RuleData> findAll(@Param("status") String status, @Param("ruleId") long ruleId);
 }

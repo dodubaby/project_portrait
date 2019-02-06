@@ -130,7 +130,7 @@ export const constantRouterMap = [
       {
         path: 'badRule',
         name: 'badRule',
-        component: () => import('@/function/better/index'),
+        component: () => import('@/function/better/badRule'),
         meta: { title: 'BadRuleCheck', icon: 'tree' }
       },
       {
@@ -352,7 +352,18 @@ export const constantRouterMap = [
           }
         ]
       },
-
+      {
+        path: '/test',
+        component: Layout,
+        children: [
+          {
+            path: 'index',
+            name: 'test',
+            component: () => import('@/views/test/index'),
+            meta: { title: 'test', icon: 'form' }
+          }
+        ]
+      },
       {
         path: 'external-link',
         component: Layout,

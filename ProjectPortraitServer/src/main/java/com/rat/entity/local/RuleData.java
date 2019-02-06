@@ -15,6 +15,8 @@ public class RuleData implements Serializable {
     private String data;
     private long dataLine;
     private String status;
+    // 多表查询得出
+    private String fileName;
 
     public long getId() {
         return id;
@@ -62,5 +64,13 @@ public class RuleData implements Serializable {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 }

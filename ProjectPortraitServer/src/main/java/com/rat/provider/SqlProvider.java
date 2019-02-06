@@ -75,23 +75,24 @@ public class SqlProvider {
             String type = (String) para.get("type");
             sql.append(" and type = '" + type + "'");
         }
+        sql.append(" order by id");
         return sql.toString();
     }
 
     public String ruleDataFindAll(Map<String, Object> para) {
         StringBuffer sql = new StringBuffer();
-        sql.append("select * from rule_data where 1=1");
+        sql.append("select rd.*, f.name as file_name from rule_data as rd, file as f where rd.file_id = f.id");
         // 状态
         if (StringUtil.isNotBlank(para.get("status"))) {
             String status = (String) para.get("status");
-            sql.append(" and status = '" + status + "'");
+            sql.append(" and rd.status = '" + status + "'");
         }
-        // ruleIdList
-        if (StringUtil.isNotBlank(para.get("ruleIdList"))) {
-            String ruleIdList = (String) para.get("ruleIdList");
-            sql.append(" and rule_id in (" + ruleIdList + ")");
+        // ruleId
+        if (StringUtil.isNotBlank(para.get("ruleId"))) {
+            long ruleId = (long) para.get("ruleId");
+            sql.append(" and rd.rule_id = " + ruleId);
         }
-        sql.append(" order by rule_id desc");
+        sql.append(" order by rd.rule_id");
         return sql.toString();
     }
 
