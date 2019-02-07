@@ -17,6 +17,7 @@ TABLE_NAME_REFERENCE = "reference"  # 引用关系
 TABLE_NAME_RULE = "rule"  # 规则
 TABLE_NAME_RULE_DATA = "rule_data"  # 规则数据
 TABLE_NAME_TAG = "tag"  # 标签
+TABLE_NAME_TAG_DATA = "tag_data"  # 标签数据
 
 # 数据库配置
 config = {
@@ -175,6 +176,17 @@ def createTables():
                        'PRIMARY KEY (id)'
                        ') ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci'
                        % TABLE_NAME_TAG)
+
+        # 创建tag_data表
+        cursor.execute('DROP TABLE IF EXISTS %s' % TABLE_NAME_TAG_DATA)
+        cursor.execute('CREATE TABLE %s('
+                       'id bigint unsigned zerofill NOT NULL AUTO_INCREMENT,'
+                       'tag_id bigint DEFAULT NULL,'
+                       'data_type varchar(20) DEFAULT NULL, '
+                       'data_id bigint DEFAULT NULL,'
+                       'PRIMARY KEY (id)'
+                       ') ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci'
+                       % TABLE_NAME_TAG_DATA)
     except:
         traceback.print_exc()
         # 发生错误时会滚

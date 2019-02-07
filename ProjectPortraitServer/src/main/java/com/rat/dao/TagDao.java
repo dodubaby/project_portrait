@@ -14,6 +14,6 @@ import java.util.List;
  */
 @Repository
 public interface TagDao {
-    @Select("select * from tag where type=#{type}")
+    @Select("select * from tag where type=#{type} order by value")
     List<Tag> findByType(@Param("type") String type);
 }
