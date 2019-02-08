@@ -26,17 +26,23 @@ export function referenceFindAll(key) {
     method: 'get'
   })
 }
-// ruleData
+// rule、ruleData
 export function ruleDataFindAll(ruleType, ruleDataStatus) {
   return request({
     url: '?actionId=4001&ruleType=' + ruleType + '&ruleDataStatus=' + ruleDataStatus,
     method: 'get'
   })
 }
-// tag
+// tag、tagData
 export function tagFindByType(type) {
   return request({
     url: '?actionId=5001&type=' + type,
+    method: 'get'
+  })
+}
+export function tagDataFindByDataId(dataType, dataId) {
+  return request({
+    url: '?actionId=5002&dataType=' + dataType + '&dataId=' + dataId,
     method: 'get'
   })
 }

@@ -15,7 +15,7 @@ public class RuleData implements Serializable {
     private String data;
     private long dataLine;
     private String status;
-    // 多表查询得出
+    // 连表查询得出
     private String fileName;
 
     public long getId() {

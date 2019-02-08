@@ -21,9 +21,10 @@ public class RequestCode {
     // reference
     public static final int REFERENCE_FIND_ALL = 3001;
 
-    // ruleData
+    // rule、ruleData
     public static final int RULE_DATA_FIND_ALL = 4001;
 
-    // tag
+    // tag、tagData
     public static final int TAG_FIND_BY_TYPE = 5001;
+    public static final int TAG_DATA_FIND_BY_DATA_ID = 5002;
 }

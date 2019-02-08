@@ -10,7 +10,7 @@
         <el-input v-model="form.rootKey" style="width:300px;"/>
         <el-tag>空代表检索所有</el-tag>
       </el-form-item>
-      <el-form-item label="Tag-owner">
+      <el-form-item label="Tag-Owner">
         <el-checkbox-group v-model="form.type">
           <el-checkbox label="item1" name="type"/>
           <el-checkbox label="item2" name="type"/>
@@ -19,13 +19,13 @@
           <el-checkbox label="item5" name="type"/>
         </el-checkbox-group>
       </el-form-item>
-      <el-form-item label="Tag-function">
+      <el-form-item label="Tag-Function">
         <el-checkbox-group v-model="form.type">
           <el-checkbox label="item6" name="type"/>
           <el-checkbox label="item7" name="type"/>
         </el-checkbox-group>
       </el-form-item>
-      <el-form-item label="Tag-other">
+      <el-form-item label="Tag-Other">
         <el-checkbox-group v-model="form.type">
           <el-checkbox label="item8" name="type"/>
           <el-checkbox label="item9" name="type"/>

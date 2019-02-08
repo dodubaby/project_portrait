@@ -49,6 +49,8 @@ public class RequestController {
     private SystemService systemService;
     @Resource
     private TagService tagService;
+    @Resource
+    private TagDataService tagDataService;
 
     public RequestController() {
         logger.info("rat server start");
@@ -144,6 +146,16 @@ public class RequestController {
                 }
                 actionInfo = new TagFindByTypeActionInfo(actionId, 0, DataGetType.DOWN.getCode(), type);
                 responseBody = tagService.findByType((TagFindByTypeActionInfo) actionInfo);
+                break;
+            // TagData获取:by dataId
+            case RequestCode.TAG_DATA_FIND_BY_DATA_ID:
+                String dataType = map.get("dataType");
+                String dataId = map.get("dataId");
+                if (StringUtil.isNullOrBlank(dataType) || StringUtil.isNullOrBlank(dataId)) {
+                    return ResponseInfo.getErrorResponse4Param(actionId);
+                }
+                actionInfo = new TagDataFindByDataIdActionInfo(actionId, SafeParseUtils.parseLong(dataId), dataType);
+                responseBody = tagDataService.findByDataId((TagDataFindByDataIdActionInfo) actionInfo);
                 break;
             // 请求解析异常
             default:
