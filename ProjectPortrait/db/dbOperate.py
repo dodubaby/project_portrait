@@ -100,7 +100,7 @@ def createTables():
         cursor.execute('CREATE TABLE %s('
                        'id bigint unsigned zerofill NOT NULL AUTO_INCREMENT,'
                        'type varchar(255) DEFAULT NULL,'
-                       'full_name varchar(255) DEFAULT NULL,'
+                       'full_name varchar(190) DEFAULT NULL,'
                        'path varchar(255) DEFAULT NULL,'
                        'name varchar(255) DEFAULT NULL,'
                        'suffix varchar(255) DEFAULT NULL,'
@@ -111,7 +111,7 @@ def createTables():
                        'scan_time varchar(255) DEFAULT NULL,'
                        'PRIMARY KEY (id),'
                        'UNIQUE KEY(full_name)'
-                       ') ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci'
+                       ') ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin'
                        % TABLE_NAME_FILE)
 
         # 创建resource表
@@ -124,7 +124,7 @@ def createTables():
                        'file_id varchar(255) DEFAULT NULL, '
                        'file_full_name varchar(255) DEFAULT NULL,'
                        'PRIMARY KEY (id)'
-                       ') ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci'
+                       ') ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin'
                        % TABLE_NAME_RESOURCE)
 
         # 创建reference表
@@ -137,7 +137,7 @@ def createTables():
                        'reference_data varchar(255) DEFAULT NULL, '
                        'reference_line bigint DEFAULT NULL,'
                        'PRIMARY KEY (id)'
-                       ') ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci'
+                       ') ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin'
                        % TABLE_NAME_REFERENCE)
 
         # 创建rule表
@@ -151,7 +151,7 @@ def createTables():
                        'creater varchar(40) DEFAULT NULL, '
                        'create_time varchar(255) DEFAULT NULL,'
                        'PRIMARY KEY (id)'
-                       ') ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci'
+                       ') ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin'
                        % TABLE_NAME_RULE)
 
         # 创建rule_data表
@@ -164,7 +164,7 @@ def createTables():
                        'data_line bigint DEFAULT NULL,'
                        'status varchar(20) DEFAULT NULL, '
                        'PRIMARY KEY (id)'
-                       ') ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci'
+                       ') ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin'
                        % TABLE_NAME_RULE_DATA)
 
         # 创建tag表
@@ -174,7 +174,7 @@ def createTables():
                        'type varchar(255) DEFAULT NULL, '
                        'value varchar(255) DEFAULT NULL, '
                        'PRIMARY KEY (id)'
-                       ') ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci'
+                       ') ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin'
                        % TABLE_NAME_TAG)
 
         # 创建tag_data表
@@ -185,7 +185,7 @@ def createTables():
                        'data_type varchar(20) DEFAULT NULL, '
                        'data_id bigint DEFAULT NULL,'
                        'PRIMARY KEY (id)'
-                       ') ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci'
+                       ') ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin'
                        % TABLE_NAME_TAG_DATA)
     except:
         traceback.print_exc()
