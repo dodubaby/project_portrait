@@ -6,7 +6,7 @@
     </div>
     <div class="wrap">
       <h1>技能列表</h1>
-      <custom-select v-if="visibleaa" :list="skills" btnTitle="Search"  @receiveValue="aaaa"></custom-select>
+      <custom-select v-if="visible" :list="skills" btnTitle="Search" @receiveValue="aaaa"></custom-select>
     </div>
   </div>
 </template>
@@ -22,12 +22,12 @@ export default {
     return {
       citys: ['北京', '上海', '广州', '青岛'],
       skills: ['Java', 'Android', 'Vue', 'PHP'],
-      visibleaa: true
+      visible: true
     }
   },
   methods: {
     aaaa (abc) {
-      this.visibleaa = false
+      this.visible = false
     }
   }
 }

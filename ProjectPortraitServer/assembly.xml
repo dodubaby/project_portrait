@@ -5,7 +5,7 @@
 
     <id>tgz</id>
     <!-- 应用名.war（压缩包解压后的目录名） -->
-    <baseDirectory>ProjectPortrait.war</baseDirectory>
+    <baseDirectory>ProjectPortraitServer.war</baseDirectory>
     <formats>
         <!-- 压缩包的格式,一律为tar.gz -->
         <format>tar.gz</format>
@@ -14,7 +14,7 @@
     <fileSets>
         <fileSet>
             <!-- 要压缩的目录，请按实际目录填写 -->
-            <directory>target/ProjectPortrait</directory>
+            <directory>target/ProjectPortraitServer</directory>
             <!-- 输出的目录,此处为空即可 -->
             <outputDirectory></outputDirectory>
             <includes>

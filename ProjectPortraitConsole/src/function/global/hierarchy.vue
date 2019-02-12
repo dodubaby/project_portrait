@@ -38,17 +38,25 @@
       </el-form-item>
     </el-form>
     <div id="container"/>
+    <tag-manage v-if="tagManageVisible" :data="data" :dataId="dataId" @callBack="dataUpdate"></tag-manage>
   </div>
 </template>
 <script>
 import {fileFindAll} from '@/api/ppserver'
+import TagManage from '../../components/function/tagManage'
 import ElCol from "element-ui/packages/col/src/col";
 import ElTag from "../../../node_modules/element-ui/packages/tag/src/tag";
 import ElButton from "../../../node_modules/element-ui/packages/button/src/button";
 import ElMain from "../../../node_modules/element-ui/packages/main/src/main";
 
 export default {
-  components: {ElMain, ElButton, ElTag, ElCol}, data() {
+  components: {
+    ElMain,
+    ElButton,
+    ElTag,
+    ElCol,
+    'tag-manage': TagManage
+  }, data() {
     return {
       form: {
         rootKey: '',
@@ -60,7 +68,10 @@ export default {
         resource: '',
         desc: ''
       },
-      loading: false
+      loading: false,
+      tagManageVisible: false,
+      data: '',
+      dataId: ''
     }
   },
   mounted() {
@@ -72,11 +83,19 @@ export default {
         type: 'warning'
       })
     },
+    showTagManageView(mData, mDataId) {
+      this.tagManageVisible = true
+      this.data = mData
+      this.dataId = mDataId
+    },
+    dataUpdate () {
+      this.$message('data update');
+    },
     fetchData() {
       this.loading = true
       fileFindAll(this.form.rootKey).then(response => {
         var root = response.fileListWithHierarchy
-        this.draw(root);
+        this.draw(root, this.showTagManageView);
         this.loading = false
       })
 //      var root = {
@@ -108,7 +127,7 @@ export default {
 //      };
     },
 
-    draw(root){
+    draw(root, nodeClick){
       var m = [20, 120, 20, 120],
         w = 3000 - m[1] - m[3],
         h = 1000 - m[0] - m[2],
@@ -147,10 +166,9 @@ export default {
       // toggle(root.children[9]);
       // toggle(root.children[9].children[0]);
 
-      update(root);
+      update(root, nodeClick);
 
-
-      function update(source) {
+      function update(source, nodeClick) {
         var duration = d3.event && d3.event.altKey ? 5000 : 500;
 
         // Compute the new tree layout.
@@ -196,7 +214,7 @@ export default {
             return d.name + "[t.u]";
           })
           .on("click", function (d) {
-            alert('处理归属者标签、功能标签、其他标签\n查找引用关系\nIDE中打开文件');
+            nodeClick(d.name, d.id)
           })
           .style("fill-opacity", 1e-6);
         nodeEnter.append('svg:text')
