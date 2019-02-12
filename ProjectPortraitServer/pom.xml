@@ -230,14 +230,14 @@
     </profiles>
 
     <build>
-        <finalName>ProjectPortrait</finalName>
+        <finalName>ProjectPortraitServer</finalName>
         <resources>
-            <resourceData>
+            <resource>
                 <directory>${profiles.dir}/${package.environment}</directory>
-            </resourceData>
-            <resourceData>
+            </resource>
+            <resource>
                 <directory>src/main/resources</directory>
-            </resourceData>
+            </resource>
         </resources>
         <plugins>
             <plugin>
