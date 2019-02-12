@@ -3,9 +3,10 @@
     title="标签管理"
     :visible.sync="dialogVisible"
     width="40%"
-    :before-close="handleClose"
-    v-loading="loading">
-    <div style="margin-bottom: 10px">【{{data}}】【{{dataId}}】</div>
+    :before-close="handleClose">
+    <el-alert :closable="false" type="info"
+              :title="data"
+              :description="dataId" v-loading="loading" style="margin-bottom: 10px"/>
     <el-tag>Tag-Owner</el-tag>
     <span>max=3</span>
     <el-checkbox-group
@@ -42,7 +43,7 @@
 </template>
 
 <script>
-import {tagDataFindByDataId} from '@/api/ppserver'
+import {tagDataFindByDataId, tagDataUpdateTags} from '@/api/ppserver'
 import ElCheckboxButton from "../../../node_modules/element-ui/packages/checkbox/src/checkbox-button";
 
 export default {
@@ -67,7 +68,7 @@ export default {
   methods: {
     fetchData() {
       this.loading = true
-      tagDataFindByDataId('file', 234).then(response => {
+      tagDataFindByDataId('file', this.dataId).then(response => {
         this.dataList4Owner = response.tagList4Owner
         this.dataList4Function = response.tagList4Function
         this.dataList4Other = response.tagList4Other
@@ -86,7 +87,16 @@ export default {
     },
     handleChange(value){
       this.dataChanged = true
-      this.$alert(this.checkedList4Owner + " || " + this.checkedList4Function + " || " + this.checkedList4Other)
+      this.loading = true
+      var tags = this.checkedList4Owner + "," + this.checkedList4Function + "," + this.checkedList4Other
+      tagDataUpdateTags('file', this.dataId, tags).then(response => {
+        this.$notify({
+          title: '标签更新成功',
+          message: tags,
+          type: 'success'
+        });
+        this.loading = false
+      })
     }
   }
 }

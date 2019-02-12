@@ -79,6 +79,8 @@ public class RequestController {
         }
         ActionInfo actionInfo;
         String suffix;// 文件后缀
+        String dataType;// 数据类型
+        String dataId;// 数据Id
         switch (actionId) {
             // 用户login
             case RequestCode.SYSTEM_USER_LOGIN:
@@ -149,13 +151,25 @@ public class RequestController {
                 break;
             // TagData获取:by dataId
             case RequestCode.TAG_DATA_FIND_BY_DATA_ID:
-                String dataType = map.get("dataType");
-                String dataId = map.get("dataId");
+                dataType = map.get("dataType");
+                dataId = map.get("dataId");
                 if (StringUtil.isNullOrBlank(dataType) || StringUtil.isNullOrBlank(dataId)) {
                     return ResponseInfo.getErrorResponse4Param(actionId);
                 }
                 actionInfo = new TagDataFindByDataIdActionInfo(actionId, SafeParseUtils.parseLong(dataId), dataType);
                 responseBody = tagDataService.findByDataId((TagDataFindByDataIdActionInfo) actionInfo);
+                break;
+            // TagData更新
+            case RequestCode.TAG_DATA_UPDATE_TAGS:
+                dataType = map.get("dataType");
+                dataId = map.get("dataId");
+                String tags = map.get("tags");
+                if (StringUtil.isNullOrBlank(dataType) || StringUtil.isNullOrBlank(dataId)) {
+                    return ResponseInfo.getErrorResponse4Param(actionId);
+                }
+                String[] tagArray = tags.split(",");
+                actionInfo = new TagDataUpdateTagsActionInfo(actionId, SafeParseUtils.parseLong(dataId), dataType, tagArray);
+                responseBody = tagDataService.updateTagList((TagDataUpdateTagsActionInfo) actionInfo);
                 break;
             // 请求解析异常
             default:

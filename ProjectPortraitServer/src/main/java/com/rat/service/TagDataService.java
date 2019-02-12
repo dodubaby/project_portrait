@@ -4,8 +4,11 @@ import com.rat.dao.TagDao;
 import com.rat.dao.TagDataDao;
 import com.rat.entity.local.Tag;
 import com.rat.entity.network.request.TagDataFindByDataIdActionInfo;
+import com.rat.entity.network.request.TagDataUpdateTagsActionInfo;
 import com.rat.entity.network.response.TagDataFindByDataIdRspInfo;
+import com.rat.entity.network.response.base.ResponseInfo;
 import com.rat.service.base.BaseService;
+import com.rat.utils.StringUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -43,6 +46,23 @@ public class TagDataService extends BaseService {
         rspInfo.setTagValueList4Function(tagValueList4Function);
         rspInfo.setTagValueList4Other(tagValueList4Other);
 
+        return rspInfo;
+    }
+
+    public ResponseInfo updateTagList(TagDataUpdateTagsActionInfo actionInfo) {
+        // 删除旧tag
+        tagDataDao.deleteTagsByDataId(actionInfo.getDataType(), actionInfo.getDataId());
+        // 新增新tag
+        String[] tagArray = actionInfo.getTagArray();
+        if (null != tagArray && tagArray.length > 0) {
+            for (String tagValue : tagArray) {
+                if (StringUtil.isNullOrBlank(tagValue)) continue;
+                Long tagId = tagDao.findIdByValue(tagValue);
+                tagDataDao.create(actionInfo.getDataType(), actionInfo.getDataId(), tagId);
+            }
+        }
+        ResponseInfo rspInfo = new ResponseInfo();
+        rspInfo.initSuccess(actionInfo.getActionId());
         return rspInfo;
     }
 }

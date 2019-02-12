@@ -42,7 +42,7 @@ def main():
     analysisFileList("../../lianjia_android_nh_plugin")
 
     # 分析资源列表
-    # analysisResourceList()
+    analysisResourceList()
 
     # 分析文件内容
     analysisAllFileContent()

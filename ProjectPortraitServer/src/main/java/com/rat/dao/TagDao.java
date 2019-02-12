@@ -16,4 +16,8 @@ import java.util.List;
 public interface TagDao {
     @Select("select * from tag where type=#{type} order by value")
     List<Tag> findByType(@Param("type") String type);
+
+
+    @Select("select id from tag where value=#{value} limit 1")
+    Long findIdByValue(@Param("value") String value);
 }

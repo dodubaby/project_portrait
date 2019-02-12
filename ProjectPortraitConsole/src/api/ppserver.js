@@ -12,6 +12,7 @@ export function fileFindAll(rootKey) {
     method: 'get'
   })
 }
+
 // resource
 export function resourceFindStatisticsByCount(params) {
   return request({
@@ -19,6 +20,7 @@ export function resourceFindStatisticsByCount(params) {
     method: 'get'
   })
 }
+
 // reference
 export function referenceFindAll(key) {
   return request({
@@ -26,6 +28,7 @@ export function referenceFindAll(key) {
     method: 'get'
   })
 }
+
 // rule、ruleData
 export function ruleDataFindAll(ruleType, ruleDataStatus) {
   return request({
@@ -33,6 +36,7 @@ export function ruleDataFindAll(ruleType, ruleDataStatus) {
     method: 'get'
   })
 }
+
 // tag、tagData
 export function tagFindByType(type) {
   return request({
@@ -43,6 +47,12 @@ export function tagFindByType(type) {
 export function tagDataFindByDataId(dataType, dataId) {
   return request({
     url: '?actionId=5002&dataType=' + dataType + '&dataId=' + dataId,
+    method: 'get'
+  })
+}
+export function tagDataUpdateTags(dataType, dataId, tags) {
+  return request({
+    url: '?actionId=5003&dataType=' + dataType + '&dataId=' + dataId + '&tags=' + tags,
     method: 'get'
   })
 }
