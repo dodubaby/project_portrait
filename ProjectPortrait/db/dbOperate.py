@@ -3,7 +3,7 @@
 
 import traceback
 
-import MySQLdb as mdb
+import pymysql as mdb
 
 import const as const
 
