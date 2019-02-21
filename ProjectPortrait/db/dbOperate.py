@@ -45,10 +45,12 @@ config = {
 
 
 def connect():
+    print ("db connect start")
     const.dbconnect = mdb.connect(**config)
-
+    const.dbconnect.select_db(DB_NAME)
     # 如果使用事务引擎，可以设置自动提交事务，或者在每次操作完成后手动提交事务conn.commit()
     const.dbconnect.autocommit(True)
+    print ("db connect end")
 
 
 """
@@ -57,8 +59,10 @@ def connect():
 
 
 def disconnect():
+    print ("db disconnect start")
     # 关闭数据库连接
     const.dbconnect.close()
+    print ("db disconnect end")
 
 
 """
@@ -90,8 +94,8 @@ def createDatabases():
 
 def createTables():
     try:
+        print ("db create tables start")
         conn = const.dbconnect
-        conn.select_db(DB_NAME)
         # 使用cursor()方法获取操作游标
         cursor = conn.cursor()
 
@@ -187,6 +191,7 @@ def createTables():
                        'PRIMARY KEY (id)'
                        ') ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin'
                        % TABLE_NAME_TAG_DATA)
+        print ("db create tables end")
     except:
         traceback.print_exc()
         # 发生错误时会滚
@@ -202,12 +207,14 @@ def createTables():
 
 
 def clearTableData(tableName):
-    conn = const.dbconnect
-    conn.select_db(DB_NAME)
-    # 使用cursor()方法获取操作游标
-    cursor = conn.cursor()
     try:
+        print ("db clear table data start")
+        conn = const.dbconnect
+        # 使用cursor()方法获取操作游标
+        cursor = conn.cursor()
+
         cursor.execute('truncate table %s' % tableName)
+        print ("db clear table data end")
     except:
         traceback.print_exc()
         # 发生错误时会滚

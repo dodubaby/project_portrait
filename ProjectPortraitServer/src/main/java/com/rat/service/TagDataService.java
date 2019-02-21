@@ -32,18 +32,22 @@ public class TagDataService extends BaseService {
     public TagDataFindByDataIdRspInfo findByDataId(TagDataFindByDataIdActionInfo actionInfo) {
         List<Tag> tagList4Owner = tagDao.findByType("owner");
         List<Tag> tagList4Function = tagDao.findByType("function");
+        List<Tag> tagList4Common = tagDao.findByType("common");
         List<Tag> tagList4Other = tagDao.findByType("other");
         List<String> tagValueList4Owner = tagDataDao.findTagListByParam("owner", actionInfo.getDataType(), actionInfo.getDataId());
         List<String> tagValueList4Function = tagDataDao.findTagListByParam("function", actionInfo.getDataType(), actionInfo.getDataId());
+        List<String> tagValueList4Common = tagDataDao.findTagListByParam("common", actionInfo.getDataType(), actionInfo.getDataId());
         List<String> tagValueList4Other = tagDataDao.findTagListByParam("other", actionInfo.getDataType(), actionInfo.getDataId());
 
         TagDataFindByDataIdRspInfo rspInfo = new TagDataFindByDataIdRspInfo();
         rspInfo.initSuccess(actionInfo.getActionId());
         rspInfo.setTagList4Owner(tagList4Owner);
         rspInfo.setTagList4Function(tagList4Function);
+        rspInfo.setTagList4Common(tagList4Common);
         rspInfo.setTagList4Other(tagList4Other);
         rspInfo.setTagValueList4Owner(tagValueList4Owner);
         rspInfo.setTagValueList4Function(tagValueList4Function);
+        rspInfo.setTagValueList4Common(tagValueList4Common);
         rspInfo.setTagValueList4Other(tagValueList4Other);
 
         return rspInfo;

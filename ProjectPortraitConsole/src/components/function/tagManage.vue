@@ -27,6 +27,16 @@
       @change="handleChange">
       <el-checkbox-button v-for="data in dataList4Function" :label="data.value" :key="data.type"></el-checkbox-button>
     </el-checkbox-group>
+    <el-tag>Tag-Common</el-tag>
+    <span>max=1</span>
+    <el-checkbox-group
+      v-model="checkedList4Common"
+      :min="0"
+      :max="1"
+      size="mini"
+      @change="handleChange">
+      <el-checkbox-button v-for="data in dataList4Common" :label="data.value" :key="data.type"></el-checkbox-button>
+    </el-checkbox-group>
     <el-tag>Tag-Other</el-tag>
     <el-checkbox-group
       v-model="checkedList4Other"
@@ -55,9 +65,11 @@ export default {
       dialogVisible: true,
       dataList4Owner: [],
       dataList4Function: [],
+      dataList4Common: [],
       dataList4Other: [],
       checkedList4Owner: [],
       checkedList4Function: [],
+      checkedList4Common: [],
       checkedList4Other: [],
       dataChanged: false // 数据是否变化
     }
@@ -71,10 +83,12 @@ export default {
       tagDataFindByDataId('file', this.dataId).then(response => {
         this.dataList4Owner = response.tagList4Owner
         this.dataList4Function = response.tagList4Function
+        this.dataList4Common = response.tagList4Common
         this.dataList4Other = response.tagList4Other
         this.checkedList4Owner = response.tagValueList4Owner
         this.checkedList4Function = response.tagValueList4Function
-        this.checkedList4Ohter = response.tagValueList4Other
+        this.checkedList4Common = response.tagValueList4Common
+        this.checkedList4Other = response.tagValueList4Other
         this.loading = false
       })
     },
@@ -88,7 +102,7 @@ export default {
     handleChange(value){
       this.dataChanged = true
       this.loading = true
-      var tags = this.checkedList4Owner + "," + this.checkedList4Function + "," + this.checkedList4Other
+      var tags = this.checkedList4Owner + "," + this.checkedList4Function + "," + this.checkedList4Common + "," + this.checkedList4Other
       tagDataUpdateTags('file', this.dataId, tags).then(response => {
         this.$notify({
           title: '标签更新成功',
@@ -104,7 +118,7 @@ export default {
 <style>
   .el-checkbox-group {
     margin-top: 5px;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
   }
 
   .el-checkbox-button {

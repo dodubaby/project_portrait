@@ -13,10 +13,12 @@ import java.util.List;
 public class TagDataFindByDataIdRspInfo extends ResponseInfo {
     private List<Tag> tagList4Owner;
     private List<Tag> tagList4Function;
+    private List<Tag> tagList4Common;
     private List<Tag> tagList4Other;
 
     private List<String> tagValueList4Owner;// 对应tagValue列表
     private List<String> tagValueList4Function;// 对应tagValue列表
+    private List<String> tagValueList4Common;// 对应tagCommon列表
     private List<String> tagValueList4Other;// 对应tagValue列表
 
     public List<Tag> getTagList4Owner() {
@@ -57,6 +59,22 @@ public class TagDataFindByDataIdRspInfo extends ResponseInfo {
 
     public void setTagValueList4Function(List<String> tagValueList4Function) {
         this.tagValueList4Function = tagValueList4Function;
+    }
+
+    public List<Tag> getTagList4Common() {
+        return tagList4Common;
+    }
+
+    public void setTagList4Common(List<Tag> tagList4Common) {
+        this.tagList4Common = tagList4Common;
+    }
+
+    public List<String> getTagValueList4Common() {
+        return tagValueList4Common;
+    }
+
+    public void setTagValueList4Common(List<String> tagValueList4Common) {
+        this.tagValueList4Common = tagValueList4Common;
     }
 
     public List<String> getTagValueList4Other() {

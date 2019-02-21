@@ -13,6 +13,7 @@ from fileAndDataCheck import ignoreFile
 
 
 def analysisFileList(path):
+    print ("analysis file list start")
     files = fileUtil.readFileList(path)
     for file in files:  # 遍历文件夹
         # 忽略文件
@@ -44,3 +45,4 @@ def analysisFileList(path):
         else:
             print "FileListxxxxxx File: error! " + fullName
             print "FileListxxxxxx File: error! "
+    print ("analysis file list end")

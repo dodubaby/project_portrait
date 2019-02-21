@@ -12,6 +12,7 @@ import util.configUtil as configUtil
 
 def initBaseData():
     try:
+        print ("db init base data start")
         conn = const.dbconnect
         cursor = conn.cursor()
         # 从配置文件获取基础数据sql脚本
@@ -19,6 +20,7 @@ def initBaseData():
         sqlForRule = configUtil.getConfig("./config/dbBaseData.ini", 1, 'sqlForRule')
         cursor.execute(sqlForTag)
         cursor.execute(sqlForRule)
+        print ("db init base data end")
     except:
         traceback.print_exc()
         # 发生错误时会滚

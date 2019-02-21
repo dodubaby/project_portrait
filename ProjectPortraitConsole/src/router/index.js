@@ -112,6 +112,12 @@ export const constantRouterMap = [
         meta: { title: 'function标签', icon: 'tree' }
       },
       {
+        path: 'common',
+        name: 'common',
+        component: () => import('@/function/tag/common'),
+        meta: { title: 'common标签', icon: 'tree' }
+      },
+      {
         path: 'other',
         name: 'other',
         component: () => import('@/function/tag/other'),

@@ -12,11 +12,13 @@ from util.fileUtil import readFileContent
 
 
 def analysisAllFileContent():
+    print ("analysis all file content start")
     fileList = db.readNeedAnalysisFileList(5000)
     for file in fileList:
         fileId = str(file[0])
         fileFullName = str(file[1])
         analysisFileContent(fileId, fileFullName)
+    print ("analysis all file content end")
 
 
 """

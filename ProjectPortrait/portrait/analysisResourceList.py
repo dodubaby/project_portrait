@@ -11,12 +11,14 @@ from util.fileUtil import *
 
 
 def analysisResourceList():
+    print ("analysis resource list start")
     fileList = db.readResourceFileList()
     for file in fileList:
         # 获取资源内容
         fileId = str(file[0])
         fileFullName = str(file[1])
         getResource(fileId, fileFullName)
+    print ("analysis resource list end")
 
 
 """
