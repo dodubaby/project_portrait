@@ -28,4 +28,5 @@ public class RequestCode {
     public static final int TAG_FIND_BY_TYPE = 5001;
     public static final int TAG_DATA_FIND_BY_DATA_ID = 5002;
     public static final int TAG_DATA_UPDATE_TAGS = 5003;
+    public static final int TAG_FIND_ALL = 5004;
 }

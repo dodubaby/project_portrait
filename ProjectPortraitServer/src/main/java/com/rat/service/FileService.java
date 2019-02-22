@@ -1,6 +1,7 @@
 package com.rat.service;
 
 import com.rat.dao.FileDao;
+import com.rat.dao.TagDao;
 import com.rat.entity.local.File;
 import com.rat.entity.local.ParentChild;
 import com.rat.entity.network.entity.DataPage;
@@ -24,6 +25,8 @@ import java.util.List;
 public class FileService extends BaseService {
     @Resource
     private FileDao fileDao;
+    @Resource
+    private TagDao tagDao;
 
     public FileService() {
     }
@@ -31,14 +34,27 @@ public class FileService extends BaseService {
     public FileFindAllRspInfo findAll(FileFindAllActionInfo actionInfo) {
         // 获取文件列表
         List<File> fileList = fileDao.findAll(actionInfo.getSuffix(), actionInfo.getRootKey());
+
+        // 过滤掉不包含指定tag的文件
+        String tags = actionInfo.getTags();
+        tags = StringUtil.isNullOrBlank(tags) ? "" : tags;
+        String[] tagArray = tags.split(",");
+        if (tagArray.length > 0) {
+            StringBuffer tagIds = new StringBuffer();
+            for (String tagValue : tagArray) {
+                Long tagId = tagDao.findIdByValue(tagValue);
+                tagIds.append(tagId);
+                tagIds.append(",");
+            }
+        }
         // 获取文件列表（带层级，只有Java文件）
         ParentChild root = new ParentChild("root");
+        String rootKey = actionInfo.getRootKey();// 查询的起始根节点
         for (File file : fileList) {
             String str = file.getClassFullName();
             if (StringUtil.isNullOrBlank(str)) {
                 continue;
             }
-            String rootKey = actionInfo.getRootKey();// 查询的起始根节点
             if (StringUtil.isNotBlank(rootKey)) {  // 起始根节点存在，展示起始根节点后面的内容
                 if (!str.contains(rootKey)) {
                     continue;

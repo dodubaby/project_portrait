@@ -21,7 +21,7 @@ public class SqlProvider {
         // 起始根节点
         if (StringUtil.isNotBlank(para.get("rootKey"))) {
             String rootKey = (String) para.get("rootKey");
-            sql.append(" and path like '%" + rootKey + "%'");
+            sql.append(" and full_name like '%" + rootKey + "%'");
         }
         return sql.toString();
     }

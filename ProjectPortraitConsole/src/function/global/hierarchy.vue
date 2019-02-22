@@ -4,36 +4,34 @@
               title="Function说明"
               description="项目熟悉、风险范围评估、优先级评估"
               style="margin-bottom: 20px"/>
-    <el-form ref="form" :model="form" label-width="120px"
-             v-loading="loading">
+    <el-form ref="form" :model="form" label-width="120px" v-loading="loading">
       <el-form-item label="展示根节点">
         <el-input v-model="form.rootKey" style="width:300px;"/>
         <el-tag>空代表检索所有</el-tag>
       </el-form-item>
       <el-form-item label="Tag-Owner">
-        <el-checkbox-group v-model="form.type">
-          <el-checkbox label="item1" name="type"/>
-          <el-checkbox label="item2" name="type"/>
-          <el-checkbox label="item3" name="type"/>
-          <el-checkbox label="item4" name="type"/>
-          <el-checkbox label="item5" name="type"/>
+        <el-checkbox-group v-model="checkedList4Owner" size="mini">
+          <el-checkbox-button v-for="data in dataList4Owner" :label="data.value" :key="data.type"></el-checkbox-button>
         </el-checkbox-group>
       </el-form-item>
       <el-form-item label="Tag-Function">
-        <el-checkbox-group v-model="form.type">
-          <el-checkbox label="item6" name="type"/>
-          <el-checkbox label="item7" name="type"/>
+        <el-checkbox-group v-model="checkedList4Function" size="mini">
+          <el-checkbox-button v-for="data in dataList4Function" :label="data.value"
+                              :key="data.type"></el-checkbox-button>
+        </el-checkbox-group>
+      </el-form-item>
+      <el-form-item label="Tag-Common">
+        <el-checkbox-group v-model="checkedList4Common" size="mini">
+          <el-checkbox-button v-for="data in dataList4Common" :label="data.value" :key="data.type"></el-checkbox-button>
         </el-checkbox-group>
       </el-form-item>
       <el-form-item label="Tag-Other">
-        <el-checkbox-group v-model="form.type">
-          <el-checkbox label="item8" name="type"/>
-          <el-checkbox label="item9" name="type"/>
-          <el-checkbox label="item10" name="type"/>
+        <el-checkbox-group v-model="checkedList4Other" size="mini">
+          <el-checkbox-button v-for="data in dataList4Other" :label="data.value" :key="data.type"></el-checkbox-button>
         </el-checkbox-group>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" plain @click="fetchData">查询</el-button>
+        <el-button type="primary" plain @click="getHierarchy">查询</el-button>
         <el-button plain @click="onReset">重置所有选项</el-button>
       </el-form-item>
     </el-form>
@@ -42,16 +40,18 @@
   </div>
 </template>
 <script>
-import {fileFindAll} from '@/api/ppserver'
+import {fileFindAll, tagFindAll} from '@/api/ppserver'
 import TagManage from '../../components/function/tagManage'
 import ElCol from "element-ui/packages/col/src/col";
 import ElTag from "../../../node_modules/element-ui/packages/tag/src/tag";
 import ElButton from "../../../node_modules/element-ui/packages/button/src/button";
 import ElMain from "../../../node_modules/element-ui/packages/main/src/main";
+import ElCheckboxGroup from "../../../node_modules/element-ui/packages/checkbox/src/checkbox-group";
+import ElFormItem from "../../../node_modules/element-ui/packages/form/src/form-item";
 
 export default {
   components: {
-    ElMain,
+    ElFormItem, ElCheckboxGroup, ElMain,
     ElButton,
     ElTag,
     ElCol,
@@ -71,10 +71,19 @@ export default {
       loading: false,
       tagManageVisible: false,
       data: '',
-      dataId: ''
+      dataId: '',
+      dataList4Owner: [],
+      dataList4Function: [],
+      dataList4Common: [],
+      dataList4Other: [],
+      checkedList4Owner: [],
+      checkedList4Function: [],
+      checkedList4Common: [],
+      checkedList4Other: [],
     }
   },
   mounted() {
+    this.getTagList()
   },
   methods: {
     onReset() {
@@ -91,9 +100,20 @@ export default {
     dataUpdate () {
       this.$message('data update');
     },
-    fetchData() {
+    getTagList() {
       this.loading = true
-      fileFindAll(this.form.rootKey).then(response => {
+      tagFindAll().then(response => {
+        this.dataList4Owner = response.tagList4Owner
+        this.dataList4Function = response.tagList4Function
+        this.dataList4Common = response.tagList4Common
+        this.dataList4Other = response.tagList4Other
+        this.loading = false
+      })
+    },
+    getHierarchy() {
+      this.loading = true
+      var tags = this.checkedList4Owner + "," + this.checkedList4Function + "," + this.checkedList4Common + "," + this.checkedList4Other
+      fileFindAll('java', this.form.rootKey, tags).then(response => {
         var root = response.fileListWithHierarchy
         this.draw(root, this.showTagManageView);
         this.loading = false
@@ -296,7 +316,7 @@ export default {
         });
       }
 
-// Toggle children.
+      // Toggle children.
       function toggle(d) {
         if (d.children) {
           d._children = d.children;
@@ -330,5 +350,9 @@ export default {
 
   .line {
     text-align: center;
+  }
+
+  .el-form-item {
+    margin-bottom: 0px;
   }
 </style>
