@@ -81,18 +81,20 @@ public class RequestController {
         String suffix;// 文件后缀
         String dataType;// 数据类型
         String dataId;// 数据Id
+        String tags;// 数据对应的tag列表
         switch (actionId) {
             // 用户login
             case RequestCode.SYSTEM_USER_LOGIN:
-                // TODO by L.jinzhu 暂时不控制权限
+                // 直接返回，暂不控制权限
                 responseBody = new ResponseInfo();
                 responseBody.initSuccess(actionId);
                 break;
             // 文件获取全部
             case RequestCode.FILE_FIND_ALL:
                 String rootKey = map.get("rootKey");
+                tags = map.get("tags");
                 suffix = map.get("suffix");
-                actionInfo = new FileFindAllActionInfo(actionId, suffix, rootKey);
+                actionInfo = new FileFindAllActionInfo(actionId, suffix, rootKey, tags);
                 responseBody = fileService.findAll((FileFindAllActionInfo) actionInfo);
                 break;
             // 文件获取:by类型for行数
@@ -149,6 +151,11 @@ public class RequestController {
                 actionInfo = new TagFindByTypeActionInfo(actionId, 0, DataGetType.DOWN.getCode(), type);
                 responseBody = tagService.findByType((TagFindByTypeActionInfo) actionInfo);
                 break;
+            // Tag获取全部
+            case RequestCode.TAG_FIND_ALL:
+                actionInfo = new ActionInfo(actionId);
+                responseBody = tagService.findAll(actionInfo);
+                break;
             // TagData获取:by dataId
             case RequestCode.TAG_DATA_FIND_BY_DATA_ID:
                 dataType = map.get("dataType");
@@ -163,7 +170,7 @@ public class RequestController {
             case RequestCode.TAG_DATA_UPDATE_TAGS:
                 dataType = map.get("dataType");
                 dataId = map.get("dataId");
-                String tags = map.get("tags");
+                tags = map.get("tags");
                 if (StringUtil.isNullOrBlank(dataType) || StringUtil.isNullOrBlank(dataId)) {
                     return ResponseInfo.getErrorResponse4Param(actionId);
                 }

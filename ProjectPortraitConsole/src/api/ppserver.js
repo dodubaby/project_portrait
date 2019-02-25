@@ -1,14 +1,14 @@
 import request from "@/utils/request";
 // file
-export function fileFindBySuffixOrderByLineCount(params) {
+export function fileFindBySuffixOrderByLineCount() {
   return request({
     url: '?actionId=1002&suffix=java&maxLineCount=500',
     method: 'get'
   })
 }
-export function fileFindAll(rootKey) {
+export function fileFindAll(suffix, rootKey, tags) {
   return request({
-    url: '?actionId=1001&rootKey=' + rootKey,
+    url: '?actionId=1001&suffix=' + suffix + '&rootKey=' + rootKey + '&tags=' + tags,
     method: 'get'
   })
 }
@@ -41,6 +41,12 @@ export function ruleDataFindAll(ruleType, ruleDataStatus) {
 export function tagFindByType(type) {
   return request({
     url: '?actionId=5001&type=' + type,
+    method: 'get'
+  })
+}
+export function tagFindAll() {
+  return request({
+    url: '?actionId=5004',
     method: 'get'
   })
 }

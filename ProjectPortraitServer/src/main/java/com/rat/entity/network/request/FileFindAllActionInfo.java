@@ -11,11 +11,21 @@ import com.rat.entity.network.request.base.ActionInfo;
 public class FileFindAllActionInfo extends ActionInfo {
     private String suffix;
     private String rootKey;// 起始根节点
+    private String tags;
 
-    public FileFindAllActionInfo(int actionId, String suffix, String rootKey) {
+    public FileFindAllActionInfo(int actionId, String suffix, String rootKey, String tags) {
         super(actionId);
         this.suffix = suffix;
         this.rootKey = rootKey;
+        this.tags = tags;
+    }
+
+    public String getTags() {
+        return tags;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tags;
     }
 
     public String getRootKey() {
