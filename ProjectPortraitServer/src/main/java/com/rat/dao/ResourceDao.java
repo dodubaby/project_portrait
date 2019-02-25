@@ -56,4 +56,7 @@ public interface ResourceDao {
 
     @Update("update user_resource set isDefault = 0 where userId=#{userId}")
     void updateUserResourceSetAllNotDefault(@Param("userId") Long userId);
+
+    @Select("SELECT count(*) FROM (SELECT COUNT(*), resource_value FROM resource WHERE resource_type=#{resourceType} GROUP BY resource_value HAVING count(*)>1) AS a")
+    int findResourceCountByType(@Param("resourceType") String resourceType);
 }

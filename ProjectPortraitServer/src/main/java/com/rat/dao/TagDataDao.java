@@ -23,4 +23,7 @@ public interface TagDataDao {
 
     @Delete("delete from tag_data where data_type=#{dataType} and data_id=#{dataId}")
     void deleteTagsByDataId(@Param("dataType") String dataType, @Param("dataId") long dataId);
+
+    @Select("select count(*) from tag where type =#{type} and id in (SELECT DISTINCT tag_id FROM tag_data)")
+    int findTagCountByType(@Param("type") String type);
 }

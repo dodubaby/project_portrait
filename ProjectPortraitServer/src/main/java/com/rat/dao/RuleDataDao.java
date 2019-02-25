@@ -3,6 +3,7 @@ package com.rat.dao;
 import com.rat.entity.local.RuleData;
 import com.rat.provider.SqlProvider;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectProvider;
 import org.springframework.stereotype.Repository;
 
@@ -17,4 +18,12 @@ import java.util.List;
 public interface RuleDataDao {
     @SelectProvider(type = SqlProvider.class, method = "ruleDataFindAll")
     List<RuleData> findAll(@Param("status") String status, @Param("ruleId") long ruleId);
+
+    /**
+     * 查询某种rule count
+     * @param group
+     * @return
+     */
+    @Select("select count(*) from rule_data where rule_group = #{group} and status != 'normal'")
+    int findRuleCountByGroup(@Param("group") String group);
 }

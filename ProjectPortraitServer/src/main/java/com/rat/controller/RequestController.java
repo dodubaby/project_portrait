@@ -51,6 +51,8 @@ public class RequestController {
     private TagService tagService;
     @Resource
     private TagDataService tagDataService;
+    @Resource
+    private StatisBoardService statisBoardService;
 
     public RequestController() {
         logger.info("rat server start");
@@ -177,6 +179,11 @@ public class RequestController {
                 String[] tagArray = tags.split(",");
                 actionInfo = new TagDataUpdateTagsActionInfo(actionId, SafeParseUtils.parseLong(dataId), dataType, tagArray);
                 responseBody = tagDataService.updateTagList((TagDataUpdateTagsActionInfo) actionInfo);
+                break;
+            // 数据面板统计
+            case RequestCode.STATIS_DATABOARD_INDEX:
+                actionInfo = new ActionInfo(actionId);
+                responseBody = statisBoardService.findStatisBoardInfo(actionId);
                 break;
             // 请求解析异常
             default:

@@ -27,6 +27,9 @@ public interface FileDao {
 
     @Select("select id from file where name=#{name} limit 0,1")
     Long findIdByName(@Param("name") String name);
+
+    @Select("select count(*) from file where line_count>#{fileCount}")
+    int findFileCountByLine(@Param("fileCount") int fileCount);
 //
 //    @Insert("insert into userinfo (" +
 //            "headUrl,nickName,account,accountType,age,sex,bigImg,cityCode,cityName,workCode,workName,educationCode,educationName,houseCode,houseName,marriageCode,marriageName,introduce,remark,token4RongCloud" +
