@@ -16,22 +16,14 @@ def analysisRuleData(fileId, lineContent, lineNum):
     if (ruleList is None):
         getRuleList()
     for rule in ruleList:
-        keyLeft = str(rule[1])
-        keyRight = str(rule[2])
-        # 双边界
-        if (isNotEmpty(keyLeft) and isNotEmpty(keyRight)):
-            ruleData = regular.regular(lineContent, keyLeft, keyRight)
-        # 左边界
-        elif (isNotEmpty(keyLeft)):
-            ruleData = regular.regularWithLeft(lineContent, keyLeft)
-        # 右边界
-        elif (isNotEmpty(keyRight)):
-            ruleData = regular.regularWithRight(lineContent, keyRight)
+        key = rule[1]
+        if(isNotEmpty(key)):
+            ruleData = regular.regularWord(lineContent, key)
         else:
             ruleData = ""
 
         if (ruleData != ""):
-            db.saveRuleData(rule[0], fileId, lineContent, lineNum, 'normal')
+            db.saveRuleData(rule[0], rule[5], fileId, lineContent, lineNum, 'normal')
 
 
 """

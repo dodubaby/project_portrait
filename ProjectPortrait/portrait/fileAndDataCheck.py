@@ -23,6 +23,12 @@ def ignoreFile(str):
         return True
     if str.endswith(".json"):
         return True
+    if str.endswith(".iml"):
+        return True
+    if str.endswith(".pro"):
+        return True
+    if str.endswith(".properties"):
+        return True
     else:
         return False
 

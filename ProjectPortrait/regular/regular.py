@@ -16,6 +16,17 @@ def demo():
     print matcher1.group(0)
 
 
+
+"""
+匹配所有rule的正则
+"""
+def regularWord(content,regularRule):
+    pattern = re.compile(regularRule)
+    matcher = re.search(pattern, content)
+    if (None == matcher):
+        return ""
+    return matcher.group(0)
+
 """
 正则
 """
