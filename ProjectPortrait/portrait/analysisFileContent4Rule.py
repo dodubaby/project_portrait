@@ -12,18 +12,20 @@ ruleList = None
 """
 
 
-def analysisRuleData(fileId, lineContent, lineNum):
+def analysisRuleData(fileId, lineContent, lineNum, suffix):
     if (ruleList is None):
         getRuleList()
     for rule in ruleList:
-        key = rule[1]
-        if(isNotEmpty(key)):
-            ruleData = regular.regularWord(lineContent, key)
-        else:
-            ruleData = ""
+        scan_file_suffix = rule[2]
+        if scan_file_suffix in suffix:
+            key = rule[1]
+            if (isNotEmpty(key)):
+                ruleData = regular.regularWord(lineContent, key)
+            else:
+                ruleData = ""
 
-        if (ruleData != ""):
-            db.saveRuleData(rule[0], rule[5], fileId, lineContent, lineNum, 'normal')
+            if (ruleData != ""):
+                db.saveRuleData(rule[0], rule[5], fileId, lineContent, lineNum, 'normal')
 
 
 """

@@ -144,14 +144,14 @@ def saveReferenceForResource(file_id, reference_data, reference_line):
 """
 
 
-def saveRuleData(rule_id, file_id, group, data, data_line, status):
+def saveRuleData(rule_id, file_id, rule_group, data, data_line, status):
     try:
         if (len(data) >= 255):
             data = data[0:200] + '...'
         conn = const.dbconnect
         cursor = conn.cursor()
-        sql = 'INSERT INTO rule_data(rule_id, group, file_id, data, data_line, status) VALUES(%s, %s, %s, %s, %s, %s)'
-        value = [rule_id, group, file_id, data, data_line, status]
+        sql = 'INSERT INTO rule_data(rule_id, rule_group, file_id, data, data_line, status) VALUES(%s, %s, %s, %s, %s, %s)'
+        value = [rule_id, rule_group, file_id, data, data_line, status]
         cursor.execute(sql, value)
     except:
         traceback.print_exc()
@@ -196,7 +196,7 @@ def readNeedAnalysisFileList(count):
     try:
         conn = const.dbconnect
         cursor = conn.cursor()
-        sql = 'SELECT id,full_name FROM file WHERE type = "file" AND suffix IN ("java", "xml") AND scan_time = %s'
+        sql = 'SELECT id, full_name, suffix FROM file WHERE type = "file" AND suffix IN ("java", "xml") AND scan_time = %s'
         if (count > 0):
             sql = sql + ' LIMIT ' + str(count)
         value = [const.scanTime]

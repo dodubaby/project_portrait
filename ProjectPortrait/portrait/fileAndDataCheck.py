@@ -29,6 +29,8 @@ def ignoreFile(str):
         return True
     if str.endswith(".properties"):
         return True
+    if str.endswith(".li"):
+        return True
     else:
         return False
 

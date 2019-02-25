@@ -17,7 +17,8 @@ def analysisAllFileContent():
     for file in fileList:
         fileId = str(file[0])
         fileFullName = str(file[1])
-        analysisFileContent(fileId, fileFullName)
+        suffix = str(file[2])
+        analysisFileContent(fileId, fileFullName, suffix)
     print ("analysis all file content end")
 
 
@@ -26,7 +27,7 @@ def analysisAllFileContent():
 """
 
 
-def analysisFileContent(fileId, fileFullName):
+def analysisFileContent(fileId, fileFullName, suffix):
     iter_f = readFileContent(fileFullName)
     lineNum = 0
     for lineContent in iter_f:  # 遍历文件，一行行遍历，读取文本
@@ -34,4 +35,4 @@ def analysisFileContent(fileId, fileFullName):
         # 解析引用关系
         reference.analysisReference(fileId, lineContent, lineNum)
         # 解析规则数据
-        rule.analysisRuleData(fileId, lineContent, lineNum)
+        rule.analysisRuleData(fileId, lineContent, lineNum, suffix)
