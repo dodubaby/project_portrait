@@ -33,18 +33,17 @@ export default {
         var links = response.referenceList
         this.draw(links);
       })
-//      var links = [
-//        {source: "哈哈哈哈哈哈哈", target: "Amazon", type: "licensing"},
-//        {source: "Microsoft", target: "HTC", type: "licensing"},
-//        {source: "Samsung", target: "Apple", type: "suit"},
-//        {source: "Motorola", target: "哈哈哈哈哈哈哈", type: "suit"},
-//        {source: "Nokia", target: "哈哈哈哈哈哈哈", type: "resolved"},
-//        {source: "Kodak", target: "RIM", type: "suit"},
-//        {source: "Nokia", target: "Qualcomm", type: "suit"},
-//        {source: "aaa", target: "RIM", type: "suit"}
-//      ];
     },
-
+    // ====D3.js start====
+    // var links = [
+    // {source: "Microsoft", target: "HTC", type: "licensing"},
+    // {source: "Samsung", target: "Apple", type: "suit"},
+    // {source: "Motorola", target: "哈哈哈哈哈哈哈", type: "suit"},
+    // {source: "Nokia", target: "哈哈哈哈哈哈哈", type: "resolved"},
+    // {source: "Kodak", target: "RIM", type: "suit"},
+    // {source: "Nokia", target: "Qualcomm", type: "suit"},
+    // {source: "aaa", target: "RIM", type: "suit"}
+    // ];
     draw(links){
       var nodes = {};
 
@@ -132,6 +131,7 @@ export default {
         return "translate(" + d.x + "," + d.y + ")";
       }
     }
+    // ====D3.js end====
   }
 }
 </script>

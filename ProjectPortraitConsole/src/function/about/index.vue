@@ -23,6 +23,11 @@
           <el-tag class="tag_name">符飚(笑哈哈)-23109668</el-tag>
         </el-tooltip>
       </div>
+      <div class="text item">
+        <el-tooltip effect="dark" content="何健：此处放这位大牛的介绍" placement="right">
+          <el-tag class="tag_name">何健(闪现)-26015660</el-tag>
+        </el-tooltip>
+      </div>
     </el-card>
     <el-card style="width: 1000px;margin-top: 20px">
       <div slot="header" class="clearfix">
@@ -83,6 +88,5 @@
   .tag_name {
     width: auto;
     height: auto;
-    font-size: 18px;
   }
 </style>

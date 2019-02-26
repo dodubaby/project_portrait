@@ -22,19 +22,42 @@ import java.util.List;
  */
 @Service
 public class TagService extends BaseService {
+    // 用于筛选的tag条目
+    public static final String TAG_OWNER = "owner";
+    public static final String TAG_OWNER_NO = "[无Owner]";
+    public static final String TAG_OWNER_IGNORE = "[忽略Owner]";
+    public static final String TAG_FUNCTION = "function";
+    public static final String TAG_FUNCTION_NO = "[无Function]";
+    public static final String TAG_FUNCTION_IGNORE = "[忽略Function]";
+    public static final String TAG_COMMON = "common";
+    public static final String TAG_COMMON_NO = "[无Common]";
+    public static final String TAG_COMMON_IGNORE = "[忽略Common]";
+    public static final String TAG_OTHER = "other";
+    public static final String TAG_OTHER_NO = "[无Other]";
+    public static final String TAG_OTHER_IGNORE = "[忽略Other]";
+
     @Resource
     private TagDao tagDao;
     @Resource
     private TagDataDao tagDataDao;
-
     public TagService() {
     }
 
     public TagFindAllRspInfo findAll(ActionInfo actionInfo) {
-        List<Tag> tagList4Owner = tagDao.findByType("owner");
-        List<Tag> tagList4Function = tagDao.findByType("function");
-        List<Tag> tagList4Common = tagDao.findByType("common");
-        List<Tag> tagList4Other = tagDao.findByType("other");
+        List<Tag> tagList4Owner = tagDao.findByType(TAG_OWNER);
+        List<Tag> tagList4Function = tagDao.findByType(TAG_FUNCTION);
+        List<Tag> tagList4Common = tagDao.findByType(TAG_COMMON);
+        List<Tag> tagList4Other = tagDao.findByType(TAG_OTHER);
+
+        tagList4Owner.add(0, new Tag(TAG_OWNER_NO));
+        tagList4Owner.add(0, new Tag(TAG_OWNER_IGNORE));
+        tagList4Function.add(0, new Tag(TAG_FUNCTION_NO));
+        tagList4Function.add(0, new Tag(TAG_FUNCTION_IGNORE));
+        tagList4Common.add(0, new Tag(TAG_COMMON_NO));
+        tagList4Common.add(0, new Tag(TAG_COMMON_IGNORE));
+        tagList4Other.add(0, new Tag(TAG_OTHER_NO));
+        tagList4Other.add(0, new Tag(TAG_OTHER_IGNORE));
+
         TagFindAllRspInfo rspInfo = new TagFindAllRspInfo();
         rspInfo.initSuccess(actionInfo.getActionId());
         rspInfo.setTagList4Owner(tagList4Owner);
@@ -82,5 +105,6 @@ public class TagService extends BaseService {
         responseInfo.initSuccess(actionInfo.getActionId());
         return responseInfo;
     }
+
 }
 

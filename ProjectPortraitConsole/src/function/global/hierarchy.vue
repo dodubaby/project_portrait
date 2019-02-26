@@ -7,7 +7,7 @@
     <el-form ref="form" :model="form" label-width="120px" v-loading="loading">
       <el-form-item label="展示根节点">
         <el-input v-model="form.rootKey" style="width:300px;"/>
-        <el-tag>空代表检索所有</el-tag>
+        <el-tag>空代表检索所有；示例：libcore、dialog</el-tag>
       </el-form-item>
       <el-form-item label="Tag-Owner">
         <el-checkbox-group v-model="checkedList4Owner" size="mini">
@@ -36,7 +36,8 @@
       </el-form-item>
     </el-form>
     <div id="container"/>
-    <tag-manage v-if="tagManageVisible" :data="data" :dataId="dataId" @callBack="dataUpdate"></tag-manage>
+    <tag-manage v-if="tagManageVisible" v-show="tagManageVisible" :data="data" :dataId="dataId"
+                @callBack="backToCurrentPage"></tag-manage>
   </div>
 </template>
 <script>
@@ -97,7 +98,9 @@ export default {
       this.data = mData
       this.dataId = mDataId
     },
-    dataUpdate () {
+    // 公共方法：从上一个vue返回到当前vue
+    backToCurrentPage () {
+      this.tagManageVisible = false
       this.$message('data update');
     },
     getTagList() {
@@ -118,35 +121,36 @@ export default {
         this.draw(root, this.showTagManageView);
         this.loading = false
       })
-//      var root = {
-//        "name": "com",
-//        "children": [{
-//          "name": "111",
-//          "children": [{
-//            "name": "222",
-//            "children": [{
-//              "name": "333",
-//            }, {
-//              "name": "444",
-//            }, {
-//              "name": "555",
-//            }, {
-//              "name": "666",
-//            }]
-//          }]
-//        }, {
-//          "name": "ISchedulable"
-//        }, {
-//          "name": "Parallel",
-//          "children": [{
-//            "name": "111122222"
-//          }]
-//        }, {
-//          "name": "Pause",
-//        }]
-//      };
     },
 
+    // ====D3.js start====
+    // var root = {
+    //   "name": "com",
+    //   "children": [{
+    //     "name": "111",
+    //     "children": [{
+    //       "name": "222",
+    //       "children": [{
+    //         "name": "333",
+    //       }, {
+    //         "name": "444",
+    //       }, {
+    //         "name": "555",
+    //       }, {
+    //         "name": "666",
+    //       }]
+    //     }]
+    //   }, {
+    //     "name": "ISchedulable"
+    //   }, {
+    //     "name": "Parallel",
+    //     "children": [{
+    //       "name": "111122222"
+    //     }]
+    //   }, {
+    //     "name": "Pause",
+    //   }]
+    // };
     draw(root, nodeClick){
       var m = [20, 120, 20, 120],
         w = 3000 - m[1] - m[3],
@@ -210,16 +214,16 @@ export default {
           .attr("class", "node")
           .attr("transform", function (d) {
             return "translate(" + source.y0 + "," + source.x0 + ")";
-          })
-          .on("click", function (d) {
-            toggle(d);
-            update(d);
           });
 
         nodeEnter.append("svg:circle")
           .attr("r", 1e-6)
           .style("fill", function (d) {
             return d._children ? "lightsteelblue" : "#fff";
+          })
+          .on("click", function (d) {
+            toggle(d);
+            update(d, nodeClick);
           });
 
         nodeEnter.append("svg:text")
@@ -327,6 +331,7 @@ export default {
         }
       }
     }
+    // ====D3.js end====
   }
 }
 </script>

@@ -47,7 +47,7 @@
     </el-checkbox-group>
 
     <span slot="footer">
-    <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+    <el-button type="primary" @click="close">确 定</el-button>
     </span>
   </el-dialog>
 </template>
@@ -70,8 +70,7 @@ export default {
       checkedList4Owner: [],
       checkedList4Function: [],
       checkedList4Common: [],
-      checkedList4Other: [],
-      dataChanged: false // 数据是否变化
+      checkedList4Other: []
     }
   },
   created() {
@@ -92,15 +91,14 @@ export default {
         this.loading = false
       })
     },
+    close() {
+      this.$emit('callBack')
+    },
     handleClose(done) {
-      // 关闭前回调特定方法
-      if (this.dataChanged) {
-        this.$emit('callBack')
-      }
       done();
+      this.$emit('callBack')
     },
     handleChange(value){
-      this.dataChanged = true
       this.loading = true
       var tags = this.checkedList4Owner + "," + this.checkedList4Function + "," + this.checkedList4Common + "," + this.checkedList4Other
       tagDataUpdateTags('file', this.dataId, tags).then(response => {

@@ -30,14 +30,14 @@ public class TagDataService extends BaseService {
     }
 
     public TagDataFindByDataIdRspInfo findByDataId(TagDataFindByDataIdActionInfo actionInfo) {
-        List<Tag> tagList4Owner = tagDao.findByType("owner");
-        List<Tag> tagList4Function = tagDao.findByType("function");
-        List<Tag> tagList4Common = tagDao.findByType("common");
-        List<Tag> tagList4Other = tagDao.findByType("other");
-        List<String> tagValueList4Owner = tagDataDao.findTagListByParam("owner", actionInfo.getDataType(), actionInfo.getDataId());
-        List<String> tagValueList4Function = tagDataDao.findTagListByParam("function", actionInfo.getDataType(), actionInfo.getDataId());
-        List<String> tagValueList4Common = tagDataDao.findTagListByParam("common", actionInfo.getDataType(), actionInfo.getDataId());
-        List<String> tagValueList4Other = tagDataDao.findTagListByParam("other", actionInfo.getDataType(), actionInfo.getDataId());
+        List<Tag> tagList4Owner = tagDao.findByType(TagService.TAG_OWNER);
+        List<Tag> tagList4Function = tagDao.findByType(TagService.TAG_FUNCTION);
+        List<Tag> tagList4Common = tagDao.findByType(TagService.TAG_COMMON);
+        List<Tag> tagList4Other = tagDao.findByType(TagService.TAG_OTHER);
+        List<String> tagValueList4Owner = tagDataDao.findTagListByParam(TagService.TAG_OWNER, actionInfo.getDataType(), actionInfo.getDataId());
+        List<String> tagValueList4Function = tagDataDao.findTagListByParam(TagService.TAG_FUNCTION, actionInfo.getDataType(), actionInfo.getDataId());
+        List<String> tagValueList4Common = tagDataDao.findTagListByParam(TagService.TAG_COMMON, actionInfo.getDataType(), actionInfo.getDataId());
+        List<String> tagValueList4Other = tagDataDao.findTagListByParam(TagService.TAG_OTHER, actionInfo.getDataType(), actionInfo.getDataId());
 
         TagDataFindByDataIdRspInfo rspInfo = new TagDataFindByDataIdRspInfo();
         rspInfo.initSuccess(actionInfo.getActionId());

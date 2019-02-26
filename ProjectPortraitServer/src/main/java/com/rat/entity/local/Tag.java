@@ -1,6 +1,9 @@
 package com.rat.entity.local;
 
+import com.rat.utils.SafeParseUtils;
+
 import java.io.Serializable;
+import java.math.BigInteger;
 
 /**
  * 实体类
@@ -12,6 +15,16 @@ public class Tag implements Serializable {
     private long id;
     private String type;
     private String value;
+
+    public Tag(BigInteger id, String type, String value) {
+        this.id = SafeParseUtils.parseLong(String.valueOf(id));
+        this.type = type;
+        this.value = value;
+    }
+
+    public Tag(String value) {
+        this.value = value;
+    }
 
     public long getId() {
         return id;

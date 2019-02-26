@@ -2,6 +2,7 @@ package com.rat.service;
 
 import com.rat.dao.FileDao;
 import com.rat.dao.TagDao;
+import com.rat.dao.TagDataDao;
 import com.rat.entity.local.File;
 import com.rat.entity.local.ParentChild;
 import com.rat.entity.network.entity.DataPage;
@@ -12,8 +13,10 @@ import com.rat.service.base.BaseService;
 import com.rat.utils.DataPageUtil;
 import com.rat.utils.StringUtil;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,27 +30,18 @@ public class FileService extends BaseService {
     private FileDao fileDao;
     @Resource
     private TagDao tagDao;
+    @Resource
+    private TagDataDao tagDataDao;
 
     public FileService() {
     }
 
     public FileFindAllRspInfo findAll(FileFindAllActionInfo actionInfo) {
-        // 获取文件列表
-        List<File> fileList = fileDao.findAll(actionInfo.getSuffix(), actionInfo.getRootKey());
-
-        // 过滤掉不包含指定tag的文件
-        String tags = actionInfo.getTags();
-        tags = StringUtil.isNullOrBlank(tags) ? "" : tags;
-        String[] tagArray = tags.split(",");
-        if (tagArray.length > 0) {
-            StringBuffer tagIds = new StringBuffer();
-            for (String tagValue : tagArray) {
-                Long tagId = tagDao.findIdByValue(tagValue);
-                tagIds.append(tagId);
-                tagIds.append(",");
-            }
-        }
-        // 获取文件列表（带层级，只有Java文件）
+        // 获取"文件"列表
+        List<File> tempFileList = fileDao.findAll(actionInfo.getSuffix(), actionInfo.getRootKey());
+        // 根据tags过滤文件列表
+        List<File> fileList = filteFileListByTagList(tempFileList, actionInfo.getTags());
+        // 获取"文件"列表（含层级，只有Java文件）
         ParentChild root = new ParentChild("root");
         String rootKey = actionInfo.getRootKey();// 查询的起始根节点
         for (File file : fileList) {
@@ -82,7 +76,13 @@ public class FileService extends BaseService {
         return rspInfo;
     }
 
-
+    /**
+     * 处理层级结构
+     *
+     * @param root
+     * @param strArray
+     * @return
+     */
     public static ParentChild addChildList(ParentChild root, String[] strArray) {
         ParentChild current = root;
         for (String newStr : strArray) {
@@ -91,5 +91,68 @@ public class FileService extends BaseService {
         }
         return root;
     }
-}
 
+    /**
+     * 根据tagList过滤文件列表
+     */
+    private List<File> filteFileListByTagList(List<File> fileList, String tags) {
+        if (CollectionUtils.isEmpty(fileList)) {
+            return fileList;
+        }
+        // tags内容为空，不做处理
+        if (StringUtil.isNullOrBlank(tags)) {
+            return fileList;
+        }
+        if (StringUtil.isNullOrBlank(tags.replace(",", ""))) {
+            return fileList;
+        }
+        // 逐步处理Tag各种类型
+        fileList = filteFileListByTagType(TagService.TAG_OWNER, TagService.TAG_OWNER_IGNORE, TagService.TAG_OWNER_NO, fileList, tags);
+        fileList = filteFileListByTagType(TagService.TAG_FUNCTION, TagService.TAG_FUNCTION_IGNORE, TagService.TAG_FUNCTION_NO, fileList, tags);
+        fileList = filteFileListByTagType(TagService.TAG_COMMON, TagService.TAG_COMMON_IGNORE, TagService.TAG_COMMON_NO, fileList, tags);
+        fileList = filteFileListByTagType(TagService.TAG_OTHER, TagService.TAG_OTHER_IGNORE, TagService.TAG_OTHER_NO, fileList, tags);
+        return fileList;
+    }
+
+    /**
+     * 根据tag类型过滤文件列表
+     */
+    private List<File> filteFileListByTagType(String tagType, String tagTypeIgnore, String tagTypeNo, List<File> tempFileList, String tags) {
+        if (CollectionUtils.isEmpty(tempFileList)) {
+            return tempFileList;
+        }
+        // 包含此类tag的"忽略标识"，不作处理
+        if (tags.contains(tagTypeIgnore)) {
+            return tempFileList;
+        }
+        // 包含此类tag的"无tag标识"，保留不含此类tag的文件
+        if (tags.contains(tagTypeNo)) {
+            List<Long> dataIdList = tagDataDao.findDataIdListByTagType(tagType, "file");
+            ArrayList<File> delList = new ArrayList<>();
+            for (File file : tempFileList) {
+                if (dataIdList.contains(file.getId())) {
+                    delList.add(file);
+                }
+            }
+            tempFileList.removeAll(delList);
+            return tempFileList;
+        }
+        // 未选择此类tag的"任何标识"，不作处理
+        String tagsForSql = tags.replaceAll(",", "','");
+        tagsForSql = "'" + tagsForSql + "'";
+        int tagCount = tagDao.findCountByTagValues(tagType, tagsForSql);
+        if (tagCount == 0) {
+            return tempFileList;
+        }
+        // 选择此类tag的"具体标识"，保留含有具体tag的文件
+        List<Long> dataIdList = tagDataDao.findDataIdListByTags(tagType, tagsForSql, "file");
+        ArrayList<File> delList = new ArrayList<>();
+        for (File file : tempFileList) {
+            if (!dataIdList.contains(file.getId())) {
+                delList.add(file);
+            }
+        }
+        tempFileList.removeAll(delList);
+        return tempFileList;
+    }
+}
