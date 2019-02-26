@@ -29,6 +29,9 @@ public class RequestCode {
     public static final int TAG_DATA_FIND_BY_DATA_ID = 5002;
     public static final int TAG_DATA_UPDATE_TAGS = 5003;
     public static final int TAG_FIND_ALL = 5004;
+    public static final int TAG_INSERT = 5005;
+    public static final int TAG_DELETE_BY_VALUE = 5006;
+
 
     //statis
     public static final int STATIS_DATABOARD_INDEX = 6001;

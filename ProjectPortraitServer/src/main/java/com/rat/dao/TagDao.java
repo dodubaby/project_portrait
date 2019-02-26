@@ -1,6 +1,8 @@
 package com.rat.dao;
 
 import com.rat.entity.local.Tag;
+import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
@@ -20,4 +22,10 @@ public interface TagDao {
 
     @Select("select id from tag where value=#{value} limit 1")
     Long findIdByValue(@Param("value") String value);
+
+    @Insert("insert into tag (type, value) values (#{type}, #{value})")
+    void insertTag(@Param("type") String type, @Param("value") String value);
+
+    @Delete("delete from tag where value=#{value} and type=#{type}")
+    void deleteTagByValue(@Param("type") String type, @Param("value") String value);
 }

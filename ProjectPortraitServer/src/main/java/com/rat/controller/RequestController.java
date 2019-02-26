@@ -158,6 +158,26 @@ public class RequestController {
                 actionInfo = new ActionInfo(actionId);
                 responseBody = tagService.findAll(actionInfo);
                 break;
+            // tag新增
+            case RequestCode.TAG_INSERT:
+                String insertType = map.get("type");
+                String insertValue = map.get("value");
+                if (StringUtil.isNullOrBlank(insertType) || StringUtil.isNullOrBlank(insertValue)) {
+                    return ResponseInfo.getErrorResponse4Param(actionId);
+                }
+                actionInfo = new TagInsertDeleteActionInfo(actionId, insertType, insertValue);
+                responseBody = tagService.insertTag((TagInsertDeleteActionInfo) actionInfo);
+                break;
+            // tag根据value删除
+            case RequestCode.TAG_DELETE_BY_VALUE:
+                String delType = map.get("type");
+                String delValue = map.get("value");
+                if (StringUtil.isNullOrBlank(delType) || StringUtil.isNullOrBlank(delValue)) {
+                    return ResponseInfo.getErrorResponse4Param(actionId);
+                }
+                actionInfo = new TagInsertDeleteActionInfo(actionId, delType, delValue);
+                responseBody = tagService.deleteTagByValue((TagInsertDeleteActionInfo) actionInfo);
+                break;
             // TagData获取:by dataId
             case RequestCode.TAG_DATA_FIND_BY_DATA_ID:
                 dataType = map.get("dataType");
