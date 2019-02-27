@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * @author L.jinzhu
  * @Description:响应回执公共基类
- * @date 2015-08-31 上午12:01:22
+ * @date 2018-08-31 上午12:01:22
  */
 public abstract class AbstractResponseInfo implements Serializable {
 

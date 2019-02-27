@@ -1,10 +1,8 @@
 package com.rat.dao;
 
 import com.rat.entity.local.Tag;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import com.rat.provider.SqlProvider;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -22,7 +20,7 @@ public interface TagDao {
     @Select("select id from tag where value=#{value} limit 1")
     Long findIdByValue(@Param("value") String value);
 
-    @Select("select count(*) from tag where type=#{type} and value in (#{valueList})")
+    @SelectProvider(type = SqlProvider.class, method = "tagFindCountByTagValues")
     int findCountByTagValues(@Param("type") String type, @Param("valueList") String valueList);
 
     @Insert("insert into tag (type, value) values (#{type}, #{value})")

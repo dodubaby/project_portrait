@@ -125,30 +125,30 @@ export default {
 
     // ====D3.js start====
     // var root = {
-    //   "name": "com",
+    //   "dataName": "com",
     //   "children": [{
-    //     "name": "111",
+    //     "dataName": "111",
     //     "children": [{
-    //       "name": "222",
+    //       "dataName": "222",
     //       "children": [{
-    //         "name": "333",
+    //         "dataName": "333",
     //       }, {
-    //         "name": "444",
+    //         "dataName": "444",
     //       }, {
-    //         "name": "555",
+    //         "dataName": "555",
     //       }, {
-    //         "name": "666",
+    //         "dataName": "666",
     //       }]
     //     }]
     //   }, {
-    //     "name": "ISchedulable"
+    //     "dataName": "ISchedulable"
     //   }, {
-    //     "name": "Parallel",
+    //     "dataName": "Parallel",
     //     "children": [{
-    //       "name": "111122222"
+    //       "dataName": "111122222"
     //     }]
     //   }, {
-    //     "name": "Pause",
+    //     "dataName": "Pause",
     //   }]
     // };
     draw(root, nodeClick){
@@ -235,10 +235,10 @@ export default {
             return d.children || d._children ? "end" : "start";
           })
           .text(function (d) {
-            return d.name + "[t.u]";
+            return d.dataName;
           })
           .on("click", function (d) {
-            nodeClick(d.name, d.id)
+            nodeClick(d.dataName, d.dataId)
           })
           .style("fill-opacity", 1e-6);
         nodeEnter.append('svg:text')

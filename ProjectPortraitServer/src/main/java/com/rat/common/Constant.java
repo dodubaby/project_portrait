@@ -20,5 +20,6 @@ public class Constant {
     public static String downloadUrl = "";
     public static String des = "";
 
+    public static String DATA_ROOT = "root";
     public static String DATA_ERROR = "DataError";
 }

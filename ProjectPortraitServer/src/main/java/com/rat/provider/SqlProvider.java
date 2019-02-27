@@ -16,7 +16,7 @@ public class SqlProvider {
         // 文件后缀
         if (StringUtil.isNotBlank(para.get("suffix"))) {
             String suffix = (String) para.get("suffix");
-            sql.append(" and suffix = '" + suffix + "'");
+            sql.append(" and ((suffix='" + suffix + "') or type='dir')");
         }
         // 起始根节点
         if (StringUtil.isNotBlank(para.get("rootKey"))) {
@@ -113,6 +113,44 @@ public class SqlProvider {
         }
         return sql.toString();
     }
+
+    public String tagFindCountByTagValues(Map<String, Object> para) {
+        StringBuffer sql = new StringBuffer();
+        sql.append("select count(*) from tag where 1=1");
+        // type
+        if (StringUtil.isNotBlank(para.get("type"))) {
+            String type = (String) para.get("type");
+            sql.append(" and type = '" + type + "'");
+        }
+        // valueList
+        if (StringUtil.isNotBlank(para.get("valueList"))) {
+            String valueList = (String) para.get("valueList");
+            sql.append(" and value in (" + valueList + ")");
+        }
+        return sql.toString();
+    }
+
+    public String tagDataFindDataIdListByTags(Map<String, Object> para) {
+        StringBuffer sql = new StringBuffer();
+        sql.append("select td.data_id from tag_data as td, tag as t where t.id=td.tag_id");
+        // tagType
+        if (StringUtil.isNotBlank(para.get("tagType"))) {
+            String tagType = (String) para.get("tagType");
+            sql.append(" and t.type='" + tagType + "'");
+        }
+        // tagValues
+        if (StringUtil.isNotBlank(para.get("tagValues"))) {
+            String tagValues = (String) para.get("tagValues");
+            sql.append(" and t.value in (" + tagValues + ")");
+        }
+        // dataType
+        if (StringUtil.isNotBlank(para.get("dataType"))) {
+            String dataType = (String) para.get("dataType");
+            sql.append(" and td.data_type='" + dataType + "'");
+        }
+        return sql.toString();
+    }
+
 
 //    public String deleteResource(Map<String, Object> para) {
 //        StringBuffer sql = new StringBuffer();

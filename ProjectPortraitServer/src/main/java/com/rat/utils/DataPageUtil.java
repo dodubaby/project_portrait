@@ -6,7 +6,7 @@ import com.rat.entity.network.entity.DataPage;
 
 /**
  * author : L.jinzhu
- * date : 2015/8/1
+ * date : 2018/8/1
  * introduce : json解析工具
  */
 public class DataPageUtil {

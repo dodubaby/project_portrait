@@ -90,8 +90,8 @@ public class UnitTestController {
         String[] strArray1 = str1.split("\\.");
         String[] strArray2 = str2.split("\\.");
 
-        root = FileService.addChildList(root, strArray1);
-        root = FileService.addChildList(root, strArray2);
+        root = FileService.addChildList(root, strArray1, "");
+        root = FileService.addChildList(root, strArray2, "");
 
         System.out.println("====");
         System.out.println(root);

@@ -1,5 +1,6 @@
 package com.rat.service;
 
+import com.rat.common.Constant;
 import com.rat.dao.FileDao;
 import com.rat.dao.TagDao;
 import com.rat.dao.TagDataDao;
@@ -10,6 +11,7 @@ import com.rat.entity.network.request.FileFindAllActionInfo;
 import com.rat.entity.network.request.FileFindBySuffixOrderByLineCountActionInfo;
 import com.rat.entity.network.response.FileFindAllRspInfo;
 import com.rat.service.base.BaseService;
+import com.rat.utils.DataCheckUtil;
 import com.rat.utils.DataPageUtil;
 import com.rat.utils.StringUtil;
 import org.springframework.stereotype.Service;
@@ -37,26 +39,24 @@ public class FileService extends BaseService {
     }
 
     public FileFindAllRspInfo findAll(FileFindAllActionInfo actionInfo) {
-        // 获取"文件"列表
+        // 获取"文件"列表结构
         List<File> tempFileList = fileDao.findAll(actionInfo.getSuffix(), actionInfo.getRootKey());
         // 根据tags过滤文件列表
         List<File> fileList = filteFileListByTagList(tempFileList, actionInfo.getTags());
-        // 获取"文件"列表（含层级，只有Java文件）
-        ParentChild root = new ParentChild("root");
+        // 获取"文件"层级结构
+        ParentChild root = new ParentChild(Constant.DATA_ROOT);
         String rootKey = actionInfo.getRootKey();// 查询的起始根节点
         for (File file : fileList) {
-            String str = file.getClassFullName();
-            if (StringUtil.isNullOrBlank(str)) {
-                continue;
-            }
+            String fullNameStr = file.getFullName();
+            fullNameStr = DataCheckUtil.clearIgnoreData(fullNameStr);
             if (StringUtil.isNotBlank(rootKey)) {  // 起始根节点存在，展示起始根节点后面的内容
-                if (!str.contains(rootKey)) {
+                if (!fullNameStr.contains(rootKey)) {
                     continue;
                 }
-                str = str.substring(str.indexOf(rootKey));
+                fullNameStr = fullNameStr.substring(fullNameStr.indexOf(rootKey));
             }
-            String[] strArray = str.split("\\.");
-            root = addChildList(root, strArray);
+            String[] fullNameArr = fullNameStr.split("/");
+            root = addChildList(root, fullNameArr, String.valueOf(file.getId()));
         }
         FileFindAllRspInfo rspInfo = new FileFindAllRspInfo();
         rspInfo.initSuccess(actionInfo.getActionId());
@@ -81,12 +81,17 @@ public class FileService extends BaseService {
      *
      * @param root
      * @param strArray
+     * @param lastItemId 因为整个结构，是用路径逐级拆分出来的，所以只给末节点添加id
      * @return
      */
-    public static ParentChild addChildList(ParentChild root, String[] strArray) {
+    public static ParentChild addChildList(ParentChild root, String[] strArray, String lastItemId) {
         ParentChild current = root;
-        for (String newStr : strArray) {
-            ParentChild newChild = new ParentChild(newStr);
+        for (int i = 0; i < strArray.length; i++) {
+            ParentChild newChild = new ParentChild(strArray[i]);
+            // 因为整个结构，是用路径逐级拆分出来的，所以只给末节点添加id
+            if (i == strArray.length - 1) {
+                newChild.setDataId(lastItemId);
+            }
             current = current.addChild(newChild);
         }
         return root;

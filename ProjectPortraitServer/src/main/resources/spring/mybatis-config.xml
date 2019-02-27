@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE configuration PUBLIC "-//ibatis.apache.org//DTD Config 3.0//EN"
-		"http://ibatis.apache.org/dtd/mybatis-3-config.dtd">
+        "http://ibatis.apache.org/dtd/mybatis-3-config.dtd">
 
 <configuration>
-	<settings>
-		<!-- 将下划线字段名称映射为驼峰变量 -->
-		<setting name="mapUnderscoreToCamelCase" value="true" />
+    <settings>
+        <!-- 将下划线字段名称映射为驼峰变量 -->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
 
-		<!-- 进制mybatis进行延迟加载 -->
-		<setting name="lazyLoadingEnabled" value="false" />
-	</settings>
+        <!-- 进制mybatis进行延迟加载 -->
+        <setting name="lazyLoadingEnabled" value="false"/>
+
+        <!-- 打印查询语句 -->
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+    </settings>
 
 </configuration>
