@@ -11,9 +11,11 @@ import java.util.List;
  */
 public class Rule implements Serializable {
     private long id;
+    private String regular;
+    private String scanFileSuffix;
     private String keyLeft;
     private String keyRight;
-    private String type;
+    private String ruleGroup;
     private String remark;
     private String creater;
     private String createTime;
@@ -42,14 +44,6 @@ public class Rule implements Serializable {
 
     public void setKeyRight(String keyRight) {
         this.keyRight = keyRight;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     public String getRemark() {
@@ -90,5 +84,29 @@ public class Rule implements Serializable {
 
     public void setRuleDataListSize(int ruleDataListSize) {
         this.ruleDataListSize = ruleDataListSize;
+    }
+
+    public String getRegular() {
+        return regular;
+    }
+
+    public void setRegular(String regular) {
+        this.regular = regular;
+    }
+
+    public String getScanFileSuffix() {
+        return scanFileSuffix;
+    }
+
+    public void setScanFileSuffix(String scanFileSuffix) {
+        this.scanFileSuffix = scanFileSuffix;
+    }
+
+    public String getRuleGroup() {
+        return ruleGroup;
+    }
+
+    public void setRuleGroup(String ruleGroup) {
+        this.ruleGroup = ruleGroup;
     }
 }

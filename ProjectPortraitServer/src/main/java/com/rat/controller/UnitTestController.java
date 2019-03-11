@@ -2,6 +2,7 @@ package com.rat.controller;
 
 import com.rat.common.RequestCode;
 import com.rat.entity.local.ParentChild;
+import com.rat.entity.network.request.RuleActionInfo;
 import com.rat.entity.network.request.base.ActionInfo;
 import com.rat.entity.network.request.base.RequestInfo;
 import com.rat.service.FileService;
@@ -96,4 +97,23 @@ public class UnitTestController {
         System.out.println("====");
         System.out.println(root);
     }
+
+    @org.junit.Test
+    public void addRuleTest() throws Exception {
+        ActionInfo actionInfo = new RuleActionInfo(RequestCode.RULE_INSERT, "test", "java","left","right"
+            ,"bad", "ena","my");
+        requestInfo.setActionInfo(actionInfo);
+        String postJson = GsonUtil.toJson(requestInfo);
+        System.out.println("=============== 参数准备完成 =============================================");
+        System.out.println("====" + postJson);
+
+        ResultActions resultActions = this.mockMvc.perform(MockMvcRequestBuilders.post(requestUrl)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(postJson));
+        MvcResult mvcResult = resultActions.andReturn();
+        String result = mvcResult.getResponse().getContentAsString();
+        System.out.println("=============== 请求获得响应 =============================================");
+        System.out.println("====" + result);
+    }
+
 }

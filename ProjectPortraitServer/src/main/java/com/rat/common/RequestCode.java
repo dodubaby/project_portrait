@@ -23,6 +23,8 @@ public class RequestCode {
 
     // rule、ruleData
     public static final int RULE_DATA_FIND_ALL = 4001;
+    public static final int RULE_INSERT = 4002;
+    public static final int RULE_DELETE_BY_REGULAR = 4003;
 
     // tag、tagData
     public static final int TAG_FIND_BY_TYPE = 5001;

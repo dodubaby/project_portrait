@@ -30,6 +30,12 @@ public interface FileDao {
 
     @Select("select count(*) from file where line_count>#{fileCount}")
     int findFileCountByLine(@Param("fileCount") int fileCount);
+
+    @Select("select * from file where full_name != #{fileFullName} and full_name like concat (#{fileFullName},'%')")
+    List<File> findIdsByFullName(@Param("fileFullName") String fileFullName);
+
+    @Select("select full_name from file where id=#{fileId}")
+    String findFullNameById(@Param("fileId") Long fileId);
 //
 //    @Insert("insert into userinfo (" +
 //            "headUrl,nickName,account,accountType,age,sex,bigImg,cityCode,cityName,workCode,workName,educationCode,educationName,houseCode,houseName,marriageCode,marriageName,introduce,remark,token4RongCloud" +

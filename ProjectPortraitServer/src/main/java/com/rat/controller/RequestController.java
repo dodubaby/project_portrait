@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.rat.common.Constant;
 import com.rat.common.RequestCode;
 import com.rat.entity.enums.DataGetType;
+import com.rat.entity.local.Rule;
 import com.rat.entity.network.request.*;
 import com.rat.entity.network.request.base.ActionInfo;
 import com.rat.entity.network.request.base.ActionInfoWithPageData;
@@ -24,6 +25,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 import java.util.Properties;
 
@@ -43,6 +46,8 @@ public class RequestController {
     private ResourceService resourceService;
     @Resource
     private ReferenceService referenceService;
+    @Resource
+    private RuleService ruleService;
     @Resource
     private RuleDataService ruleDataService;
     @Resource
@@ -144,6 +149,12 @@ public class RequestController {
                 actionInfo = new RuleDataFindAllActionInfo(actionId, ruleType, ruleDataStatus);
                 responseBody = ruleDataService.findAll((RuleDataFindAllActionInfo) actionInfo);
                 break;
+            // 规则删除
+            case RequestCode.RULE_DELETE_BY_REGULAR:
+                String regular = map.get("regular");
+                actionInfo = new RuleDeleteActionInfo(actionId, regular);
+                responseBody = ruleService.deleteRuleByRegular((RuleDeleteActionInfo)actionInfo);
+                break;
             // Tag获取:by type
             case RequestCode.TAG_FIND_BY_TYPE:
                 String type = map.get("type");
@@ -202,7 +213,6 @@ public class RequestController {
                 break;
             // 数据面板统计
             case RequestCode.STATIS_DATABOARD_INDEX:
-                actionInfo = new ActionInfo(actionId);
                 responseBody = statisBoardService.findStatisBoardInfo(actionId);
                 break;
             // 请求解析异常
@@ -234,7 +244,8 @@ public class RequestController {
         // 请求解析正常
         JSONObject jsonObject = JSONObject.parseObject(json);
         String actionInfoStr = jsonObject.getString("actionInfo");
-        switch (requestInfo.getActionInfo().getActionId()) {
+        int actionId = requestInfo.getActionInfo().getActionId();
+        switch (actionId) {
 //            // 用户更新
 //            case RequestCode.USER_UPDATE:
 //                UserUpdateActionInfo userUpdateActionInfo = GsonUtil.fromJson(actionInfoStr, UserUpdateActionInfo.class);
@@ -245,6 +256,21 @@ public class RequestController {
 //                UserFindDetailActionInfo userFindDetailActionInfo = GsonUtil.fromJson(actionInfoStr, UserFindDetailActionInfo.class);
 //                response = fileService.findDetail(userFindDetailActionInfo);
 //                break;
+            // 规则新增
+            case RequestCode.RULE_INSERT:
+                RuleActionInfo ruleActionInfo = GsonUtil.fromJson(actionInfoStr, RuleActionInfo.class);
+                Rule rule = new Rule();
+                rule.setRegular(ruleActionInfo.getRegular());
+                rule.setScanFileSuffix(ruleActionInfo.getScanFileSuffix());
+                rule.setKeyLeft(ruleActionInfo.getKeyLeft());
+                rule.setKeyRight(ruleActionInfo.getKeyRight());
+                rule.setRuleGroup(ruleActionInfo.getRuleGroup());
+                rule.setRemark(ruleActionInfo.getRemark());
+                rule.setCreater(ruleActionInfo.getCreater());
+                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                rule.setCreateTime(df.format(new Date()));
+                response = ruleService.insertRule(rule, actionId);
+                break;
             default:
                 response = new ResponseInfo();
                 response.initError4Param(requestInfo.getActionInfo().getActionId());

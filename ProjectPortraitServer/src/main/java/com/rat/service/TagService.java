@@ -95,7 +95,7 @@ public class TagService extends BaseService {
     public ResponseInfo deleteTagByValue(TagInsertDeleteActionInfo actionInfo) {
         String type = actionInfo.getType();
         ResponseInfo responseInfo = new ResponseInfo();
-        if ("owner".equals(type)) {
+        if (TAG_OWNER.equals(type)) {
             responseInfo.initError4System(actionInfo.getActionId());
             return responseInfo;
         }

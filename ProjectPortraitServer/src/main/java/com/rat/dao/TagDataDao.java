@@ -22,8 +22,8 @@ public interface TagDataDao {
     @Select("select td.data_id from tag_data as td, tag as t where t.type=#{tagType} and t.id=td.tag_id and td.data_type=#{dataType}")
     List<Long> findDataIdListByTagType(@Param("tagType") String tagType, @Param("dataType") String dataType);
 
-    @Insert("insert into tag_data (data_type,data_id,tag_id) values (#{dataType},#{dataId},#{tagId})")
-    void create(@Param("dataType") String dataType, @Param("dataId") long dataId, @Param("tagId") long tagId);
+    @Insert("insert into tag_data (data_type,data_id,tag_id, manual_type) values (#{dataType},#{dataId},#{tagId},#{manualType})")
+    void create(@Param("dataType") String dataType, @Param("dataId") long dataId, @Param("tagId") long tagId, @Param("manualType") int manualType);
 
     @Delete("delete from tag_data where data_type=#{dataType} and data_id=#{dataId}")
     void deleteTagsByDataId(@Param("dataType") String dataType, @Param("dataId") long dataId);
@@ -34,4 +34,6 @@ public interface TagDataDao {
     @Delete("delete from tag_data where tag_id=#{tagId}")
     void deleteTagDataByTagId(@Param("tagId") long tagId);
 
+    @Delete("delete from tag_data where data_id=#{dataId} and manual_type=#{manualType}")
+    void deleteTagsByFileId(@Param("dataId") long dataId, @Param("manualType") int manualType);
 }

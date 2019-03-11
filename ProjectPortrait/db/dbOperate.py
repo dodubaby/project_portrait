@@ -191,6 +191,7 @@ def createTables():
                        'tag_id bigint DEFAULT NULL,'
                        'data_type varchar(20) DEFAULT NULL, '
                        'data_id bigint DEFAULT NULL,'
+                       'manual_type bigint DEFAULT NULL,'
                        'PRIMARY KEY (id)'
                        ') ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin'
                        % TABLE_NAME_TAG_DATA)

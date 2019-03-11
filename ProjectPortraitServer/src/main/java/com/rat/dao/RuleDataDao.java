@@ -2,6 +2,7 @@ package com.rat.dao;
 
 import com.rat.entity.local.RuleData;
 import com.rat.provider.SqlProvider;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectProvider;
@@ -26,4 +27,7 @@ public interface RuleDataDao {
      */
     @Select("select count(*) from rule_data where rule_group = #{group} and status != 'normal'")
     int findRuleCountByGroup(@Param("group") String group);
+
+    @Delete("delete from rule_data where rule_id = #{ruleId}")
+    void deleteDataByRuleId(@Param("ruleId") int ruleId);
 }

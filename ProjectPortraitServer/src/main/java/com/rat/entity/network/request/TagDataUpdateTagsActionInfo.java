@@ -12,6 +12,9 @@ public class TagDataUpdateTagsActionInfo extends ActionInfo {
     private long dataId;
     private String dataType;
     private String[] tagArray;
+    //文件类型
+    public static final String FILE_TYPE = "file";
+    public static final String DIR_TYPE = "dir";
 
     public TagDataUpdateTagsActionInfo(int actionId, long dataId, String dataType, String[] tagArray) {
         super(actionId);

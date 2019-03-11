@@ -1,7 +1,9 @@
 package com.rat.service;
 
+import com.rat.dao.FileDao;
 import com.rat.dao.TagDao;
 import com.rat.dao.TagDataDao;
+import com.rat.entity.local.File;
 import com.rat.entity.local.Tag;
 import com.rat.entity.network.request.TagDataFindByDataIdActionInfo;
 import com.rat.entity.network.request.TagDataUpdateTagsActionInfo;
@@ -14,6 +16,8 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
 
+import static com.rat.entity.network.request.TagDataUpdateTagsActionInfo.DIR_TYPE;
+
 /**
  * 标签对应数据服务
  *
@@ -25,6 +29,8 @@ public class TagDataService extends BaseService {
     private TagDao tagDao;
     @Resource
     private TagDataDao tagDataDao;
+    @Resource
+    private FileDao fileDao;
 
     public TagDataService() {
     }
@@ -56,18 +62,33 @@ public class TagDataService extends BaseService {
     public ResponseInfo updateTagList(TagDataUpdateTagsActionInfo actionInfo) {
         // 删除旧tag
         tagDataDao.deleteTagsByDataId(actionInfo.getDataType(), actionInfo.getDataId());
-        // 新增新tag
+        // 更新tag
         String[] tagArray = actionInfo.getTagArray();
         if (null != tagArray && tagArray.length > 0) {
             for (String tagValue : tagArray) {
                 if (StringUtil.isNullOrBlank(tagValue)) continue;
                 Long tagId = tagDao.findIdByValue(tagValue);
-                tagDataDao.create(actionInfo.getDataType(), actionInfo.getDataId(), tagId);
+                //直接新增tagData
+                tagDataDao.create(actionInfo.getDataType(), actionInfo.getDataId(), tagId, 1);
+                //如果为文件夹
+                if (DIR_TYPE.equals(actionInfo.getDataType())){
+                    //获取文件夹全路径
+                    String fileFullName = fileDao.findFullNameById(actionInfo.getDataId());
+                    //获取所有子文件
+                    List<File> files = fileDao.findIdsByFullName(fileFullName);
+                    for (File file : files) {
+                        //先删除
+                        tagDataDao.deleteTagsByFileId(file.getId(), 0);
+                        //后添加
+                        tagDataDao.create(file.getType(), file.getId(), tagId, 0);
+                    }
+                }
             }
         }
         ResponseInfo rspInfo = new ResponseInfo();
         rspInfo.initSuccess(actionInfo.getActionId());
         return rspInfo;
     }
+
 }
 
