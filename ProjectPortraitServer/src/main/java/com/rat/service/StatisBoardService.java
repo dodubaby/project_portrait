@@ -27,14 +27,14 @@ public class StatisBoardService extends BaseService {
     @Resource
     private FileDao fileDao;
     @Resource
-    ResourceDao resourceDao;
+    private ResourceDao resourceDao;
 
     public StatisticBoardRspInfo findStatisBoardInfo(int actionId) {
         StatisticBoardRspInfo info = new StatisticBoardRspInfo();
-        int hardcodeCount = ruleDataDao.findRuleCountByGroup("hardcode");
+        int hardCodeCount = ruleDataDao.findRuleCountByGroup("hardcode");
         int errorCount = ruleDataDao.findRuleCountByGroup("error");
         int warnCount = ruleDataDao.findRuleCountByGroup("warn");
-        BadRuleAnalysis badRuleAnalysis = new BadRuleAnalysis(hardcodeCount, errorCount, warnCount);
+        BadRuleAnalysis badRuleAnalysis = new BadRuleAnalysis(hardCodeCount, errorCount, warnCount);
         info.setBadRuleAnalysis(badRuleAnalysis);
 
         QualityAnalysis qualityAnalysis = new QualityAnalysis();
@@ -44,7 +44,7 @@ public class StatisBoardService extends BaseService {
         info.setQualityaAnalysis(qualityAnalysis);
 
         FunctionAnalysis functionAnalysis = new FunctionAnalysis();
-        functionAnalysis.setCommonFunctionCounts(tagDataDao.findTagCountByType("comon"));
+        functionAnalysis.setCommonFunctionCounts(tagDataDao.findTagCountByType("common"));
         functionAnalysis.setFunctionNumbers(tagDataDao.findTagCountByType("owner"));
         functionAnalysis.setCoreFunctionCounts(tagDataDao.findTagCountByType("function"));
         info.setFunctionAnalysis(functionAnalysis);

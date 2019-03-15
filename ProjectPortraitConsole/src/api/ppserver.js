@@ -62,3 +62,11 @@ export function tagDataUpdateTags(dataType, dataId, tags) {
     method: 'get'
   })
 }
+
+// statis
+export function statisBoard() {
+  return request({
+    url: '?actionId=6001',
+    method: 'get'
+  })
+}

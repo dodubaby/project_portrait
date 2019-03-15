@@ -34,7 +34,6 @@ public class RequestCode {
     public static final int TAG_INSERT = 5005;
     public static final int TAG_DELETE_BY_VALUE = 5006;
 
-
-    //statis
+    // statis
     public static final int STATIS_DATABOARD_INDEX = 6001;
 }
