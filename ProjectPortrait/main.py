@@ -33,6 +33,16 @@ def main():
     initBaseData()
     # 系统初始化过程才执行此步骤 end
 
+    # 执行具体任务
+    task()
+
+    # 数据库断开
+    disconnect()
+
+    timeUtil.timeEnd(time)
+
+
+def task():
     # 清空recourse表数据
     clearTableData(TABLE_NAME_RESOURCE)
     clearTableData(TABLE_NAME_REFERENCE)
@@ -46,11 +56,6 @@ def main():
 
     # 分析文件内容
     analysisAllFileContent()
-
-    # 数据库断开
-    disconnect()
-
-    timeUtil.timeEnd(time)
 
 
 main()

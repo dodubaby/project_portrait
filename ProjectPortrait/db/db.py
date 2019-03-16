@@ -3,7 +3,7 @@
 import traceback
 
 import const as const
-import util.configUtil as configUtil
+import util.fileUtil as fileUtil
 
 """
 初始化基础数据
@@ -15,9 +15,18 @@ def initBaseData():
         print ("db init base data start")
         conn = const.dbconnect
         cursor = conn.cursor()
-        # 从配置文件获取基础数据sql脚本
-        sqlForTag = configUtil.getConfig("./config/dbBaseData.ini", 1, 'sqlForTag')
-        sqlForRule = configUtil.getConfig("./config/dbBaseData.ini", 1, 'sqlForRule')
+        # 获取基础数据sql脚本
+        sqlForTag = ''
+        sqlForRule = ''
+        iter_f = fileUtil.readFileContent("./config/baseDataForTag.sql")
+        for lineContent in iter_f:  # 遍历文件
+            sqlForTag = sqlForTag + lineContent
+        iter_f = fileUtil.readFileContent("./config/baseDataForRule.sql")
+        for lineContent in iter_f:  # 遍历文件
+            sqlForRule = sqlForRule + lineContent
+
+        sqlForTag = sqlForTag.replace('\t', '').replace('\n', '')
+        sqlForRule = sqlForRule.replace('\t', '').replace('\n', '')
         cursor.execute(sqlForTag)
         cursor.execute(sqlForRule)
         print ("db init base data end")

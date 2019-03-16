@@ -49,6 +49,22 @@ public class StatisBoardService extends BaseService {
         functionAnalysis.setCoreFunctionCounts(tagDataDao.findTagCountByType("function"));
         info.setFunctionAnalysis(functionAnalysis);
         info.initSuccess(actionId);
+
+        // TestData
+//        StatisticBoardRspInfo info = new StatisticBoardRspInfo();
+//        BadRuleAnalysis badRuleAnalysis = new BadRuleAnalysis(134, 52, 33);
+//        info.setBadRuleAnalysis(badRuleAnalysis);
+//        QualityAnalysis qualityAnalysis = new QualityAnalysis();
+//        qualityAnalysis.setStringReplicationCount(140);
+//        qualityAnalysis.setColorReplicationCount(38);
+//        qualityAnalysis.setFileLongCount(20);
+//        info.setQualityaAnalysis(qualityAnalysis);
+//        FunctionAnalysis functionAnalysis = new FunctionAnalysis();
+//        functionAnalysis.setCommonFunctionCounts(6);
+//        functionAnalysis.setFunctionNumbers(8);
+//        functionAnalysis.setCoreFunctionCounts(13);
+//        info.setFunctionAnalysis(functionAnalysis);
+//        info.initSuccess(actionId);
         return info;
     }
 }
