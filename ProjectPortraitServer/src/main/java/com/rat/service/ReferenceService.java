@@ -3,6 +3,7 @@ package com.rat.service;
 import com.rat.common.Constant;
 import com.rat.dao.FileDao;
 import com.rat.dao.ReferenceDao;
+import com.rat.entity.local.File;
 import com.rat.entity.local.Reference;
 import com.rat.entity.network.request.ReferenceActionInfo;
 import com.rat.entity.network.response.ReferenceFindAllRspInfo;
@@ -35,16 +36,22 @@ public class ReferenceService extends BaseService {
 
     public ReferenceFindAllRspInfo findAll(ReferenceActionInfo actionInfo) {
         String key = actionInfo.getKey();
+        File file = null;
         // 无key，获取所有
         if (StringUtil.isNullOrBlank(key)) {
-            referenceList = referenceDao.findAll(new Long(0));
+            file = new File(0, Constant.DATA_ALL);
+            referenceList = referenceDao.findAll(file.getId());
         }
         // 有key，获取key对应数据
         else {
             referenceList = new ArrayList<>();
             cacheDataList = new ArrayList<>();
-            // 先通过key（文件名）获取文件id
-            Long id = fileDao.findIdByName(key);
+            // 先通过key（文件名）获取文件
+            file = fileDao.findByFullName(key);
+            if (null == file) {
+                file = new File(0, Constant.DATA_ERROR);
+            }
+            Long id = file.getId();
             // 循环获取引用数据
             findByReferenceIdCirculation(id);
         }
@@ -55,6 +62,7 @@ public class ReferenceService extends BaseService {
         }
         ReferenceFindAllRspInfo rspInfo = new ReferenceFindAllRspInfo();
         rspInfo.initSuccess(actionInfo.getActionId());
+        rspInfo.setFile(file);
         rspInfo.setReferenceList(referenceList);
         return rspInfo;
     }

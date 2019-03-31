@@ -71,9 +71,9 @@ public class SqlProvider {
         StringBuffer sql = new StringBuffer();
         sql.append("select * from rule where 1=1");
         // 类型
-        if (StringUtil.isNotBlank(para.get("type"))) {
-            String type = (String) para.get("type");
-            sql.append(" and type = '" + type + "'");
+        if (StringUtil.isNotBlank(para.get("ruleGroup"))) {
+            String ruleGroup = (String) para.get("ruleGroup");
+            sql.append(" and rule_group = '" + ruleGroup + "'");
         }
         sql.append(" order by id");
         return sql.toString();

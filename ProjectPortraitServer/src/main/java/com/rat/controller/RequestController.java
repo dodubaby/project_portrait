@@ -144,16 +144,15 @@ public class RequestController {
                 break;
             // 规则对应数据获取全部
             case RequestCode.RULE_DATA_FIND_ALL:
-                String ruleType = map.get("ruleType");
-                String ruleDataStatus = map.get("ruleDataStatus");
-                actionInfo = new RuleDataFindAllActionInfo(actionId, ruleType, ruleDataStatus);
+                String ruleGroup = map.get("ruleGroup");
+                actionInfo = new RuleDataFindAllActionInfo(actionId, ruleGroup);
                 responseBody = ruleDataService.findAll((RuleDataFindAllActionInfo) actionInfo);
                 break;
             // 规则删除
             case RequestCode.RULE_DELETE_BY_REGULAR:
                 String regular = map.get("regular");
                 actionInfo = new RuleDeleteActionInfo(actionId, regular);
-                responseBody = ruleService.deleteRuleByRegular((RuleDeleteActionInfo)actionInfo);
+                responseBody = ruleService.deleteRuleByRegular((RuleDeleteActionInfo) actionInfo);
                 break;
             // Tag获取:by type
             case RequestCode.TAG_FIND_BY_TYPE:

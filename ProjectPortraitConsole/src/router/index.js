@@ -73,21 +73,15 @@ export const constantRouterMap = [
   {
     path: '/reference',
     component: Layout,
-    redirect: '/reference/class',
+    redirect: '/reference/index',
     name: 'reference',
     meta: { title: '逻辑关系', icon: 'example' },
     children: [
       {
         path: 'class',
         name: 'class',
-        component: () => import('@/function/reference/class'),
-        meta: { title: '类引用关系', icon: 'table' }
-      },
-      {
-        path: 'resource',
-        name: 'resource',
         component: () => import('@/function/reference/index'),
-        meta: { title: '资源引用关系', icon: 'tree' }
+        meta: { title: '引用关系', icon: 'table' }
       }
     ]
   },

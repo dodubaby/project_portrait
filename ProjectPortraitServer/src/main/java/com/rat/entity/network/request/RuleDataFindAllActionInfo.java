@@ -9,28 +9,18 @@ import com.rat.entity.network.request.base.ActionInfo;
  * introduce : 请求实体
  */
 public class RuleDataFindAllActionInfo extends ActionInfo {
-    private String ruleType;// 规则类型：bad、custom
-    private String ruleDataStatus;// 规则对应数据状态：normal、warn、error
+    private String ruleGroup;// 规则分组
 
-    public RuleDataFindAllActionInfo(int actionId, String ruleType, String ruleDataStatus) {
+    public RuleDataFindAllActionInfo(int actionId, String ruleGroup) {
         super(actionId);
-        this.ruleType = ruleType;
-        this.ruleDataStatus = ruleDataStatus;
+        this.ruleGroup = ruleGroup;
     }
 
-    public String getRuleType() {
-        return ruleType;
+    public String getRuleGroup() {
+        return ruleGroup;
     }
 
-    public void setRuleType(String ruleType) {
-        this.ruleType = ruleType;
-    }
-
-    public String getRuleDataStatus() {
-        return ruleDataStatus;
-    }
-
-    public void setRuleDataStatus(String ruleDataStatus) {
-        this.ruleDataStatus = ruleDataStatus;
+    public void setRuleGroup(String ruleGroup) {
+        this.ruleGroup = ruleGroup;
     }
 }

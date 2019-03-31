@@ -17,15 +17,15 @@ def analysisRuleData(fileId, lineContent, lineNum, suffix):
         getRuleList()
     for rule in ruleList:
         scan_file_suffix = rule[2]
-        if scan_file_suffix in suffix:
-            key = rule[1]
-            if (isNotEmpty(key)):
-                ruleData = regular.regularWord(lineContent, key)
-            else:
-                ruleData = ""
-
-            if (ruleData != ""):
-                db.saveRuleData(rule[0], rule[5], fileId, lineContent, lineNum, 'normal')
+        if scan_file_suffix not in suffix:
+            continue
+        key = rule[1]
+        if (isEmpty(key)):
+            continue
+        ruleData = regular.regularWord(lineContent, key)
+        if (isEmpty(ruleData)):
+            continue
+        db.saveRuleData(rule[0], rule[5], fileId, lineContent, lineNum, 'normal')
 
 
 """

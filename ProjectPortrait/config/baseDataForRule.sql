@@ -14,7 +14,7 @@ INSERT INTO rule (
 			'java',
 			'Integer.parseInt',
 			'',
-			'bad',
+			'error',
 			'强转异常',
 			'L.jinzhu',
 			'init'
@@ -24,7 +24,7 @@ INSERT INTO rule (
 			'java',
 			'Double.parseDouble',
 			'',
-			'bad',
+			'error',
 			'强转异常',
 			'L.jinzhu',
 			'init'
@@ -34,7 +34,7 @@ INSERT INTO rule (
 			'java',
 			'Float.parseFloat',
 			'',
-			'bad',
+			'error',
 			'强转异常',
 			'L.jinzhu',
 			'init'
@@ -44,7 +44,7 @@ INSERT INTO rule (
 			'java',
 			'Boolean.parseBoolean',
 			'',
-			'bad',
+			'error',
 			'强转异常',
 			'L.jinzhu',
 		'init'

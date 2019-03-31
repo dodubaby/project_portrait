@@ -22,4 +22,5 @@ public class Constant {
 
     public static String DATA_ROOT = "root";
     public static String DATA_ERROR = "DataError";
+    public static String DATA_ALL = "DataAll";
 }

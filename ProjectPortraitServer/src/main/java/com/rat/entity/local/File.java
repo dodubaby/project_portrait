@@ -19,6 +19,14 @@ public class File implements Serializable {
     private String lineCount;
     private String size;
 
+    public File() {
+    }
+
+    public File(long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     public long getId() {
         return id;
     }

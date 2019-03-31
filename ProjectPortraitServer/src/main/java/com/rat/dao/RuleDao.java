@@ -18,7 +18,7 @@ import java.util.List;
 @Repository
 public interface RuleDao {
     @SelectProvider(type = SqlProvider.class, method = "ruleFindAll")
-    List<Rule> findAll(@Param("type") String type);
+    List<Rule> findAll(@Param("ruleGroup") String ruleGroup);
 
     @Delete("delete from rule where regular=#{regular}")
     void deleteRuleByRegular(@Param("regular") String regular);

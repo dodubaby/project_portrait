@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -30,11 +31,16 @@ public class RuleDataService extends BaseService {
 
     public RuleDataFindAllRspInfo findAll(RuleDataFindAllActionInfo actionInfo) {
         // 获取规则
-        List<Rule> ruleList = ruleDao.findAll(actionInfo.getRuleType());
+        String ruleGroup = actionInfo.getRuleGroup();
+        String[] ruleGroupList = ruleGroup.split(",");
+        List<Rule> ruleList = new ArrayList<>();
+        for (String str : ruleGroupList) {
+            ruleList = ruleDao.findAll(str);
+        }
         // 获取规则对应数据
         if (!CollectionUtils.isEmpty(ruleList)) {
             for (Rule rule : ruleList) {
-                List<RuleData> ruleDataList = ruleDataDao.findAll(actionInfo.getRuleDataStatus(), rule.getId());
+                List<RuleData> ruleDataList = ruleDataDao.findAll(rule.getId(), "");
                 rule.setRuleDataList(ruleDataList);
                 rule.setRuleDataListSize(null == ruleDataList ? 0 : ruleDataList.size());
             }

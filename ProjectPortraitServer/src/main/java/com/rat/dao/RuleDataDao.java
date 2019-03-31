@@ -18,10 +18,11 @@ import java.util.List;
 @Repository
 public interface RuleDataDao {
     @SelectProvider(type = SqlProvider.class, method = "ruleDataFindAll")
-    List<RuleData> findAll(@Param("status") String status, @Param("ruleId") long ruleId);
+    List<RuleData> findAll(@Param("ruleId") long ruleId, @Param("status") String status);
 
     /**
      * 查询某种rule count
+     *
      * @param group
      * @return
      */

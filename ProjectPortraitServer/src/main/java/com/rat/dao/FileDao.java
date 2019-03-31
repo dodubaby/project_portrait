@@ -28,6 +28,9 @@ public interface FileDao {
     @Select("select id from file where name=#{name} limit 0,1")
     Long findIdByName(@Param("name") String name);
 
+    @Select("select * from file where full_name like concat('%',#{name},'%') limit 0,1")
+    File findByFullName(@Param("name") String name);
+
     @Select("select count(*) from file where line_count>#{fileCount}")
     int findFileCountByLine(@Param("fileCount") int fileCount);
 

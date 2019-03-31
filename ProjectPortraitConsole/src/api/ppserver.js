@@ -30,9 +30,9 @@ export function referenceFindAll(key) {
 }
 
 // rule、ruleData
-export function ruleDataFindAll(ruleType, ruleDataStatus) {
+export function ruleDataFindAll(ruleGroup) {
   return request({
-    url: '?actionId=4001&ruleType=' + ruleType + '&ruleDataStatus=' + ruleDataStatus,
+    url: '?actionId=4001&ruleGroup=' + ruleGroup,
     method: 'get'
   })
 }

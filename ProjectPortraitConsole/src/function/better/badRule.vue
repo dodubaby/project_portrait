@@ -86,7 +86,7 @@ export default {
   methods: {
     fetchData() {
       this.loading = true
-      ruleDataFindAll('bad', 'normal').then(response => {
+      ruleDataFindAll('error,warn').then(response => {
         this.list = response.ruleList
         this.loading = false
       })
