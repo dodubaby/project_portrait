@@ -7,7 +7,7 @@
     <el-form ref="form" :model="form" label-width="120px" v-loading="loading">
       <el-form-item label="展示根节点">
         <el-input v-model="form.rootKey" style="width:300px;"/>
-        <el-tag>空代表检索所有；示例：libcore、dialog</el-tag>
+        <el-tag>空代表检索所有；示例：libcore、global、dialog</el-tag>
       </el-form-item>
       <el-form-item label="Tag-Owner">
         <el-checkbox-group v-model="checkedList4Owner" size="mini">
@@ -60,7 +60,7 @@ export default {
   }, data() {
     return {
       form: {
-        rootKey: '',
+        rootKey: 'global',
         region: '',
         date1: '',
         date2: '',
@@ -153,7 +153,7 @@ export default {
     // };
     draw(root, nodeClick){
       var m = [20, 120, 20, 120],
-        w = 3000 - m[1] - m[3],
+        w = 10000 - m[1] - m[3],
         h = 1000 - m[0] - m[2],
         i = 0;
       var tree = d3.layout.tree()
@@ -200,7 +200,7 @@ export default {
 
         // Normalize for fixed-depth.
         nodes.forEach(function (d) {
-          d.y = d.depth * 250;
+          d.y = d.depth * 180;
         });
 
         // Update the nodes…
@@ -235,7 +235,12 @@ export default {
             return d.children || d._children ? "end" : "start";
           })
           .text(function (d) {
-            return d.dataName;
+            // 截取过长名称
+            var str = d.dataName;
+            if (str.length > 20) {
+              str = str.substring(0, 20) + '..'
+            }
+            return str;
           })
           .on("click", function (d) {
             nodeClick(d.dataName, d.dataId)

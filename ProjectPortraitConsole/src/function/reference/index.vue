@@ -7,7 +7,7 @@
     <el-form ref="form" :model="form" label-width="120px" v-loading="loading">
       <el-form-item label="检索关键字">
         <el-input v-model="key" style="width:300px;"/>
-        <el-tag>空代表检索所有；示例：RecommendView.java、MessageUtils.java、SafeParseUtils.java</el-tag>
+        <el-tag>空代表检索所有；示例：RecommendView.java、TopTitleView.java、SafeParseUtils.java</el-tag>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" plain @click="fetchData" style="margin-top: 20px">查询</el-button>
@@ -25,7 +25,7 @@ import {referenceFindAll} from '@/api/ppserver'
 export default {
   data() {
     return {
-      key: '',
+      key: 'TopTitleView.java',
       fileShow: false,
       fileId: '',
       fileName: '',
