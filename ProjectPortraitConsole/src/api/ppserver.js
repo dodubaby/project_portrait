@@ -36,6 +36,18 @@ export function ruleDataFindAll(ruleGroup) {
     method: 'get'
   })
 }
+export function ruleInsert(scanFileSuffix, keyLeft, keyRight, ruleGroup, remark, creater) {
+  return request({
+    url: '?actionId=4002&scanFileSuffix=' + scanFileSuffix + '&keyLeft=' + keyLeft + '&keyRight=' + keyRight + '&ruleGroup=' + ruleGroup + '&remark=' + remark + '&creater=' + creater,
+    method: 'get'
+  })
+}
+export function ruleDelete(ruleId) {
+  return request({
+    url: '?actionId=4003&ruleId=' + ruleId,
+    method: 'get'
+  })
+}
 
 // tag、tagData
 export function tagFindByType(type) {

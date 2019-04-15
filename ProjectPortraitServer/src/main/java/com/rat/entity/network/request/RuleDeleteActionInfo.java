@@ -8,18 +8,18 @@ import com.rat.entity.network.request.base.ActionInfo;
  * introduce : 规则请求实体
  */
 public class RuleDeleteActionInfo extends ActionInfo {
-    private String regular;
+    private String ruleId;
 
-    public RuleDeleteActionInfo(int actionId, String regular) {
+    public RuleDeleteActionInfo(int actionId, String ruleId) {
         super(actionId);
-        this.regular = regular;
+        this.ruleId = ruleId;
     }
 
-    public String getRegular() {
-        return regular;
+    public String getRuleId() {
+        return ruleId;
     }
 
-    public void setRegular(String regular) {
-        this.regular = regular;
+    public void setRuleId(String ruleId) {
+        this.ruleId = ruleId;
     }
 }

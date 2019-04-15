@@ -22,6 +22,19 @@ public class Rule implements Serializable {
     private List<RuleData> ruleDataList;
     private int ruleDataListSize;
 
+    public Rule() {
+    }
+
+    public Rule(String scanFileSuffix, String keyLeft, String keyRight, String ruleGroup, String remark, String creater) {
+        this.scanFileSuffix = scanFileSuffix;
+        this.keyLeft = keyLeft;
+        this.keyRight = keyRight;
+        this.ruleGroup = ruleGroup;
+        this.remark = remark;
+        this.creater = creater;
+        this.createTime = createTime;
+    }
+
     public long getId() {
         return id;
     }

@@ -20,8 +20,8 @@ public interface RuleDao {
     @SelectProvider(type = SqlProvider.class, method = "ruleFindAll")
     List<Rule> findAll(@Param("ruleGroup") String ruleGroup);
 
-    @Delete("delete from rule where regular=#{regular}")
-    void deleteRuleByRegular(@Param("regular") String regular);
+    @Delete("delete from rule where id=#{id}")
+    void deleteRuleById(@Param("id") int id);
 
     @Delete("select id from rule where regular=#{regular}")
     int selectIdByRegular(@Param("regular") String regular);

@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.rat.common.Constant;
 import com.rat.common.RequestCode;
 import com.rat.entity.enums.DataGetType;
-import com.rat.entity.local.Rule;
 import com.rat.entity.network.request.*;
 import com.rat.entity.network.request.base.ActionInfo;
 import com.rat.entity.network.request.base.ActionInfoWithPageData;
@@ -25,8 +24,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Map;
 import java.util.Properties;
 
@@ -89,6 +86,7 @@ public class RequestController {
         String dataType;// 数据类型
         String dataId;// 数据Id
         String tags;// 数据对应的tag列表
+        String ruleGroup;
         switch (actionId) {
             // 用户login
             case RequestCode.SYSTEM_USER_LOGIN:
@@ -142,17 +140,34 @@ public class RequestController {
                 actionInfo = new ReferenceActionInfo(actionId, key);
                 responseBody = referenceService.findAll((ReferenceActionInfo) actionInfo);
                 break;
-            // 规则对应数据获取全部
+            // Rule对应数据获取全部
             case RequestCode.RULE_DATA_FIND_ALL:
-                String ruleGroup = map.get("ruleGroup");
+                ruleGroup = map.get("ruleGroup");
                 actionInfo = new RuleDataFindAllActionInfo(actionId, ruleGroup);
                 responseBody = ruleDataService.findAll((RuleDataFindAllActionInfo) actionInfo);
                 break;
-            // 规则删除
-            case RequestCode.RULE_DELETE_BY_REGULAR:
-                String regular = map.get("regular");
-                actionInfo = new RuleDeleteActionInfo(actionId, regular);
-                responseBody = ruleService.deleteRuleByRegular((RuleDeleteActionInfo) actionInfo);
+            // Rule删除
+            case RequestCode.RULE_DELETE_BY_ID:
+                String ruleId = map.get("ruleId");
+                if (StringUtil.isNullOrBlank(ruleId)) {
+                    return ResponseInfo.getErrorResponse4Param(actionId);
+                }
+                actionInfo = new RuleDeleteActionInfo(actionId, ruleId);
+                responseBody = ruleService.deleteRuleById((RuleDeleteActionInfo) actionInfo);
+                break;
+            // Rule新增
+            case RequestCode.RULE_INSERT:
+                String scanFileSuffix = map.get("scanFileSuffix");
+                String keyLeft = map.get("keyLeft");
+                String keyRight = map.get("keyRight");
+                ruleGroup = map.get("ruleGroup");
+                String remark = map.get("remark");
+                String creater = map.get("creater");
+                if (StringUtil.isNullOrBlank(scanFileSuffix) || StringUtil.isNullOrBlank(ruleGroup) || StringUtil.isNullOrBlank(remark)) {
+                    return ResponseInfo.getErrorResponse4Param(actionId);
+                }
+                actionInfo = new RuleInsertActionInfo(actionId, scanFileSuffix, keyLeft, keyRight, ruleGroup, remark, creater);
+                responseBody = ruleService.insertRule((RuleInsertActionInfo) actionInfo);
                 break;
             // Tag获取:by type
             case RequestCode.TAG_FIND_BY_TYPE:
@@ -255,21 +270,6 @@ public class RequestController {
 //                UserFindDetailActionInfo userFindDetailActionInfo = GsonUtil.fromJson(actionInfoStr, UserFindDetailActionInfo.class);
 //                response = fileService.findDetail(userFindDetailActionInfo);
 //                break;
-            // 规则新增
-            case RequestCode.RULE_INSERT:
-                RuleActionInfo ruleActionInfo = GsonUtil.fromJson(actionInfoStr, RuleActionInfo.class);
-                Rule rule = new Rule();
-                rule.setRegular(ruleActionInfo.getRegular());
-                rule.setScanFileSuffix(ruleActionInfo.getScanFileSuffix());
-                rule.setKeyLeft(ruleActionInfo.getKeyLeft());
-                rule.setKeyRight(ruleActionInfo.getKeyRight());
-                rule.setRuleGroup(ruleActionInfo.getRuleGroup());
-                rule.setRemark(ruleActionInfo.getRemark());
-                rule.setCreater(ruleActionInfo.getCreater());
-                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                rule.setCreateTime(df.format(new Date()));
-                response = ruleService.insertRule(rule, actionId);
-                break;
             default:
                 response = new ResponseInfo();
                 response.initError4Param(requestInfo.getActionInfo().getActionId());
