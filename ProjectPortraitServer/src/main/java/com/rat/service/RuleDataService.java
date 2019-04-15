@@ -35,7 +35,7 @@ public class RuleDataService extends BaseService {
         String[] ruleGroupList = ruleGroup.split(",");
         List<Rule> ruleList = new ArrayList<>();
         for (String str : ruleGroupList) {
-            ruleList = ruleDao.findAll(str);
+            ruleList.addAll(ruleDao.findAll(str));
         }
         // 获取规则对应数据
         if (!CollectionUtils.isEmpty(ruleList)) {

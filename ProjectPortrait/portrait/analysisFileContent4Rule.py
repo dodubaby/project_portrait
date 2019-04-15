@@ -25,7 +25,7 @@ def analysisRuleData(fileId, lineContent, lineNum, suffix):
         ruleData = regular.regularWord(lineContent, key)
         if (isEmpty(ruleData)):
             continue
-        db.saveRuleData(rule[0], rule[5], fileId, lineContent, lineNum, 'normal')
+        db.saveRuleData(rule[0], rule[5], fileId, lineContent, lineNum, '')
 
 
 """

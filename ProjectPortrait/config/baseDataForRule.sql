@@ -10,7 +10,7 @@ INSERT INTO rule (
 	)
 	VALUES
 		(
-			'r"(?<=Integer.parseInt).+"',
+			'(?<=Integer.parseInt).+',
 			'java',
 			'Integer.parseInt',
 			'',
@@ -20,7 +20,7 @@ INSERT INTO rule (
 			'init'
 		),
 		(
-			'r"(?<=Double.parseDouble).+"',
+			'(?<=Double.parseDouble).+',
 			'java',
 			'Double.parseDouble',
 			'',
@@ -30,7 +30,7 @@ INSERT INTO rule (
 			'init'
 		),
 		(
-			'r"(?<=Float.parseFloat).+"',
+			'(?<=Float.parseFloat).+',
 			'java',
 			'Float.parseFloat',
 			'',
@@ -40,7 +40,7 @@ INSERT INTO rule (
 			'init'
 		),
 		(
-			'r"(?<=Boolean.parseBoolean).+"',
+			'(?<=Boolean.parseBoolean).+',
 			'java',
 			'Boolean.parseBoolean',
 			'',

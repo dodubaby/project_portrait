@@ -32,7 +32,7 @@ def analysisFileContent(fileId, fileFullName, suffix):
     lineNum = 0
     for lineContent in iter_f:  # 遍历文件，一行行遍历，读取文本
         lineNum = lineNum + 1
-        # 解析引用关系
-        reference.analysisReference(fileId, lineContent, lineNum)
         # 解析规则数据
         rule.analysisRuleData(fileId, lineContent, lineNum, suffix)
+        # 解析引用关系
+        reference.analysisReference(fileId, lineContent, lineNum)

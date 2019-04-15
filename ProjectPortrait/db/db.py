@@ -153,7 +153,7 @@ def saveReferenceForResource(file_id, reference_data, reference_line):
 """
 
 
-def saveRuleData(rule_id, file_id, rule_group, data, data_line, status):
+def saveRuleData(rule_id, rule_group, file_id, data, data_line, status):
     try:
         if (len(data) >= 255):
             data = data[0:200] + '...'
