@@ -59,7 +59,7 @@ import ElCheckboxButton from "../../../node_modules/element-ui/packages/checkbox
 export default {
   components: {ElCheckboxButton},
   name: 'tagManage',
-  props: ['dataId', 'data'],
+  props: ['data','dataId', 'dataType'],
   data () {
     return {
       dialogVisible: true,
@@ -79,7 +79,7 @@ export default {
   methods: {
     fetchData() {
       this.loading = true
-      tagDataFindByDataId('file', this.dataId).then(response => {
+      tagDataFindByDataId(this.dataType, this.dataId).then(response => {
         this.dataList4Owner = response.tagList4Owner
         this.dataList4Function = response.tagList4Function
         this.dataList4Common = response.tagList4Common
@@ -101,7 +101,7 @@ export default {
     handleChange(value){
       this.loading = true
       var tags = this.checkedList4Owner + "," + this.checkedList4Function + "," + this.checkedList4Common + "," + this.checkedList4Other
-      tagDataUpdateTags('file', this.dataId, tags).then(response => {
+      tagDataUpdateTags(this.dataType, this.dataId, tags).then(response => {
         this.$notify({
           title: '标签更新成功',
           message: tags,

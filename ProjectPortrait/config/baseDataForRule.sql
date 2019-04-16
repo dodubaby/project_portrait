@@ -17,7 +17,7 @@ INSERT INTO rule (
 			'error',
 			'强转异常',
 			'L.jinzhu',
-			'init'
+			'system init'
 		),
 		(
 			'(?<=Double.parseDouble).+',
@@ -27,7 +27,7 @@ INSERT INTO rule (
 			'error',
 			'强转异常',
 			'L.jinzhu',
-			'init'
+			'system init'
 		),
 		(
 			'(?<=Float.parseFloat).+',
@@ -37,7 +37,7 @@ INSERT INTO rule (
 			'error',
 			'强转异常',
 			'L.jinzhu',
-			'init'
+			'system init'
 		),
 		(
 			'(?<=Boolean.parseBoolean).+',
@@ -47,5 +47,25 @@ INSERT INTO rule (
 			'error',
 			'强转异常',
 			'L.jinzhu',
-		'init'
+			'system init'
+		),
+		(
+			'(?<=getCause).+',
+			'java',
+			'getCause',
+			'',
+			'error',
+			'此方法会抛出异常',
+			'L.jinzhu',
+			'system init'
+		),
+		(
+			'(?<=rectRoundCorner).+',
+			'java',
+			'rectRoundCorner',
+			'',
+			'warn',
+			'需要用.asCircle、asPhotoCircle',
+			'L.jinzhu',
+		  'system init'
 	)

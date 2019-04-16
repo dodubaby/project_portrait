@@ -44,7 +44,7 @@ public class FileService extends BaseService {
         // 根据tags过滤文件列表
         List<File> fileList = filteFileListByTagList(tempFileList, actionInfo.getTags());
         // 获取"文件"层级结构
-        ParentChild root = new ParentChild(Constant.DATA_ROOT);
+        ParentChild root = new ParentChild(Constant.DATA_ROOT, Constant.DATA_ROOT);
         String rootKey = actionInfo.getRootKey();// 查询的起始根节点
         for (File file : fileList) {
             String fullNameStr = file.getFullName();
@@ -56,7 +56,7 @@ public class FileService extends BaseService {
                 fullNameStr = fullNameStr.substring(fullNameStr.indexOf(rootKey));
             }
             String[] fullNameArr = fullNameStr.split("/");
-            root = addChildList(root, fullNameArr, String.valueOf(file.getId()));
+            root = addChildList(root, fullNameArr, String.valueOf(file.getId()), file.getType());
         }
         FileFindAllRspInfo rspInfo = new FileFindAllRspInfo();
         rspInfo.initSuccess(actionInfo.getActionId());
@@ -84,10 +84,10 @@ public class FileService extends BaseService {
      * @param lastItemId 因为整个结构，是用路径逐级拆分出来的，所以只给末节点添加id
      * @return
      */
-    public static ParentChild addChildList(ParentChild root, String[] strArray, String lastItemId) {
+    public static ParentChild addChildList(ParentChild root, String[] strArray, String lastItemId, String itemType) {
         ParentChild current = root;
         for (int i = 0; i < strArray.length; i++) {
-            ParentChild newChild = new ParentChild(strArray[i]);
+            ParentChild newChild = new ParentChild(strArray[i], itemType);
             // 因为整个结构，是用路径逐级拆分出来的，所以只给末节点添加id
             if (i == strArray.length - 1) {
                 newChild.setDataId(lastItemId);

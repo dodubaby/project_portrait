@@ -17,14 +17,19 @@ import java.util.List;
 public class ParentChild implements Serializable {
     private String dataId;
     private String dataName;
+    private String dataType;
     @SerializedName("children")
     private List<ParentChild> childrenList;
 
-    public ParentChild(String dataName) {
+    public ParentChild(String dataName, String dataType) {
         if (StringUtil.isNullOrBlank(dataName)) {
             dataName = Constant.DATA_ERROR;
         }
+        if (StringUtil.isNullOrBlank(dataType)) {
+            dataType = Constant.DATA_ERROR;
+        }
         this.dataName = dataName;
+        this.dataType = dataType;
     }
 
     public ParentChild addChild(ParentChild pc) {
@@ -61,5 +66,13 @@ public class ParentChild implements Serializable {
 
     public void setDataName(String dataName) {
         this.dataName = dataName;
+    }
+
+    public String getDataType() {
+        return dataType;
+    }
+
+    public void setDataType(String dataType) {
+        this.dataType = dataType;
     }
 }

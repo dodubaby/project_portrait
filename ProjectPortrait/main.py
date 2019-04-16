@@ -28,9 +28,9 @@ def main():
 
     # 系统初始化过程才执行此步骤 start
     # 数据库表初始化
-    createTables()
+    # createTables()
     # 初始化基础数据
-    initBaseData()
+    # initBaseData()
     # 系统初始化过程才执行此步骤 end
 
     # 执行具体任务

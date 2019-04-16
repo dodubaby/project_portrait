@@ -85,14 +85,14 @@ public class UnitTestController {
 
     @org.junit.Test
     public void parentChildTest() throws Exception {
-        ParentChild root = new ParentChild("root");
+        ParentChild root = new ParentChild("root", "");
         String str1 = "com.a.b1.c1.d1";
         String str2 = "com.a.b.c.d";
         String[] strArray1 = str1.split("\\.");
         String[] strArray2 = str2.split("\\.");
 
-        root = FileService.addChildList(root, strArray1, "");
-        root = FileService.addChildList(root, strArray2, "");
+        root = FileService.addChildList(root, strArray1, "", "");
+        root = FileService.addChildList(root, strArray2, "", "");
 
         System.out.println("====");
         System.out.println(root);

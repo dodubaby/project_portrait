@@ -23,4 +23,12 @@ public class Constant {
     public static String DATA_ROOT = "root";
     public static String DATA_ERROR = "DataError";
     public static String DATA_ALL = "DataAll";
+
+    // 文件类型
+    public static final String FILE_TYPE = "file";
+    public static final String DIR_TYPE = "dir";
+
+    // 数据创建类型
+    public static final int DATA_CREATE_TYPE_MANUAL = 1;// 手动
+    public static final int DATA_CREATE_TYPE_AUTO = 0;// 自动
 }

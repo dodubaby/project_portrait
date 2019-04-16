@@ -7,7 +7,7 @@
     <el-form ref="form" :model="form" label-width="120px" v-loading="loading">
       <el-form-item label="展示根节点">
         <el-input v-model="form.rootKey" style="width:300px;"/>
-        <el-tag>空代表检索所有；示例：libcore、global、dialog</el-tag>
+        <el-tag>空代表检索所有；示例：compass、libcore、global、dialog</el-tag>
       </el-form-item>
       <el-form-item label="Tag-Owner">
         <el-checkbox-group v-model="checkedList4Owner" size="mini">
@@ -36,7 +36,7 @@
       </el-form-item>
     </el-form>
     <div id="container"/>
-    <tag-manage v-if="tagManageVisible" v-show="tagManageVisible" :data="data" :dataId="dataId"
+    <tag-manage v-if="tagManageVisible" v-show="tagManageVisible" :data="data" :dataId="dataId" :dataType="dataType"
                 @callBack="backToCurrentPage"></tag-manage>
   </div>
 </template>
@@ -73,6 +73,7 @@ export default {
       tagManageVisible: false,
       data: '',
       dataId: '',
+      dataType: '',
       dataList4Owner: [],
       dataList4Function: [],
       dataList4Common: [],
@@ -93,10 +94,11 @@ export default {
         type: 'warning'
       })
     },
-    showTagManageView(mData, mDataId) {
+    showTagManageView(mData, mDataId, mDataType) {
       this.tagManageVisible = true
       this.data = mData
       this.dataId = mDataId
+      this.dataType = mDataType
     },
     // 公共方法：从上一个vue返回到当前vue
     backToCurrentPage () {
@@ -243,19 +245,19 @@ export default {
             return str;
           })
           .on("click", function (d) {
-            nodeClick(d.dataName, d.dataId)
+            nodeClick(d.dataName, d.dataId, d.dataType)
           })
           .style("fill-opacity", 1e-6);
-        nodeEnter.append('svg:text')
-          .text('__')
-          .attr("x", function (d) {
-            return d.children || d._children ? -15 : 15;
-          })
-          .attr("dy", ".40em")
-          .attr("text-anchor", function (d) {
-            return d.children || d._children ? "end" : "start";
-          })
-          .style("fill", 'red');
+//        nodeEnter.append('svg:text')
+//          .text('__')
+//          .attr("x", function (d) {
+//            return d.children || d._children ? -15 : 15;
+//          })
+//          .attr("dy", ".40em")
+//          .attr("text-anchor", function (d) {
+//            return d.children || d._children ? "end" : "start";
+//          })
+//          .style("fill", 'red');
 
         // Transition nodes to their new position.
         var nodeUpdate = node.transition()
