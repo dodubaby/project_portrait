@@ -59,7 +59,7 @@ export const constantRouterMap = [
         path: 'count',
         name: 'count',
         component: () => import('@/function/global/index'),
-        meta: { title: '数量统计', icon: 'table' }
+        meta: { title: '数量统计', icon: 'tree' }
       },
       {
         path: 'hierarchy',
@@ -81,7 +81,7 @@ export const constantRouterMap = [
         path: 'class',
         name: 'class',
         component: () => import('@/function/reference/index'),
-        meta: { title: '引用关系', icon: 'table' }
+        meta: { title: '引用关系', icon: 'tree' }
       }
     ]
   },
@@ -97,7 +97,7 @@ export const constantRouterMap = [
         path: 'owner',
         name: 'owner',
         component: () => import('@/function/tag/owner'),
-        meta: { title: 'owner标签', icon: 'table' }
+        meta: { title: 'owner标签', icon: 'tree' }
       },
       {
         path: 'function',
@@ -115,7 +115,7 @@ export const constantRouterMap = [
         path: 'other',
         name: 'other',
         component: () => import('@/function/tag/other'),
-        meta: { title: 'other标签', icon: 'table' }
+        meta: { title: 'other标签', icon: 'tree' }
       }
     ]
   },
@@ -137,7 +137,7 @@ export const constantRouterMap = [
         path: 'resourceRepeat',
         name: 'resourceRepeat',
         component: () => import('@/function/better/resourceRepeat'),
-        meta: { title: '资源重复', icon: 'table' }
+        meta: { title: '资源重复', icon: 'tree' }
       },
       {
         path: 'todo',
@@ -165,7 +165,26 @@ export const constantRouterMap = [
       }
     ]
   },
-
+  {
+    path: '/businessFunction',
+    component: Layout,
+    name: 'businessFunction',
+    meta: { title: '业务赋能', icon: 'example' },
+    children: [
+      {
+        path: 'business',
+        name: 'business',
+        component: () => import('@/function/businessfunction/business'),
+        meta: { title: '商机检测', icon: 'tree' }
+      },
+      {
+        path: 'eventCode',
+        name: 'eventCode',
+        component: () => import('@/function/businessfunction/eventCode'),
+        meta: { title: '埋点检测', icon: 'tree' }
+      }
+    ]
+  },
   {
     path: '/customRule',
     component: Layout,
@@ -177,13 +196,13 @@ export const constantRouterMap = [
         path: 'singleRule',
         name: 'singleRule',
         component: () => import('@/function/customrule/index'),
-        meta: { title: '单一规则', icon: 'table' }
+        meta: { title: '单一规则', icon: 'tree' }
       },
       {
         path: 'crossRule',
         name: 'crossRule',
         component: () => import('@/function/customrule/index'),
-        meta: { title: '交叉规则', icon: 'table' }
+        meta: { title: '交叉规则', icon: 'tree' }
       },
       {
         path: 'allBean',
@@ -229,7 +248,7 @@ export const constantRouterMap = [
         path: 'command',
         name: 'command',
         component: () => import('@/function/console/command'),
-        meta: { title: '命令', icon: 'table' }
+        meta: { title: '命令', icon: 'tree' }
       },
       {
         path: 'log',
@@ -271,7 +290,7 @@ export const constantRouterMap = [
   //           path: 'table',
   //           name: 'Table',
   //           component: () => import('@/views/table/index'),
-  //           meta: { title: 'Table', icon: 'table' }
+  //           meta: { title: 'Table', icon: 'tree' }
   //         },
   //         {
   //           path: 'tree',
