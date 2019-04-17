@@ -23,45 +23,52 @@
       </div>
     </el-card>
     <el-card style="width: 100%;margin-top: 20px">
-      <div slot="header" class="clearfix">
-        <span>测试过程</span>
-      </div>
-      <div class="text item">
-        <el-form label-width="120px">
-          <el-form-item label="测试设备">
-            <el-radio-group v-model="radio1">
-              <el-radio-button label="15810592135"></el-radio-button>
-              <el-radio-button label="HTC 2Q4D200"></el-radio-button>
-              <el-radio-button label="IPhone6"></el-radio-button>
-              <el-radio-button label="IPhone8"></el-radio-button>
-              <el-radio-button label="GIONEE GN5007	"></el-radio-button>
-              <el-radio-button label="GN5001S"></el-radio-button>
-              <el-radio-button label="Redmi 5 Plus	"></el-radio-button>
-            </el-radio-group>
-          </el-form-item>
-          <el-form-item label="数据清理">
-            <el-button plain @click="onReset">清空当前设备的测试数据</el-button>
-          </el-form-item>
-          <el-form-item label="测试操作">
-            <el-button type="primary" plain @click="getHierarchy">开始测试</el-button>
-            <el-button type="primary" plain @click="getHierarchy">暂停测试</el-button>
-          </el-form-item>
-          <el-form-item label="测试统计">
-            <el-button size="mini" plain @click="onReset">上次自动更新：2019/4/17 12:19:47（点击立刻更新）</el-button>
-            <div class="text item">
-              <a>测试进度：</a>
-              <a class="textBig info">37%</a>
-              <a>完全命中：</a>
-              <a class="textBig success">12</a>
-              <a>错误：</a>
-              <a class="textBig danger">2</a>
-              <a>重复：</a>
-              <a class="textBig danger">1</a>
-              <a>计划外：</a>
-              <a class="textBig danger">1</a>
-            </div>
-          </el-form-item>
-        </el-form>
+      <div style="display: inline-block;">
+        <div slot="header" class="clearfix">
+          <span>测试过程</span>
+        </div>
+        <div style="display: inline-block;width: 70%">
+          <div class="text item">
+            <el-form label-width="120px">
+              <el-form-item label="测试设备">
+                <el-radio-group v-model="radio1">
+                  <el-radio-button label="15810592135"></el-radio-button>
+                  <el-radio-button label="HTC 2Q4D200"></el-radio-button>
+                  <el-radio-button label="IPhone6"></el-radio-button>
+                  <el-radio-button label="IPhone8"></el-radio-button>
+                  <el-radio-button label="GIONEE GN5007	"></el-radio-button>
+                  <el-radio-button label="GN5001S"></el-radio-button>
+                  <el-radio-button label="Redmi 5 Plus	"></el-radio-button>
+                </el-radio-group>
+              </el-form-item>
+              <el-form-item label="数据清理">
+                <el-button plain @click="onReset">清空当前设备的测试数据</el-button>
+              </el-form-item>
+              <el-form-item label="测试操作">
+                <el-button type="primary" plain @click="getHierarchy">开始测试</el-button>
+                <el-button type="primary" plain @click="getHierarchy">暂停测试</el-button>
+              </el-form-item>
+              <el-form-item label="测试统计">
+                <el-button size="mini" plain @click="onReset">上次自动更新：2019/4/17 12:19:47（点击立刻更新）</el-button>
+                <div class="text item">
+                  <a>测试进度：</a>
+                  <a class="textBig info">37%</a>
+                  <a>完全命中：</a>
+                  <a class="textBig success">12</a>
+                  <a>错误：</a>
+                  <a class="textBig danger">2</a>
+                  <a>重复：</a>
+                  <a class="textBig danger">1</a>
+                  <a>计划外：</a>
+                  <a class="textBig danger">1</a>
+                </div>
+              </el-form-item>
+            </el-form>
+          </div>
+        </div>
+        <div style="display: inline-block;">
+          <img style="height: 300px;width: 400px;" src="./temp_img.png"/>
+        </div>
       </div>
     </el-card>
     <el-card style="width: 100%;margin-top: 20px">
