@@ -182,6 +182,18 @@ export const constantRouterMap = [
         name: 'eventCode',
         component: () => import('@/function/businessfunction/eventCode'),
         meta: { title: '埋点检测', icon: 'tree' }
+      },
+      {
+        path: 'businessList',
+        name: 'businessList',
+        component: () => import('@/function/businessfunction/index'),
+        meta: { title: '商机清单', icon: 'tree' }
+      },
+      {
+        path: 'eventCodeList',
+        name: 'eventCodeList',
+        component: () => import('@/function/businessfunction/index'),
+        meta: { title: '埋点清单', icon: 'tree' }
       }
     ]
   },

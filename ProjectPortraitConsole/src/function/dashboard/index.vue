@@ -41,6 +41,12 @@
         </el-card>
       </el-col>
       <el-col>
+        <el-card shadow="always" header="业务赋能">
+          <li>如果你想<b>持续保证商机准确性</b>，猛戳这里<a class="text success" style="font-size: 18px">商机检测</a></li>
+          <li>如果你想<b>全面回归埋点数据</b>，猛戳这里<a class="text success" style="font-size: 18px">埋点检测</a></li>
+        </el-card>
+      </el-col>
+      <el-col>
         <el-card shadow="always" header="增强工具">
           <li>如果你想<b>评估风险范围</b>亦或<b>查询引用关系</b>，欢迎进行<a class="text success" style="font-size: 18px">逻辑关系查询</a></li>
           <li>如果你要检查<b>代码层级结构</b>情况如何，可以尝试<a class="text success" style="font-size: 18px">层级关系查询</a></li>
@@ -121,7 +127,7 @@ export default {
   .text {
     margin: 5px;
     font-weight: bold;
-    font-size: 35px;
+    font-size: 28px;
   }
 
   .text.success {
