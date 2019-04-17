@@ -15,16 +15,16 @@
         <el-input v-model="form.remark" placeholder="remark" style="width: auto;"/>
         <el-input v-model="form.creater" placeholder="creater" style="width: auto;"/>
       </el-form-item>
-      <el-form-item>
+      <el-form-item style="margin-top: 10px;">
         <el-button plain @click="handleInsert()">新增</el-button>
       </el-form-item>
     </el-form>
-    <el-table
-      :data="list"
-      border
-      fit
-      stripe
-      highlight-current-row>
+    <el-table style="margin-top: 30px"
+              :data="list"
+              border
+              fit
+              stripe
+              highlight-current-row>
       <el-table-column type="expand">
         <template slot-scope="scope">
           <el-table
@@ -66,7 +66,6 @@
         <template slot-scope="scope">
           <el-button size="mini" type="danger" plain @click="ruleDeleteConfirm(scope.$index, scope.row.id)">
             删除
-
 
 
           </el-button>
